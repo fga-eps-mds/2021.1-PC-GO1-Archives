@@ -1,0 +1,23 @@
+name: Estilo
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  check_style:
+    name: Verificar Estilo de Código
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Conferir Repositório
+        uses: actions/checkout@v2
+
+      - name: Executar flake8  
+        run: sudo docker-compose -f .github/docker-compose.actions.yml --project-directory . run check_style

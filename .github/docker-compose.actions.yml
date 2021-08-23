@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  check_style:
+    build: .
+    command: flake8
+
+  test:
+    build: .
+    command: pytest -v --cov=. --cov-report=xml
