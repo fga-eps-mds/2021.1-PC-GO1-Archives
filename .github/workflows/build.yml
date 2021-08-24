@@ -37,3 +37,4 @@ jobs:
 
       - name: Verificar o server
         run: curl http://0.0.0.0:8002/
+
