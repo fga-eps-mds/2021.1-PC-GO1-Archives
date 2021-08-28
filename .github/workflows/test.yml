@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-      - development
+      - devel
   pull_request:
     branches:
       - main
-      - development
+      - devel
 
 jobs:
   test:
@@ -16,16 +16,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Conferir Repositório
+      - name: Conferir repositório
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0  # Evita clones rasos
+
+      - name: Criar arquivo .env
+        run: |
+          touch .env
+          echo SECRET_KEY=secret_key >> .env
+          echo DEBUG=True >> .env
+          echo POSTGRES_HOST=db >> .env
+          echo POSTGRES_DB=postgres >> .env
+          echo POSTGRES_USER=postgres >> .env
+          echo POSTGRES_PASSWORD=password >> .env
+          cat .env
 
       - name: Executar pytest  
-        run: sudo docker-compose -f .github/docker-compose.actions.yml --project-directory . run test
+        run: sudo docker-compose run web pytest --cov --cov-report xml:./coverage.xml
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: "Upload coverage to Codecov"
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
