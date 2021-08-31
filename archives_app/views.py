@@ -1,22 +1,21 @@
-from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from .serializers import UserSerializer, GroupSerializer
+from .serializers import  BoxAbbreviationsSerializer, PublicWorkerSerializer
+from .models import BoxAbbreviations, PublicWorker
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class BoxAbbreviationViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+    queryset = BoxAbbreviations.objects.all()
+    serializer_class = BoxAbbreviationsSerializer
     permission_classes = [permissions.AllowAny]
 
-
-class GroupViewSet(viewsets.ModelViewSet):
+class PublicWorkerViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows users to be viewed or edited.
     """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+    queryset = PublicWorker.objects.all()
+    serializer_class = PublicWorkerSerializer
     permission_classes = [permissions.AllowAny]
