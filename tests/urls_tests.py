@@ -14,14 +14,14 @@ class TestBoxAbreviationsEndpoints:
 
         api_client = APIClient()
         response = api_client.post(
-            'http://0.0.0.0:8002/box_abbreviation/', data=data,
+            '/box_abbreviation/', data=data,
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
     def test_list(self):
 
         api_client = APIClient()
-        response = api_client.get('http://0.0.0.0:8002/box_abbreviation/')
+        response = api_client.get('/box_abbreviation/')
         assert response.status_code == 200
 
     def test_retrieve(self):
@@ -34,10 +34,10 @@ class TestBoxAbreviationsEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/box_abbreviation/', data=data2,
+            '/box_abbreviation/', data=data2,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.get('http://0.0.0.0:8002/box_abbreviation/2/')
+        response = api_client.get('/box_abbreviation/2/')
         assert response.status_code == 200
 
     def test_update(self):
@@ -55,11 +55,11 @@ class TestBoxAbreviationsEndpoints:
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/box_abbreviation/', data=data3,
+            '/box_abbreviation/', data=data3,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            'http://0.0.0.0:8002/box_abbreviation/3/', data=data4,
+            '/box_abbreviation/3/', data=data4,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
@@ -73,10 +73,10 @@ class TestBoxAbreviationsEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/box_abbreviation/', data=data5,
+            '/box_abbreviation/', data=data5,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.delete('http://0.0.0.0:8002/box_abbreviation/4/')
+        response = api_client.delete('/box_abbreviation/4/')
         assert response.status_code == 204
 
 
@@ -94,14 +94,14 @@ class TestPublicWorkerEndpoints:
 
         api_client = APIClient()
         response = api_client.post(
-            'http://0.0.0.0:8002/public_worker/', data=data,
+            '/public_worker/', data=data,
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
     def test_list(self):
 
         api_client = APIClient()
-        response = api_client.get('http://0.0.0.0:8002/public_worker/')
+        response = api_client.get('/public_worker/')
         assert response.status_code == 200
 
     def test_retrieve(self):
@@ -116,10 +116,10 @@ class TestPublicWorkerEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/public_worker/', data=data2,
+            '/public_worker/', data=data2,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.get('http://0.0.0.0:8002/public_worker/2/')
+        response = api_client.get('/public_worker/2/')
         assert response.status_code == 200
 
     def test_update(self):
@@ -141,11 +141,11 @@ class TestPublicWorkerEndpoints:
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/public_worker/', data=data3,
+            '/public_worker/', data=data3,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            'http://0.0.0.0:8002/public_worker/3/', data=data4,
+            '/public_worker/3/', data=data4,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
@@ -161,10 +161,10 @@ class TestPublicWorkerEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/public_worker/', data=data5,
+            '/public_worker/', data=data5,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.delete('http://0.0.0.0:8002/public_worker/4/')
+        response = api_client.delete('/public_worker/4/')
         assert response.status_code == 204
 
 
@@ -178,14 +178,14 @@ class TestDocumentSubjectEndpoints:
 
         api_client = APIClient()
         response = api_client.post(
-            'http://0.0.0.0:8002/document_subject/', data=data,
+            '/document_subject/', data=data,
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
     def test_list(self):
 
         api_client = APIClient()
-        response = api_client.get('http://0.0.0.0:8002/document_subject/')
+        response = api_client.get('/document_subject/')
         assert response.status_code == 200
 
     def test_retrieve(self):
@@ -196,10 +196,10 @@ class TestDocumentSubjectEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/document_subject/', data=data2,
+            '/document_subject/', data=data2,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.get('http://0.0.0.0:8002/document_subject/2/')
+        response = api_client.get('/document_subject/2/')
         assert response.status_code == 200
 
     def test_update(self):
@@ -213,11 +213,11 @@ class TestDocumentSubjectEndpoints:
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/document_subject/', data=data3,
+            '/document_subject/', data=data3,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            'http://0.0.0.0:8002/document_subject/3/', data=data4,
+            '/document_subject/3/', data=data4,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
@@ -229,10 +229,10 @@ class TestDocumentSubjectEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/document_subject/', data=data5,
+            '/document_subject/', data=data5,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.delete('http://0.0.0.0:8002/document_subject/4/')
+        response = api_client.delete('/document_subject/4/')
         assert response.status_code == 204
 
 
@@ -246,14 +246,14 @@ class TestDocumentTypeEndpoints:
 
         api_client = APIClient()
         response = api_client.post(
-            'http://0.0.0.0:8002/document_type/', data=data,
+            '/document_type/', data=data,
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
     def test_list(self):
 
         api_client = APIClient()
-        response = api_client.get('http://0.0.0.0:8002/document_type/')
+        response = api_client.get('/document_type/')
         assert response.status_code == 200
 
     def test_retrieve(self):
@@ -264,10 +264,10 @@ class TestDocumentTypeEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/document_type/', data=data2,
+            '/document_type/', data=data2,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.get('http://0.0.0.0:8002/document_type/2/')
+        response = api_client.get('/document_type/2/')
         assert response.status_code == 200
 
     def test_update(self):
@@ -281,11 +281,11 @@ class TestDocumentTypeEndpoints:
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/document_type/', data=data3,
+            '/document_type/', data=data3,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            'http://0.0.0.0:8002/document_type/3/', data=data4,
+            '/document_type/3/', data=data4,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
@@ -297,10 +297,10 @@ class TestDocumentTypeEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/document_type/', data=data5,
+            '/document_type/', data=data5,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.delete('http://0.0.0.0:8002/document_type/4/')
+        response = api_client.delete('/document_type/4/')
         assert response.status_code == 204
 
 
@@ -320,14 +320,14 @@ class TestUnityEndpoints:
 
         api_client = APIClient()
         response = api_client.post(
-            'http://0.0.0.0:8002/unity/', data=data,
+            '/unity/', data=data,
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
     def test_list(self):
 
         api_client = APIClient()
-        response = api_client.get('http://0.0.0.0:8002/unity/')
+        response = api_client.get('/unity/')
         assert response.status_code == 200
 
     def test_retrieve(self):
@@ -344,10 +344,10 @@ class TestUnityEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/unity/', data=data2,
+            '/unity/', data=data2,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.get('http://0.0.0.0:8002/unity/2/')
+        response = api_client.get('/unity/2/')
         assert response.status_code == 200
 
     def test_update(self):
@@ -373,11 +373,11 @@ class TestUnityEndpoints:
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/unity/', data=data3,
+            '/unity/', data=data3,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            'http://0.0.0.0:8002/unity/3/', data=data4,
+            '/unity/3/', data=data4,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
@@ -395,10 +395,10 @@ class TestUnityEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/unity/', data=data5,
+            '/unity/', data=data5,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.delete('http://0.0.0.0:8002/unity/4/')
+        response = api_client.delete('/unity/4/')
         assert response.status_code == 204
 
 
@@ -411,14 +411,14 @@ class TestShelfEEndpoints:
 
         api_client = APIClient()
         response = api_client.post(
-            'http://0.0.0.0:8002/shelfE/', data=data,
+            '/shelfE/', data=data,
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
     def test_list(self):
 
         api_client = APIClient()
-        response = api_client.get('http://0.0.0.0:8002/shelfE/')
+        response = api_client.get('/shelfE/')
         assert response.status_code == 200
 
     def test_retrieve(self):
@@ -428,10 +428,10 @@ class TestShelfEEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/shelfE/', data=data2,
+            '/shelfE/', data=data2,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.get('http://0.0.0.0:8002/shelfE/2/')
+        response = api_client.get('/shelfE/2/')
         assert response.status_code == 200
 
     def test_update(self):
@@ -443,11 +443,11 @@ class TestShelfEEndpoints:
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/shelfE/', data=data3,
+            '/shelfE/', data=data3,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            'http://0.0.0.0:8002/shelfE/3/', data=data4,
+            '/shelfE/3/', data=data4,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
@@ -458,10 +458,10 @@ class TestShelfEEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/shelfE/', data=data5,
+            '/shelfE/', data=data5,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.delete('http://0.0.0.0:8002/shelfE/4/')
+        response = api_client.delete('/shelfE/4/')
         assert response.status_code == 204
 
 
@@ -474,14 +474,14 @@ class TestShelfPEndpoints:
 
         api_client = APIClient()
         response = api_client.post(
-            'http://0.0.0.0:8002/shelfP/', data=data,
+            '/shelfP/', data=data,
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
     def test_list(self):
 
         api_client = APIClient()
-        response = api_client.get('http://0.0.0.0:8002/shelfP/')
+        response = api_client.get('/shelfP/')
         assert response.status_code == 200
 
     def test_retrieve(self):
@@ -491,10 +491,10 @@ class TestShelfPEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/shelfP/', data=data2,
+            '/shelfP/', data=data2,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.get('http://0.0.0.0:8002/shelfP/2/')
+        response = api_client.get('/shelfP/2/')
         assert response.status_code == 200
 
     def test_update(self):
@@ -506,11 +506,11 @@ class TestShelfPEndpoints:
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/shelfP/', data=data3,
+            '/shelfP/', data=data3,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            'http://0.0.0.0:8002/shelfP/3/', data=data4,
+            '/shelfP/3/', data=data4,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
@@ -521,10 +521,10 @@ class TestShelfPEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/shelfP/', data=data5,
+            '/shelfP/', data=data5,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.delete('http://0.0.0.0:8002/shelfP/4/')
+        response = api_client.delete('/shelfP/4/')
         assert response.status_code == 204
 
 
@@ -537,14 +537,14 @@ class TestFrontCoverEndpoints:
 
         api_client = APIClient()
         response = api_client.post(
-            'http://0.0.0.0:8002/front_cover/', data=data,
+            '/front_cover/', data=data,
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
     def test_list(self):
 
         api_client = APIClient()
-        response = api_client.get('http://0.0.0.0:8002/front_cover/')
+        response = api_client.get('/front_cover/')
         assert response.status_code == 200
 
     def test_retrieve(self):
@@ -554,10 +554,10 @@ class TestFrontCoverEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/front_cover/', data=data2,
+            '/front_cover/', data=data2,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.get('http://0.0.0.0:8002/front_cover/2/')
+        response = api_client.get('/front_cover/2/')
         assert response.status_code == 200
 
     def test_update(self):
@@ -569,11 +569,11 @@ class TestFrontCoverEndpoints:
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/front_cover/', data=data3,
+            '/front_cover/', data=data3,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            'http://0.0.0.0:8002/front_cover/3/', data=data4,
+            '/front_cover/3/', data=data4,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
@@ -584,10 +584,10 @@ class TestFrontCoverEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/front_cover/', data=data5,
+            '/front_cover/', data=data5,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.delete('http://0.0.0.0:8002/front_cover/4/')
+        response = api_client.delete('/front_cover/4/')
         assert response.status_code == 204
 
 
@@ -603,14 +603,14 @@ class TestStatusEndpoints:
 
         api_client = APIClient()
         response = api_client.post(
-            'http://0.0.0.0:8002/status/', data=data,
+            '/status/', data=data,
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
     def test_list(self):
 
         api_client = APIClient()
-        response = api_client.get('http://0.0.0.0:8002/status/')
+        response = api_client.get('/status/')
         assert response.status_code == 200
 
     def test_retrieve(self):
@@ -623,10 +623,10 @@ class TestStatusEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/status/', data=data2,
+            '/status/', data=data2,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.get('http://0.0.0.0:8002/status/2/')
+        response = api_client.get('/status/2/')
         assert response.status_code == 200
 
     def test_update(self):
@@ -644,11 +644,11 @@ class TestStatusEndpoints:
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/status/', data=data3,
+            '/status/', data=data3,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            'http://0.0.0.0:8002/status/3/', data=data4,
+            '/status/3/', data=data4,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
@@ -662,8 +662,8 @@ class TestStatusEndpoints:
 
         api_client = APIClient()
         intermediary = api_client.post(
-            'http://0.0.0.0:8002/status/', data=data5,
+            '/status/', data=data5,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
-        response = api_client.delete('http://0.0.0.0:8002/status/4/')
+        response = api_client.delete('/status/4/')
         assert response.status_code == 204
