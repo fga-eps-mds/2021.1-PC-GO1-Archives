@@ -58,7 +58,7 @@ class BoxAbbreviationsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BoxAbbreviations
-        fields = ['number', 'abbreviation', 'name', 'year']
+        fields = '__all__'
 
 
 class ShelfESerializer(serializers.ModelSerializer):
