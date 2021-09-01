@@ -2,10 +2,11 @@ from django.urls import include, path
 from rest_framework import routers
 from archives_app import views
 
+
 router = routers.DefaultRouter()
 router.register(r'box_abbreviation', views.BoxAbbreviationViewSet)
 router.register(r'public_worker', views.PublicWorkerViewSet)
-router.register(r'document_subjetc', views.DocumentSubjectViewSet)
+router.register(r'document_subject', views.DocumentSubjectViewSet)
 router.register(r'document_type', views.DocumentTypeViewSet)
 router.register(r'unity', views.UnityViewSet)
 router.register(r'shelfE', views.ShelfEViewSet)
