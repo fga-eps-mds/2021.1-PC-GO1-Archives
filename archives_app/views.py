@@ -2,10 +2,9 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from .serializers import BoxAbbreviationsSerializer, PublicWorkerSerializer
 from .serializers import DocumentSubjectSerializer, DocumentTypeSerializer, UnitySerializer
-from .serializers import ShelfESerializer, ShelfPSerializer
-from .serializers import FrontCoverSerializer, StatusSerializer
+from .serializers import FrontCoverSerializer, StatusSerializer, ShelfSerializer
 from .models import BoxAbbreviations, PublicWorker, DocumentSubject, DocumentType
-from .models import Unity, ShelfE, ShelfP, FrontCover, Status
+from .models import Unity, Shelf, FrontCover, Status
 
 
 class DocumentSubjectViewSet(viewsets.ModelViewSet):
@@ -53,21 +52,12 @@ class BoxAbbreviationViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
 
-class ShelfEViewSet(viewsets.ModelViewSet):
+class ShelfViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = ShelfE.objects.all()
-    serializer_class = ShelfESerializer
-    permission_classes = [permissions.AllowAny]
-
-
-class ShelfPViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = ShelfP.objects.all()
-    serializer_class = ShelfPSerializer
+    queryset = Shelf.objects.all()
+    serializer_class = ShelfSerializer
     permission_classes = [permissions.AllowAny]
 
 
