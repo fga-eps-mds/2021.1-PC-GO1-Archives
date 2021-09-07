@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import BoxAbbreviations, FrontCover, PublicWorker, DocumentSubject
-from .models import DocumentType, ShelfE, ShelfP, Status, Unity
+from .models import DocumentType, Shelf, Status, Unity
 
 
 class DocumentSubjectSerializer(serializers.ModelSerializer):
@@ -36,7 +36,7 @@ class PublicWorkerSerializer(serializers.ModelSerializer):
 
 
 class UnitySerializer(serializers.ModelSerializer):
-    name_of_unity = serializers.CharField(max_length=100, required=False)
+    unity_name = serializers.CharField(max_length=100, required=False)
     unity_abbreviation = serializers.CharField(max_length=20, required=False)
     administrative_bond = serializers.CharField(max_length=100, required=False)
     bond_abbreviation = serializers.CharField(max_length=20, required=False)
@@ -58,22 +58,15 @@ class BoxAbbreviationsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BoxAbbreviations
-        fields = '__all__'
+        fields = ['number', 'abbreviation', 'name', 'year']
 
 
-class ShelfESerializer(serializers.ModelSerializer):
-    number = serializers.IntegerField(required=False)
-
-    class Meta:
-        model = ShelfE
-        fields = '__all__'
-
-
-class ShelfPSerializer(serializers.ModelSerializer):
-    number = serializers.IntegerField(required=False)
+class ShelfSerializer(serializers.ModelSerializer):
+    shelfe_number = serializers.IntegerField(required=False)
+    shelfp_number = serializers.IntegerField(required=False)
 
     class Meta:
-        model = ShelfP
+        model = Shelf
         fields = '__all__'
 
 
@@ -87,7 +80,8 @@ class FrontCoverSerializer(serializers.ModelSerializer):
 
 class StatusSerializer(serializers.ModelSerializer):
     filed = serializers.BooleanField(required=False)
-    unity_that_forwarded = serializers.CharField(max_length=100, required=False)
+    eliminated = serializers.BooleanField(required=False)
+    sent_from = serializers.CharField(max_length=100, required=False)
     document_requested = serializers.CharField(max_length=100, required=False)
     send_date = serializers.DateField(required=False)
 

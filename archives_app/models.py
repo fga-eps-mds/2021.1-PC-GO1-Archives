@@ -21,7 +21,7 @@ class PublicWorker(models.Model):
 
 
 class Unity(models.Model):
-    name_of_unity = models.CharField(max_length=100, blank=True)
+    unity_name = models.CharField(max_length=100, blank=True)
     unity_abbreviation = models.CharField(max_length=20, blank=True)
     administrative_bond = models.CharField(max_length=100, blank=True)
     bond_abbreviation = models.CharField(max_length=20, blank=True)
@@ -38,12 +38,9 @@ class BoxAbbreviations(models.Model):
     year = models.IntegerField(blank=True)
 
 
-class ShelfE(models.Model):
-    number = models.IntegerField(blank=True)
-
-
-class ShelfP(models.Model):
-    number = models.IntegerField(blank=True)
+class Shelf(models.Model):
+    shelfe_number = models.IntegerField(blank=True)
+    shelfp_number = models.IntegerField(blank=True)
 
 
 class FrontCover(models.Model):
@@ -52,6 +49,7 @@ class FrontCover(models.Model):
 
 class Status(models.Model):
     filed = models.BooleanField(blank=True)
-    unity_that_forwarded = models.CharField(max_length=100, blank=True)
-    document_requested = models.CharField(max_length=100, blank=True)
+    eliminated = models.BooleanField(blank=True)
+    sent_from = models.CharField(max_length=100, blank=True)
+    requested_document = models.CharField(max_length=100, blank=True)
     send_date = models.DateField(blank=True, null=True)
