@@ -12,6 +12,11 @@ router.register(r'unity', views.UnityViewSet)
 router.register(r'shelf', views.ShelfViewSet)
 router.register(r'front_cover', views.FrontCoverViewSet)
 router.register(r'status', views.StatusViewSet)
+router.register(r'administrative-process', views.AdministrativeProcessSet)
+router.register(r'frequency-document', views.FrequencyDocumentViewSet)
+router.register(r'frequency-relation', views.FrequencyRelationViewSet)
+router.register(r'archiving-relation', views.ArchivingRelationViewSet)
+
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

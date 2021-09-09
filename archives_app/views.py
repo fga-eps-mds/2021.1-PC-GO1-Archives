@@ -1,10 +1,14 @@
 from rest_framework import viewsets
 from rest_framework import permissions
-from .serializers import BoxAbbreviationsSerializer, PublicWorkerSerializer
-from .serializers import DocumentSubjectSerializer, DocumentTypeSerializer, UnitySerializer
-from .serializers import FrontCoverSerializer, StatusSerializer, ShelfSerializer
-from .models import BoxAbbreviations, PublicWorker, DocumentSubject, DocumentType
-from .models import Unity, Shelf, FrontCover, Status
+from .fields_serializers import BoxAbbreviationsSerializer, PublicWorkerSerializer
+from .fields_serializers import DocumentSubjectSerializer, DocumentTypeSerializer, UnitySerializer
+from .fields_serializers import FrontCoverSerializer, StatusSerializer, ShelfSerializer
+from .fields_models import BoxAbbreviations, PublicWorker, DocumentSubject, DocumentType
+from .fields_models import Unity, Shelf, FrontCover, Status
+from .documents_models import AdministrativeProcess, FrequencyDocument, FrequencyRelation
+from .documents_models import ArchivingRelation
+from .documents_serializers import AdministrativeProcessSerializer, FrequencyDocumentSerializer
+from .documents_serializers import FrequencyRelationSerializer, ArchivingRelationSerializer
 
 
 class DocumentSubjectViewSet(viewsets.ModelViewSet):
@@ -76,4 +80,40 @@ class StatusViewSet(viewsets.ModelViewSet):
     """
     queryset = Status.objects.all()
     serializer_class = StatusSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class AdministrativeProcessSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = AdministrativeProcess.objects.all()
+    serializer_class = AdministrativeProcessSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class FrequencyDocumentViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = FrequencyDocument.objects.all()
+    serializer_class = FrequencyDocumentSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class FrequencyRelationViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = FrequencyRelation.objects.all()
+    serializer_class = FrequencyRelationSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class ArchivingRelationViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = ArchivingRelation.objects.all()
+    serializer_class = ArchivingRelationSerializer
     permission_classes = [permissions.AllowAny]

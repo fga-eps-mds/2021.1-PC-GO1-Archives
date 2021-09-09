@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import BoxAbbreviations, FrontCover, PublicWorker, DocumentSubject
-from .models import DocumentType, Shelf, Status, Unity
+from .fields_models import BoxAbbreviations, FrontCover, PublicWorker, DocumentSubject
+from .fields_models import DocumentType, Shelf, Status, Unity
 
 
 class DocumentSubjectSerializer(serializers.ModelSerializer):
@@ -36,12 +36,6 @@ class PublicWorkerSerializer(serializers.ModelSerializer):
 
 
 class UnitySerializer(serializers.ModelSerializer):
-    unity_name = serializers.CharField(max_length=100, required=False)
-    unity_abbreviation = serializers.CharField(max_length=20, required=False)
-    administrative_bond = serializers.CharField(max_length=100, required=False)
-    bond_abbreviation = serializers.CharField(max_length=20, required=False)
-    type_of_unity = serializers.CharField(max_length=30, required=False)
-    municipality = serializers.CharField(max_length=100, required=False)
     telephone_number = serializers.CharField(max_length=8, required=False)
     note = serializers.CharField(max_length=100, required=False)
 
@@ -83,8 +77,3 @@ class StatusSerializer(serializers.ModelSerializer):
     eliminated = serializers.BooleanField(required=False)
     sent_from = serializers.CharField(max_length=100, required=False)
     document_requested = serializers.CharField(max_length=100, required=False)
-    send_date = serializers.DateField(required=False)
-
-    class Meta:
-        model = Status
-        fields = '__all__'
