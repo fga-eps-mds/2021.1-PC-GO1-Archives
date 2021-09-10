@@ -1,67 +1,59 @@
 from django.db import models
-from django.db.models.fields import CharField
-
-class AdministrativeProcess(models.Model):
-    process_number = models.IntegerField(max_length=100, blank=False)
-    booked_date = models.DateField(blank=False, null=True)
-    interested = models.CharField(max_length=100, blank=False)
-    cpf_cnpj = models.CharField(max_length=11, blank=True)
-    subject = models.CharField(max_length=100, blank=False)
-    destination_unity = models.CharField(max_length=100, blank=True)
-    refrence_date = models.CharField(max_length=30, blank=True)
-    unity_forwarded_for_archiving = models.CharField(max_length=100, blank=True)
-    forwarded_by = models.CharField(max_length=100, blank=True)
-    arquiving_date = models.DateField(blank=True, null=True)
-    box_abbreviation = models.CharField(max_length=30, blank=True)
-    shelfe_number = models.IntegerField(max_length=20, blank=True)
-    shelfp_number = models.IntegerField(max_length=20, blank=True)
-    worker_who_registered = models.CharField(max_length=100, blank=True)
-    status = models.BooleanField(blank=False)
-    notes = models.CharField(max_length=200, blank=True)
+from archives_app.fields_models import (BoxAbbreviations, DocumentType, PublicWorker,
+                                        DocumentSubject, Status, Shelf, Unity)
 
 
-class FrequencyRelation(models.Model):
-    process_number = models.IntegerField(max_length=20, blank=False)
-    document_type = models.CharField(max_length=100, blank=False)
-    document_number = models.IntegerField(max_length=20, blank=False)
-    unity_forwarded_for_archiving = models.CharField(max_length=100, blank=False)
-    time_course = models.JSONField(max_length=300, blank=False)
-    worker_who_recieved_frequencies = models.CharField(max_length=100, blank=False)
-    receipt_date = models.DateField(blank=False)
-    box_abbreviation = models.CharField(max_length=30, blank=True)
-    shelfe_number = models.IntegerField(max_length=20, blank=True)
-    shelfp_number = models.IntegerField(max_length=20, blank=True)
-    notes = models.CharField(max_length=200, blank=True)
+class Document(models.Model):
+    process_number = models.CharField(max_length=100)
+    sender_unity = models.CharField(max_length=100)
+    abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT)
+    shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT)
+    notes = models.CharField(max_length=300)
 
 
-class FrequencyDocument(models.Model):  #frequencys
-    worker_name = models.CharField(max_length=100, blank=False)
-    cpf = models.CharField(max_length=11, blank=True)
-    workload = models.CharField(max_length=100, blank=False)
-    worker_class = models.CharField(max_length=100, blank=True)
-    time_course = models.CharField(max_length=100, blank=False)
-    capacity = models.CharField(max_length=100, blank=False)
-    municipality = models.CharField(max_length=100, blank=False)
-    process_number_that_sent_frequency = models.IntegerField(max_length=20, blank=True)
-    box_abbreviation = models.CharField(max_length=30, blank=True)
-    shelfe_number = models.IntegerField(max_length=20, blank=True)
-    shelfp_number = models.IntegerField(max_length=20, blank=True)
-    notes = models.CharField(max_length=200, blank=True)
+class Relation(Document):
+    document_type = models.ForeignKey(DocumentType, on_delete=models.PROTECT)
+    number = models.CharField(max_length=1000)
+    received_date = models.DateField()
 
 
-class ArchivingRelation(models.Model):
-    process_number = models.IntegerField(max_length=20, blank=False)
-    document_type = models.CharField(max_length=100, blank=False)
-    document_number = models.IntegerField(max_length=20, blank=False)
-    unity_forwarded_for_archiving = models.CharField(max_length=100, blank=False)
-    receipt_date = models.DateField(blank=False)
-    worker_who_recieved_box = models.CharField(max_length=100, blank=False)
-    number_of_boxes_received_for_archiving = models.ImageField(max_length=3, blank=True)
-    origin_box = models.JSONField(max_length=300, blank=True) #numero e ano
-    subjects = models.JSONField(max_length=300, blank=True) #por caixa de origem
-    dates = models.JSONField(max_length=300, blank=True) #dos assuntos por caixa de origem 
-    box_abbreviation = models.CharField(max_length=30, blank=True)
-    shelfe_number = models.IntegerField(max_length=20, blank=True)
-    shelfp_number = models.IntegerField(max_length=20, blank=True)
-    notes = models.CharField(max_length=200, blank=True)
-    document_to_attach = models.ImageField(blank=True)
+class OriginBox(models.Model):
+    number = models.CharField(max_length=100)
+    year = models.IntegerField()
+    subject = models.CharField(max_length=150)
+    date = models.DateField()
+
+
+class ArchivalRelation(Relation):
+    box_receiver = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    number_of_boxes = models.IntegerField()
+    origin_box_id = models.ManyToManyField(OriginBox)
+    document_url = models.URLField()
+    cover_sheet = models.CharField(max_length=100)
+
+
+class FrequencyRelation(Relation):
+    due_date = models.DateField()
+    frequency_receiver_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+
+
+class FrequencySheet(models.Model):
+    public_worker_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    due_date = models.DateField()
+    abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT)
+    shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT)
+    notes = models.CharField(max_length=300)
+    process_number = models.CharField(max_length=1000)
+
+
+class AdministrativeProcess(Document):
+    notice_date = models.DateField()
+    interested = models.CharField(max_length=150)
+    cpf_cnpj = models.CharField(max_length=15)
+    subject = models.ForeignKey(DocumentSubject, on_delete=models.PROTECT)
+    dest_unity = models.ForeignKey(Unity, on_delete=models.PROTECT)
+    reference_month_year = models.FloatField()
+    sender_worker = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    archiving_date = models.DateField()
+    status = models.ForeignKey(Status, on_delete=models.PROTECT)
+    # user

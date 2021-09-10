@@ -4,18 +4,19 @@ from archives_app import views
 
 
 router = routers.DefaultRouter()
-router.register(r'box_abbreviation', views.BoxAbbreviationViewSet)
-router.register(r'public_worker', views.PublicWorkerViewSet)
-router.register(r'document_subject', views.DocumentSubjectViewSet)
-router.register(r'document_type', views.DocumentTypeViewSet)
+router.register(r'box-abbreviation', views.BoxAbbreviationViewSet)
+router.register(r'public-worker', views.PublicWorkerViewSet)
+router.register(r'document-subject', views.DocumentSubjectViewSet)
+router.register(r'document-type', views.DocumentTypeViewSet)
 router.register(r'unity', views.UnityViewSet)
 router.register(r'shelf', views.ShelfViewSet)
-router.register(r'front_cover', views.FrontCoverViewSet)
+router.register(r'front-cover', views.FrontCoverViewSet)
 router.register(r'status', views.StatusViewSet)
-router.register(r'administrative-process', views.AdministrativeProcessSet)
-router.register(r'frequency-document', views.FrequencyDocumentViewSet)
+router.register(r'administrative-process', views.AdministrativeProcessViewSet)
 router.register(r'frequency-relation', views.FrequencyRelationViewSet)
-router.register(r'archiving-relation', views.ArchivingRelationViewSet)
+router.register(r'frequency-sheet', views.FrequencySheetViewSet)
+router.register(r'archival-relation', views.ArchivalRelationViewSet)
+router.register(r'origin-box', views.OriginBoxViewSet)
 
 
 # Wire up our API using automatic URL routing.
