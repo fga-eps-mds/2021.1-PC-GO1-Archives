@@ -25,7 +25,7 @@ class OriginBox(models.Model):
 
 
 class ArchivalRelation(Relation):
-    box_receiver = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    box_receiver = models.ForeignKey(PublicWorker, on_delete=models.PROTECT) # Will be replaced by User when user is created
     number_of_boxes = models.IntegerField()
     origin_box_id = models.ManyToManyField(OriginBox)
     document_url = models.URLField()
@@ -34,11 +34,11 @@ class ArchivalRelation(Relation):
 
 class FrequencyRelation(Relation):
     due_date = models.DateField()
-    frequency_receiver_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    frequency_receiver_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT) # Will be replaced by User when user is created
 
 
 class FrequencySheet(models.Model):
-    public_worker_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    public_worker_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT) # Will be replaced by User when user is created
     due_date = models.DateField()
     abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT)
@@ -53,7 +53,7 @@ class AdministrativeProcess(Document):
     subject = models.ForeignKey(DocumentSubject, on_delete=models.PROTECT)
     dest_unity = models.ForeignKey(Unity, on_delete=models.PROTECT)
     reference_month_year = models.FloatField()
-    sender_worker = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    sender_worker = models.ForeignKey(PublicWorker, on_delete=models.PROTECT) # Will be replaced by User when user is created
     archiving_date = models.DateField()
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
-    # user
+    # user = will be created as a foreignkey to the User class whe the user class is created
