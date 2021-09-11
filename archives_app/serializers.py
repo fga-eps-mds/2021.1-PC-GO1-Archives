@@ -42,8 +42,8 @@ class UnitySerializer(serializers.ModelSerializer):
     bond_abbreviation = serializers.CharField(max_length=20, required=False)
     type_of_unity = serializers.CharField(max_length=30, required=False)
     municipality = serializers.CharField(max_length=100, required=False)
-    telephone_number = serializers.CharField(max_length=8, required=False)
-    note = serializers.CharField(max_length=100, required=False)
+    telephone_number = serializers.CharField(max_length=11, required=False)
+    notes = serializers.CharField(max_length=300, required=False)
 
     class Meta:
         model = Unity
@@ -79,7 +79,7 @@ class FrontCoverSerializer(serializers.ModelSerializer):
 
 
 class StatusSerializer(serializers.ModelSerializer):
-    filed = serializers.BooleanField(required=False)
+    is_filed = serializers.BooleanField(required=False)
     eliminated = serializers.BooleanField(required=False)
     sent_from = serializers.CharField(max_length=100, required=False)
     requested_document = serializers.CharField(max_length=100, required=False)
