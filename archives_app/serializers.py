@@ -58,7 +58,7 @@ class BoxAbbreviationsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BoxAbbreviations
-        fields = ['number', 'abbreviation', 'name', 'year']
+        fields = '__all__'
 
 
 class ShelfSerializer(serializers.ModelSerializer):
@@ -82,7 +82,7 @@ class StatusSerializer(serializers.ModelSerializer):
     filed = serializers.BooleanField(required=False)
     eliminated = serializers.BooleanField(required=False)
     sent_from = serializers.CharField(max_length=100, required=False)
-    document_requested = serializers.CharField(max_length=100, required=False)
+    requested_document = serializers.CharField(max_length=100, required=False)
     send_date = serializers.DateField(required=False)
 
     class Meta:
