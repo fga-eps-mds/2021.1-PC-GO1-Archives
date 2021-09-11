@@ -1,0 +1,28 @@
+name: Lançamento
+
+on:
+  pull_request:
+    types: [open, closed]  
+
+jobs:
+  build:
+    name: Criar Nova Versão
+    runs-on: ubuntu-latest
+
+    # if: github.event.pull_request.merged
+    # testar se um PR fechado e não mergeado vai ativar a action
+
+    steps:
+      - name: PATCH
+        # if: contains( github.event.pull_request.labels.*.name, 'PATCH' )
+        run: echo github.event.pull_request
+      #  run: gh release create
+
+      # -F arquivo
+      # -t titulo
+
+      #- name: MINOR
+      #  if: contains( github.event.pull_request.labels.*.name, 'MINOR' )
+
+      #- name: MAJOR
+      #  if: contains( github.event.pull_request.labels.*.name, 'MAJOR' )
