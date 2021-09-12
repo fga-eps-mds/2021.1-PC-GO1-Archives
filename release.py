@@ -52,7 +52,7 @@ if __name__ == "__main__":
         print('\033[93m' + "WARNING:" + '\033[0m' + " Unable to collect topics.")
 
     last_tag = requests.get(
-        "https://api.github.com/repos/J-Matheus/FT/tags", #
+        "https://api.github.com/repos/fga-eps-mds/2021.1-PC-GO1-Archives/tags",
         auth=requests.auth.HTTPBasicAuth(user, token)
     ).json()[0]['name'][1:]
 
