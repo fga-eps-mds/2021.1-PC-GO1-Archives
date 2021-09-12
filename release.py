@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
         changelog.writelines(
             "Hoje, estamos lançando, com as correções dos erros encontrados recentemente "
-            "pela comunidade, uma nova versão da API de Gerenciamento de Usuários do "
+            "pela comunidade, uma nova versão da API de Gerenciamento de Arquivos do "
             "sistema *[SysArq](https://github.com/fga-eps-mds/2021.1-PC-GO1)*. Ainda não "
             "conhece o sistema? "
             "**[Saiba Mais](https://fga-eps-mds.github.io/2021.1-PC-GO1/)**\n"
@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
             changelog.writelines(
                 "Hoje, estamos lançando, com as alterações recentes, uma nova versão da API"
-                " de Gerenciamento de Usuários do sistema "
+                " de Gerenciamento de Arquivos do sistema "
                 "*[SysArq](https://github.com/fga-eps-mds/2021.1-PC-GO1)*.\nAinda não "
                 "conhece o sistema? "
                 "**[Saiba Mais](https://fga-eps-mds.github.io/2021.1-PC-GO1/)**\n"
@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
             changelog.writelines(
                 "Hoje, estamos lançando, para marcar o fim de um prazo, uma nova versão da"
-                " API de Gerenciamento de Usuários do sistema "
+                " API de Gerenciamento de Arquivos do sistema "
                 "*[SysArq](https://github.com/fga-eps-mds/2021.1-PC-GO1)*. Ainda não "
                 "conhece o sistema? "
                 "**[Saiba Mais](https://fga-eps-mds.github.io/2021.1-PC-GO1/)**\n"
