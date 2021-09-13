@@ -4,7 +4,7 @@ from archives_app.fields_models import (BoxAbbreviations, DocumentType, PublicWo
 
 
 class Document(models.Model):
-    process_number = models.CharField(max_length=1000000)
+    process_number = models.CharField(max_length=20)
     sender_unity = models.CharField(max_length=100)
     abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT, blank=True)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True)
@@ -14,13 +14,13 @@ class Document(models.Model):
 
 class Relation(Document):
     document_type_id = models.ForeignKey(DocumentType, on_delete=models.PROTECT)
-    number = models.CharField(max_length=1000000)
+    number = models.CharField(max_length=20)
     received_date = models.DateField()
     receiver_user_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT) # Will be replaced by User when user is created
 
 
 class OriginBox(models.Model):
-    number = models.CharField(max_length=1000000)
+    number = models.CharField(max_length=20)
     year = models.IntegerField()
     subject = models.CharField(max_length=150)
     date = models.DateField()
@@ -34,16 +34,16 @@ class ArchivalRelation(Relation):
 
 
 class FrequencyRelation(Relation):
-    due_date = models.DateField()
+    reference_period = models.DateField() # CRIAR UMA NOVA TABELA
 
 
 class FrequencySheet(models.Model):
     public_worker_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT) # Will be replaced by User when user is created
-    due_date = models.DateField()
+    due_date = models.DateField() # CRIAR UMA NOVA TABELA
     abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT)
     notes = models.CharField(max_length=300)
-    process_number = models.CharField(max_length=10000)
+    process_number = models.CharField(max_length=20)
 
 
 class AdministrativeProcess(Document):
@@ -52,7 +52,7 @@ class AdministrativeProcess(Document):
     cpf_cnpj = models.CharField(max_length=15)
     subject_id = models.ForeignKey(DocumentSubject, on_delete=models.PROTECT)
     dest_unity_id = models.ForeignKey(Unity, on_delete=models.PROTECT)
-    reference_month_year = models.DateField()
+    # reference_month_year = models.DateField() CRIAR UMA NOVA TABELA
     sender_worker_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT) # Will be replaced by User when user is created
     archiving_date = models.DateField()
     status_id = models.ForeignKey(Status, on_delete=models.PROTECT)
