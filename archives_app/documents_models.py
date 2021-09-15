@@ -11,14 +11,13 @@ class Document(models.Model):
                                         blank=True)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True)
     notes = models.CharField(max_length=300, blank=True)
-    filer_user_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    filer_user = models.CharField(max_length=150)
 
 
 class Relation(Document):
     document_type_id = models.ForeignKey(DocumentType, on_delete=models.PROTECT)
     number = models.CharField(max_length=20)
     received_date = models.DateField()
-    receiver_user_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
 
 
 class ReferencePeriod(models.Model):
@@ -44,7 +43,7 @@ class FrequencyRelation(Relation):
 
 
 class FrequencySheet(models.Model):
-    public_worker_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    person_name = models.CharField(max_length=150)
     reference_period = models.ManyToManyField(ReferencePeriod)
     abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT)
@@ -59,6 +58,6 @@ class AdministrativeProcess(Document):
     subject_id = models.ForeignKey(DocumentSubject, on_delete=models.PROTECT)
     dest_unity_id = models.ForeignKey(Unity, on_delete=models.PROTECT)
     reference_month_year = models.DateField()
-    sender_worker_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT)
+    sender_user = models.CharField(max_length=150)
     archiving_date = models.DateField()
     status_id = models.ForeignKey(Status, on_delete=models.PROTECT)

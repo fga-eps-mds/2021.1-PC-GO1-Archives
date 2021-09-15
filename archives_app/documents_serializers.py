@@ -19,7 +19,6 @@ class FrequencyRelationSerializer(serializers.ModelSerializer):
 
 
 class AdministrativeProcessSerializer(serializers.ModelSerializer):
-    reference_month_year = serializers.ListField()
 
     class Meta:
         model = AdministrativeProcess
