@@ -5,6 +5,13 @@ from archives_app.documents_models import (FrequencyRelation, ArchivalRelation,
 
 
 class ArchivalRelationSerializer(serializers.ModelSerializer):
+    # abbreviation_id = serializers.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
+    #                                     required=False)
+    # shelf_id = serializers.ForeignKey(Shelf, on_delete=models.PROTECT, required=False)
+    # notes = serializers.CharField(max_length=300, required=False)
+    # number_of_boxes = serializers.IntegerField(required=False)
+    # document_url = serializers.URLField(required=False)
+    # cover_sheet = serializers.CharField(max_length=100, required=False)
 
     class Meta:
         model = ArchivalRelation
@@ -12,6 +19,10 @@ class ArchivalRelationSerializer(serializers.ModelSerializer):
 
 
 class FrequencyRelationSerializer(serializers.ModelSerializer):
+    # abbreviation_id = serializers.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
+    #                                     required=False)
+    # shelf_id = serializers.ForeignKey(Shelf, on_delete=models.PROTECT, required=False)
+    # notes = serializers.CharField(max_length=300, required=False)
 
     class Meta:
         model = FrequencyRelation
@@ -33,6 +44,11 @@ class OriginBoxSerializer(serializers.ModelSerializer):
 
 
 class FrequencySheetSerializer(serializers.ModelSerializer):
+    # abbreviation_id = serializers.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
+    #                                         required=False)
+    # shelf_id = serializers.ForeignKey(Shelf, on_delete=models.PROTECT, required=False)
+    # notes = serializers.CharField(max_length=300, required=False)
+    # process_number = serializers.CharField(max_length=20, required=False)
 
     class Meta:
         model = FrequencySheet

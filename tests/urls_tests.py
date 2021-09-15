@@ -619,20 +619,15 @@ class TestFrequencySheetsEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
             "name": "SAGA",
             "year": 2020
+        }
+
+        data_ref_period = {
+            "period_month_year": "2021-11-11"
         }
 
         api_client = APIClient()
@@ -642,21 +637,26 @@ class TestFrequencySheetsEndpoints:
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
 
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
-
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
             header={"Content-Type": "application/json"})
         assert response_abbreviation.status_code == 201
 
+        response_ref_period = api_client.post(
+            '/reference-period/', data=data_ref_period,
+            header={"Content-Type": "application/json"})
+        assert response_ref_period.status_code == 201
+
         data = {
-            "due_date": "2021-12-12",
+            "person_name": "teste",
+            "cpf": "teste",
+            "role": "teste",
+            "category": "teste",
+            "workplace": "teste",
+            "municipal_area": "teste",
             "notes": "Nenhuma no momento",
             "process_number": "1",
-            "public_worker_id": response_pw.data['id'],
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
@@ -679,20 +679,15 @@ class TestFrequencySheetsEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
             "name": "SAGA",
             "year": 2020
+        }
+
+        data_ref_period = {
+            "period_month_year": "2021-11-11"
         }
 
         api_client = APIClient()
@@ -702,21 +697,26 @@ class TestFrequencySheetsEndpoints:
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
 
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
-
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
             header={"Content-Type": "application/json"})
         assert response_abbreviation.status_code == 201
 
+        response_ref_period = api_client.post(
+            '/reference-period/', data=data_ref_period,
+            header={"Content-Type": "application/json"})
+        assert response_ref_period.status_code == 201
+
         data = {
-            "due_date": "2021-12-12",
+            "person_name": "teste",
+            "cpf": "teste",
+            "role": "teste",
+            "category": "teste",
+            "workplace": "teste",
+            "municipal_area": "teste",
             "notes": "Nenhuma no momento",
             "process_number": "1",
-            "public_worker_id": response_pw.data['id'],
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
@@ -733,20 +733,15 @@ class TestFrequencySheetsEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
             "name": "SAGA",
             "year": 2020
+        }
+
+        data_ref_period = {
+            "period_month_year": "2021-11-11"
         }
 
         api_client = APIClient()
@@ -756,30 +751,40 @@ class TestFrequencySheetsEndpoints:
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
 
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
-
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
             header={"Content-Type": "application/json"})
         assert response_abbreviation.status_code == 201
 
+        response_ref_period = api_client.post(
+            '/reference-period/', data=data_ref_period,
+            header={"Content-Type": "application/json"})
+        assert response_ref_period.status_code == 201
+
         data = {
-            "due_date": "2021-12-12",
+            "person_name": "teste",
+            "cpf": "teste",
+            "role": "teste",
+            "category": "teste",
+            "workplace": "teste",
+            "municipal_area": "teste",
             "notes": "Nenhuma no momento",
             "process_number": "1",
-            "public_worker_id": response_pw.data['id'],
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
 
         data_2 = {
-            "due_date": "2021-12-13",
+            "person_name": "teste2",
+            "cpf": "teste",
+            "role": "teste",
+            "category": "teste",
+            "workplace": "teste",
+            "municipal_area": "teste",
             "notes": "Nenhuma no momento",
-            "process_number": "2",
-            "public_worker_id": response_pw.data['id'],
+            "process_number": "1",
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
@@ -798,20 +803,15 @@ class TestFrequencySheetsEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
             "name": "SAGA",
             "year": 2020
+        }
+
+        data_ref_period = {
+            "period_month_year": "2021-11-11"
         }
 
         api_client = APIClient()
@@ -821,21 +821,26 @@ class TestFrequencySheetsEndpoints:
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
 
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
-
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
             header={"Content-Type": "application/json"})
         assert response_abbreviation.status_code == 201
 
+        response_ref_period = api_client.post(
+            '/reference-period/', data=data_ref_period,
+            header={"Content-Type": "application/json"})
+        assert response_ref_period.status_code == 201
+
         data = {
-            "due_date": "2021-12-12",
+            "person_name": "teste",
+            "cpf": "teste",
+            "role": "teste",
+            "category": "teste",
+            "workplace": "teste",
+            "municipal_area": "teste",
             "notes": "Nenhuma no momento",
             "process_number": "1",
-            "public_worker_id": response_pw.data['id'],
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
@@ -1292,15 +1297,6 @@ class TestFrequencyRelationEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
@@ -1313,17 +1309,16 @@ class TestFrequencyRelationEndpoints:
             "temporality": "2021-11-11"
         }
 
+        data_ref_period = {
+            "period_month_year": "2021-11-11"
+        }
+
         api_client = APIClient()
 
         response_shelf = api_client.post(
             '/shelf/', data=data_shelf,
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
-
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
 
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
@@ -1335,14 +1330,19 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_type.status_code == 201
 
+        response_ref_period = api_client.post(
+            '/reference-period/', data=data_ref_period,
+            header={"Content-Type": "application/json"})
+        assert response_ref_period.status_code == 201
+
         data = {
             "process_number": "1",
             "sender_unity": "teste",
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
-            "due_date": "2021-11-11",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1365,15 +1365,6 @@ class TestFrequencyRelationEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
@@ -1386,17 +1377,16 @@ class TestFrequencyRelationEndpoints:
             "temporality": "2021-11-11"
         }
 
+        data_ref_period = {
+            "period_month_year": "2021-11-11"
+        }
+
         api_client = APIClient()
 
         response_shelf = api_client.post(
             '/shelf/', data=data_shelf,
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
-
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
 
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
@@ -1408,14 +1398,19 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_type.status_code == 201
 
+        response_ref_period = api_client.post(
+            '/reference-period/', data=data_ref_period,
+            header={"Content-Type": "application/json"})
+        assert response_ref_period.status_code == 201
+
         data = {
             "process_number": "1",
             "sender_unity": "teste",
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
-            "due_date": "2021-11-11",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1433,15 +1428,6 @@ class TestFrequencyRelationEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
@@ -1454,17 +1440,16 @@ class TestFrequencyRelationEndpoints:
             "temporality": "2021-11-11"
         }
 
+        data_ref_period = {
+            "period_month_year": "2021-11-11"
+        }
+
         api_client = APIClient()
 
         response_shelf = api_client.post(
             '/shelf/', data=data_shelf,
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
-
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
 
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
@@ -1476,14 +1461,19 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_type.status_code == 201
 
+        response_ref_period = api_client.post(
+            '/reference-period/', data=data_ref_period,
+            header={"Content-Type": "application/json"})
+        assert response_ref_period.status_code == 201
+
         data = {
             "process_number": "1",
             "sender_unity": "teste",
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
-            "due_date": "2021-11-11",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1495,8 +1485,8 @@ class TestFrequencyRelationEndpoints:
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
-            "due_date": "2021-11-11",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1516,15 +1506,6 @@ class TestFrequencyRelationEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
@@ -1537,17 +1518,16 @@ class TestFrequencyRelationEndpoints:
             "temporality": "2021-11-11"
         }
 
+        data_ref_period = {
+            "period_month_year": "2021-11-11"
+        }
+
         api_client = APIClient()
 
         response_shelf = api_client.post(
             '/shelf/', data=data_shelf,
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
-
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
 
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
@@ -1559,14 +1539,19 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_type.status_code == 201
 
+        response_ref_period = api_client.post(
+            '/reference-period/', data=data_ref_period,
+            header={"Content-Type": "application/json"})
+        assert response_ref_period.status_code == 201
+
         data = {
             "process_number": "1",
             "sender_unity": "teste",
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
-            "due_date": "2021-11-11",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
+            "reference_period": response_ref_period.data['id'],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1590,15 +1575,6 @@ class TestArchivalRelationEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
@@ -1625,11 +1601,6 @@ class TestArchivalRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
 
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
-
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
             header={"Content-Type": "application/json"})
@@ -1654,7 +1625,7 @@ class TestArchivalRelationEndpoints:
             "number_of_boxes": 1,
             "document_url": "https://www.teste.com",
             "cover_sheet": "teste",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1677,15 +1648,6 @@ class TestArchivalRelationEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
@@ -1712,11 +1674,6 @@ class TestArchivalRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
 
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
-
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
             header={"Content-Type": "application/json"})
@@ -1741,7 +1698,7 @@ class TestArchivalRelationEndpoints:
             "number_of_boxes": 1,
             "document_url": "https://www.teste.com",
             "cover_sheet": "teste",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1760,15 +1717,6 @@ class TestArchivalRelationEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
@@ -1795,11 +1743,6 @@ class TestArchivalRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
 
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
-
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
             header={"Content-Type": "application/json"})
@@ -1824,7 +1767,7 @@ class TestArchivalRelationEndpoints:
             "number_of_boxes": 1,
             "document_url": "https://www.teste.com",
             "cover_sheet": "teste",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1840,7 +1783,7 @@ class TestArchivalRelationEndpoints:
             "number_of_boxes": 1,
             "document_url": "https://www.teste.com",
             "cover_sheet": "teste",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1861,15 +1804,6 @@ class TestArchivalRelationEndpoints:
             "shelfp_number": 1
         }
 
-        data_pw = {
-            "name": "Biel Rossi",
-            "cpf": "123456789",
-            "office": "DF",
-            "class_worker": "nao",
-            "capacity": "nao",
-            "county": "df"
-        }
-
         data_abbreviation = {
             "number": 123,
             "abbreviation": "SGA",
@@ -1896,11 +1830,6 @@ class TestArchivalRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_shelf.status_code == 201
 
-        response_pw = api_client.post(
-            '/public-worker/', data=data_pw,
-            header={"Content-Type": "application/json"})
-        assert response_pw.status_code == 201
-
         response_abbreviation = api_client.post(
             '/box-abbreviation/', data=data_abbreviation,
             header={"Content-Type": "application/json"})
@@ -1925,7 +1854,7 @@ class TestArchivalRelationEndpoints:
             "number_of_boxes": 1,
             "document_url": "https://www.teste.com",
             "cover_sheet": "teste",
-            "receiver_user_id": response_pw.data['id'],
+            "filer_user": "teste",
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
