@@ -1,5 +1,4 @@
 from rest_framework import viewsets
-from rest_framework import permissions
 from .fields_serializers import BoxAbbreviationsSerializer, PublicWorkerSerializer
 from .fields_serializers import (DocumentSubjectSerializer, DocumentTypeSerializer,
                                  UnitySerializer)
@@ -7,11 +6,12 @@ from .fields_serializers import FrontCoverSerializer, StatusSerializer, ShelfSer
 from .fields_models import BoxAbbreviations, PublicWorker, DocumentSubject, DocumentType
 from .fields_models import Unity, Shelf, FrontCover, Status
 from .documents_models import (ArchivalRelation, FrequencyRelation, AdministrativeProcess,
-                               OriginBox, FrequencySheet)
+                               OriginBox, FrequencySheet, ReferencePeriod)
 from .documents_serializers import (FrequencySheetSerializer, OriginBoxSerializer,
                                     AdministrativeProcessSerializer,
                                     FrequencyRelationSerializer,
-                                    ArchivalRelationSerializer)
+                                    ArchivalRelationSerializer,
+                                    ReferencePeriodSerializer)
 
 
 class DocumentSubjectViewSet(viewsets.ModelViewSet):
@@ -20,7 +20,6 @@ class DocumentSubjectViewSet(viewsets.ModelViewSet):
     """
     queryset = DocumentSubject.objects.all()
     serializer_class = DocumentSubjectSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class DocumentTypeViewSet(viewsets.ModelViewSet):
@@ -29,7 +28,6 @@ class DocumentTypeViewSet(viewsets.ModelViewSet):
     """
     queryset = DocumentType.objects.all()
     serializer_class = DocumentTypeSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class PublicWorkerViewSet(viewsets.ModelViewSet):
@@ -38,7 +36,6 @@ class PublicWorkerViewSet(viewsets.ModelViewSet):
     """
     queryset = PublicWorker.objects.all()
     serializer_class = PublicWorkerSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class UnityViewSet(viewsets.ModelViewSet):
@@ -47,7 +44,6 @@ class UnityViewSet(viewsets.ModelViewSet):
     """
     queryset = Unity.objects.all()
     serializer_class = UnitySerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class BoxAbbreviationViewSet(viewsets.ModelViewSet):
@@ -56,7 +52,6 @@ class BoxAbbreviationViewSet(viewsets.ModelViewSet):
     """
     queryset = BoxAbbreviations.objects.all()
     serializer_class = BoxAbbreviationsSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class ShelfViewSet(viewsets.ModelViewSet):
@@ -65,7 +60,6 @@ class ShelfViewSet(viewsets.ModelViewSet):
     """
     queryset = Shelf.objects.all()
     serializer_class = ShelfSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class FrontCoverViewSet(viewsets.ModelViewSet):
@@ -74,7 +68,6 @@ class FrontCoverViewSet(viewsets.ModelViewSet):
     """
     queryset = FrontCover.objects.all()
     serializer_class = FrontCoverSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class StatusViewSet(viewsets.ModelViewSet):
@@ -83,7 +76,6 @@ class StatusViewSet(viewsets.ModelViewSet):
     """
     queryset = Status.objects.all()
     serializer_class = StatusSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class ArchivalRelationViewSet(viewsets.ModelViewSet):
@@ -93,7 +85,6 @@ class ArchivalRelationViewSet(viewsets.ModelViewSet):
     """
     queryset = ArchivalRelation.objects.all()
     serializer_class = ArchivalRelationSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class FrequencyRelationViewSet(viewsets.ModelViewSet):
@@ -103,7 +94,6 @@ class FrequencyRelationViewSet(viewsets.ModelViewSet):
     """
     queryset = FrequencyRelation.objects.all()
     serializer_class = FrequencyRelationSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class AdministrativeProcessViewSet(viewsets.ModelViewSet):
@@ -113,7 +103,6 @@ class AdministrativeProcessViewSet(viewsets.ModelViewSet):
     """
     queryset = AdministrativeProcess.objects.all()
     serializer_class = AdministrativeProcessSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class OriginBoxViewSet(viewsets.ModelViewSet):
@@ -123,7 +112,6 @@ class OriginBoxViewSet(viewsets.ModelViewSet):
     """
     queryset = OriginBox.objects.all()
     serializer_class = OriginBoxSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class FrequencySheetViewSet(viewsets.ModelViewSet):
@@ -133,4 +121,12 @@ class FrequencySheetViewSet(viewsets.ModelViewSet):
     """
     queryset = FrequencySheet.objects.all()
     serializer_class = FrequencySheetSerializer
-    permission_classes = [permissions.AllowAny]
+
+
+class ReferencePeriod(viewsets.ModelViewSet):
+    """
+    API endpoint that allows origin box subtype
+    to be viewed or edited.
+    """
+    queryset = ReferencePeriod.objects.all()
+    serializer_class = ReferencePeriodSerializer

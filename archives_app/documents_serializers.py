@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from archives_app.documents_models import (FrequencyRelation, ArchivalRelation,
                                            AdministrativeProcess, OriginBox,
-                                           FrequencySheet)
+                                           FrequencySheet, ReferencePeriod)
 
 
 class ArchivalRelationSerializer(serializers.ModelSerializer):
@@ -20,6 +20,7 @@ class FrequencyRelationSerializer(serializers.ModelSerializer):
 
 class AdministrativeProcessSerializer(serializers.ModelSerializer):
     reference_month_year = serializers.ListField()
+
     class Meta:
         model = AdministrativeProcess
         fields = '__all__'
@@ -36,4 +37,11 @@ class FrequencySheetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FrequencySheet
+        fields = '__all__'
+
+
+class ReferencePeriodSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ReferencePeriod
         fields = '__all__'

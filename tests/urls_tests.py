@@ -1056,7 +1056,8 @@ class TestFrequencySheetsEndpoints:
 #             '/administrative-process/', data=data,
 #             header={"Content-Type": "application/json"})
 
-#         response = api_client.get('/administrative-process/{}/'.format(response.data['id']))
+#         response = api_client.get('/administrative-process/{}/'
+#                                   .format(response.data['id']))
 #         assert response.status_code == 200
 
 #     def test_update(self):

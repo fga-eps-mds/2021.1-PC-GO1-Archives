@@ -17,6 +17,7 @@ router.register(r'frequency-relation', views.FrequencyRelationViewSet)
 router.register(r'frequency-sheet', views.FrequencySheetViewSet)
 router.register(r'archival-relation', views.ArchivalRelationViewSet)
 router.register(r'origin-box', views.OriginBoxViewSet)
+router.register(r'reference-period', views.ReferencePeriod)
 
 
 # Wire up our API using automatic URL routing.
