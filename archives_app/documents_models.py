@@ -6,7 +6,7 @@ from archives_app.fields_models import (BoxAbbreviations, DocumentType,
 
 class Document(models.Model):
     process_number = models.CharField(max_length=20)
-    sender_unity = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT)
+    sender_unity = models.ForeignKey(Unity, on_delete=models.PROTECT)
     abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
                                         blank=True, null=True)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True,
