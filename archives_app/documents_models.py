@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from archives_app.fields_models import (BoxAbbreviations, DocumentType,
                                         DocumentSubject, Status, Shelf,
                                         Unity)
@@ -25,11 +26,15 @@ class ReferencePeriod(models.Model):
     period_month_year = models.DateField()
 
 
+class OriginBoxSubject(models.Model):
+    name = models.CharField(max_length=100)
+    dates = ArrayField(models.DateField())
+
+
 class OriginBox(models.Model):
     number = models.CharField(max_length=20)
     year = models.IntegerField()
-    subject = models.CharField(max_length=150)
-    date = models.DateField()
+    subject = models.ManyToManyField(OriginBoxSubject)
 
 
 class ArchivalRelation(Relation):

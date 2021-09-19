@@ -15,14 +15,15 @@ router.register(r'status', views.StatusViewSet)
 router.register(r'administrative-process', views.AdministrativeProcessViewSet)
 router.register(r'frequency-relation', views.FrequencyRelationViewSet)
 router.register(r'frequency-sheet', views.FrequencySheetViewSet)
-router.register(r'archival-relation', views.ArchivalRelationViewSet)
-router.register(r'origin-box', views.OriginBoxViewSet)
-router.register(r'reference-period', views.ReferencePeriod)
+router.register(r'reference-period', views.ReferencePeriodViewSet)
 
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
+    path('archival-relation-post/', views.post_archival_relation),
+    path('archival-relation/', views.get_archival_relation),
+    path('archival-relation/<int:pk>', views.retrieve_archival_relation),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

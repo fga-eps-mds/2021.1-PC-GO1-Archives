@@ -1313,6 +1313,17 @@ class TestFrequencyRelationEndpoints:
             "period_month_year": "2021-11-11"
         }
 
+        data_sender = {
+            "telephone_number": "",
+            "note": "",
+            "unity_name": "",
+            "unity_abbreviation": "",
+            "administrative_bond": "",
+            "bond_abbreviation": "",
+            "type_of_unity": "",
+            "municipality": ""
+        }
+
         api_client = APIClient()
 
         response_shelf = api_client.post(
@@ -1335,9 +1346,14 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_ref_period.status_code == 201
 
+        response_sender = api_client.post(
+            '/unity/', data=data_sender,
+            header={"Content-Type": "application/json"})
+        assert response_sender.status_code == 201
+
         data = {
             "process_number": "1",
-            "sender_unity": "teste",
+            "sender_unity": response_sender.data['id'],
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
@@ -1381,6 +1397,17 @@ class TestFrequencyRelationEndpoints:
             "period_month_year": "2021-11-11"
         }
 
+        data_sender = {
+            "telephone_number": "",
+            "note": "",
+            "unity_name": "",
+            "unity_abbreviation": "",
+            "administrative_bond": "",
+            "bond_abbreviation": "",
+            "type_of_unity": "",
+            "municipality": ""
+        }
+
         api_client = APIClient()
 
         response_shelf = api_client.post(
@@ -1403,9 +1430,14 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_ref_period.status_code == 201
 
+        response_sender = api_client.post(
+            '/unity/', data=data_sender,
+            header={"Content-Type": "application/json"})
+        assert response_sender.status_code == 201
+
         data = {
             "process_number": "1",
-            "sender_unity": "teste",
+            "sender_unity": response_sender.data['id'],
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
@@ -1444,6 +1476,17 @@ class TestFrequencyRelationEndpoints:
             "period_month_year": "2021-11-11"
         }
 
+        data_sender = {
+            "telephone_number": "",
+            "note": "",
+            "unity_name": "",
+            "unity_abbreviation": "",
+            "administrative_bond": "",
+            "bond_abbreviation": "",
+            "type_of_unity": "",
+            "municipality": ""
+        }
+
         api_client = APIClient()
 
         response_shelf = api_client.post(
@@ -1466,9 +1509,14 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_ref_period.status_code == 201
 
+        response_sender = api_client.post(
+            '/unity/', data=data_sender,
+            header={"Content-Type": "application/json"})
+        assert response_sender.status_code == 201
+
         data = {
             "process_number": "1",
-            "sender_unity": "teste",
+            "sender_unity": response_sender.data['id'],
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
@@ -1481,7 +1529,7 @@ class TestFrequencyRelationEndpoints:
 
         data_2 = {
             "process_number": "2",
-            "sender_unity": "teste",
+            "sender_unity": response_sender.data['id'],
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
@@ -1522,6 +1570,17 @@ class TestFrequencyRelationEndpoints:
             "period_month_year": "2021-11-11"
         }
 
+        data_sender = {
+            "telephone_number": "",
+            "note": "",
+            "unity_name": "",
+            "unity_abbreviation": "",
+            "administrative_bond": "",
+            "bond_abbreviation": "",
+            "type_of_unity": "",
+            "municipality": ""
+        }
+
         api_client = APIClient()
 
         response_shelf = api_client.post(
@@ -1544,9 +1603,14 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_ref_period.status_code == 201
 
+        response_sender = api_client.post(
+            '/unity/', data=data_sender,
+            header={"Content-Type": "application/json"})
+        assert response_sender.status_code == 201
+
         data = {
             "process_number": "1",
-            "sender_unity": "teste",
+            "sender_unity": response_sender.data['id'],
             "notes": "teste",
             "number": "1",
             "received_date": "2021-11-11",
@@ -1568,384 +1632,70 @@ class TestFrequencyRelationEndpoints:
 
 
 @pytest.mark.django_db(transaction=False)
-class TestArchivalRelationEndpoints:
-    def test_create(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
-        data_subject = {
-            "document_name": "teste",
-            "temporality": "2021-11-11"
-        }
-
-        data_origin_box = {
-            "number": "1",
-            "year": 2021,
-            "subject": "teste",
-            "date": "2021-11-11"
-        }
-
-        api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
-
-        response_type = api_client.post(
-            '/document-type/', data=data_subject,
-            header={"Content-Type": "application/json"})
-        assert response_type.status_code == 201
-
-        response_box = api_client.post(
-            '/origin-box/', data=data_origin_box,
-            header={"Content-Type": "application/json"})
-        assert response_box.status_code == 201
-
-        data = {
-            "process_number": "1",
-            "sender_unity": "teste",
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "number_of_boxes": 1,
-            "document_url": "https://www.teste.com",
-            "cover_sheet": "teste",
-            "filer_user": "teste",
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
-            "document_type_id": response_type.data['id'],
-            "origin_box_id": response_box.data['id']
-        }
-
-        response = api_client.post(
-            '/archival-relation/', data=data,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 201
-
-    def test_list(self):
-        api_client = APIClient()
-        response = api_client.get('/archival-relation/')
-        assert response.status_code == 200
-
-    def test_retrieve(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
-        data_subject = {
-            "document_name": "teste",
-            "temporality": "2021-11-11"
-        }
-
-        data_origin_box = {
-            "number": "1",
-            "year": 2021,
-            "subject": "teste",
-            "date": "2021-11-11"
-        }
-
-        api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
-
-        response_type = api_client.post(
-            '/document-type/', data=data_subject,
-            header={"Content-Type": "application/json"})
-        assert response_type.status_code == 201
-
-        response_box = api_client.post(
-            '/origin-box/', data=data_origin_box,
-            header={"Content-Type": "application/json"})
-        assert response_box.status_code == 201
-
-        data = {
-            "process_number": "1",
-            "sender_unity": "teste",
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "number_of_boxes": 1,
-            "document_url": "https://www.teste.com",
-            "cover_sheet": "teste",
-            "filer_user": "teste",
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
-            "document_type_id": response_type.data['id'],
-            "origin_box_id": response_box.data['id']
-        }
-
-        response = api_client.post(
-            '/archival-relation/', data=data,
-            header={"Content-Type": "application/json"})
-        response = api_client.get('/archival-relation/{}/'.format(response.data['id']))
-        assert response.status_code == 200
-
-    def test_update(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
-        data_subject = {
-            "document_name": "teste",
-            "temporality": "2021-11-11"
-        }
-
-        data_origin_box = {
-            "number": "1",
-            "year": 2021,
-            "subject": "teste",
-            "date": "2021-11-11"
-        }
-
-        api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
-
-        response_type = api_client.post(
-            '/document-type/', data=data_subject,
-            header={"Content-Type": "application/json"})
-        assert response_type.status_code == 201
-
-        response_box = api_client.post(
-            '/origin-box/', data=data_origin_box,
-            header={"Content-Type": "application/json"})
-        assert response_box.status_code == 201
-
-        data = {
-            "process_number": "1",
-            "sender_unity": "teste",
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "number_of_boxes": 1,
-            "document_url": "https://www.teste.com",
-            "cover_sheet": "teste",
-            "filer_user": "teste",
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
-            "document_type_id": response_type.data['id'],
-            "origin_box_id": response_box.data['id']
-        }
-
-        data_2 = {
-            "process_number": "2",
-            "sender_unity": "teste",
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "number_of_boxes": 1,
-            "document_url": "https://www.teste.com",
-            "cover_sheet": "teste",
-            "filer_user": "teste",
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
-            "document_type_id": response_type.data['id'],
-            "origin_box_id": response_box.data['id']
-        }
-
-        response = api_client.post(
-            '/archival-relation/', data=data,
-            header={"Content-Type": "application/json"})
-        response_2 = api_client.put(
-            '/archival-relation/{}/'.format(response.data['id']), data=data_2,
-            header={"Content-Type": "application/json"})
-        assert response_2.status_code == 200
-
-    def test_destroy(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
-        data_subject = {
-            "document_name": "teste",
-            "temporality": "2021-11-11"
-        }
-
-        data_origin_box = {
-            "number": "1",
-            "year": 2021,
-            "subject": "teste",
-            "date": "2021-11-11"
-        }
-
-        api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
-
-        response_type = api_client.post(
-            '/document-type/', data=data_subject,
-            header={"Content-Type": "application/json"})
-        assert response_type.status_code == 201
-
-        response_box = api_client.post(
-            '/origin-box/', data=data_origin_box,
-            header={"Content-Type": "application/json"})
-        assert response_box.status_code == 201
-
-        data = {
-            "process_number": "1",
-            "sender_unity": "teste",
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "number_of_boxes": 1,
-            "document_url": "https://www.teste.com",
-            "cover_sheet": "teste",
-            "filer_user": "teste",
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
-            "document_type_id": response_type.data['id'],
-            "origin_box_id": response_box.data['id']
-        }
-
-        response = api_client.post(
-            '/archival-relation/', data=data,
-            header={"Content-Type": "application/json"})
-
-        response_2 = api_client.delete(
-            '/archival-relation/{}/'.format(response.data['id']), data=data,
-            header={"Content-Type": "application/json"})
-        assert response_2.status_code == 204
+def test_archival_relation_get():
+    api_client = APIClient()
+    response = api_client.get('/archival-relation/')
+    assert response.status_code == 200
 
 
 @pytest.mark.django_db(transaction=False)
-class TestOriginBoxEndpoints:
-    def test_create(self):
-        data = {
-            "number": "1",
-            "year": 2021,
-            "subject": "teste",
-            "date": "2021-11-11"
-        }
+def test_archival_relation_post():
+    api_client = APIClient()
 
-        api_client = APIClient()
-        response = api_client.post(
-            '/origin-box/', data=data,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 201
+    data_sender = {
+        "telephone_number": "",
+        "note": "",
+        "unity_name": "",
+        "unity_abbreviation": "",
+        "administrative_bond": "",
+        "bond_abbreviation": "",
+        "type_of_unity": "",
+        "municipality": ""
+    }
 
-    def test_list(self):
+    response_sender = api_client.post(
+        '/unity/', data=data_sender,
+        header={"Content-Type": "application/json"})
+    assert response_sender.status_code == 201
 
-        api_client = APIClient()
-        response = api_client.get('/origin-box/')
-        assert response.status_code == 200
+    data_type = {
+        "document_name": "teste",
+        "temporality": "2021-11-11"
+    }
 
-    def test_retrieve(self):
-        data = {
-            "number": "1",
-            "year": 2021,
-            "subject": "teste",
-            "date": "2021-11-11"
-        }
+    response_type = api_client.post(
+        '/document-type/', data=data_type,
+        header={"Content-Type": "application/json"})
+    assert response_type.status_code == 201
 
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/origin-box/', data=data,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.get('/origin-box/{}/'.format(intermediary.data['id']))
-        assert response.status_code == 200
+    data = {
+        "box_list": [
+            {
+                "number": "1",
+                "year": 2020,
+                "subjects_list": [
+                    {
+                        "name": "teste",
+                        "dates": ["2020-11-11"]
+                    }
+                ]
+            },
+        ],
+        "process_number": "1",
+        "sender_unity": response_sender.data['id'],
+        "notes": "1",
+        "number": "1",
+        "received_date": "2020-11-11",
+        "number_of_boxes": 1,
+        "document_url": "http://www.t.com/",
+        "cover_sheet": "1",
+        "filer_user": "1",
+        "abbreviation_id": "",
+        "shelf_id": "",
+        "document_type_id": response_type.data['id']
+    }
 
-    def test_update(self):
-        data = {
-            "number": "1",
-            "year": 2021,
-            "subject": "teste",
-            "date": "2021-11-11"
-        }
-
-        data_2 = {
-            "number": "2",
-            "year": 2021,
-            "subject": "teste",
-            "date": "2021-11-11"
-        }
-
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/origin-box/', data=data,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.put(
-            '/origin-box/{}/'.format(intermediary.data['id']), data=data_2,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 200
-
-    def test_destroy(self):
-        data = {
-            "number": "1",
-            "year": 2021,
-            "subject": "teste",
-            "date": "2021-11-11"
-        }
-
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/origin-box/', data=data,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.delete('/origin-box/{}/'.format(intermediary.data['id']))
-        assert response.status_code == 204
+    response_archival = api_client.post(
+        '/archival-relation-post/', data=data,
+        format='json')
+    assert response_archival.status_code == 201

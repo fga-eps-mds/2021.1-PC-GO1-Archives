@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from .fields_serializers import BoxAbbreviationsSerializer, PublicWorkerSerializer
 from .fields_serializers import (DocumentSubjectSerializer, DocumentTypeSerializer,
                                  UnitySerializer)
@@ -6,8 +8,8 @@ from .fields_serializers import FrontCoverSerializer, StatusSerializer, ShelfSer
 from .fields_models import BoxAbbreviations, PublicWorker, DocumentSubject, DocumentType
 from .fields_models import Unity, Shelf, FrontCover, Status
 from .documents_models import (ArchivalRelation, FrequencyRelation, AdministrativeProcess,
-                               OriginBox, FrequencySheet, ReferencePeriod)
-from .documents_serializers import (FrequencySheetSerializer, OriginBoxSerializer,
+                               OriginBox, FrequencySheet, ReferencePeriod, OriginBoxSubject)
+from .documents_serializers import (FrequencySheetSerializer,
                                     AdministrativeProcessSerializer,
                                     FrequencyRelationSerializer,
                                     ArchivalRelationSerializer,
@@ -78,15 +80,6 @@ class StatusViewSet(viewsets.ModelViewSet):
     serializer_class = StatusSerializer
 
 
-class ArchivalRelationViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows archival relations document type
-    to be viewed or edited.
-    """
-    queryset = ArchivalRelation.objects.all()
-    serializer_class = ArchivalRelationSerializer
-
-
 class FrequencyRelationViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows frequency relations document type
@@ -105,15 +98,6 @@ class AdministrativeProcessViewSet(viewsets.ModelViewSet):
     serializer_class = AdministrativeProcessSerializer
 
 
-class OriginBoxViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows origin box subtype
-    to be viewed or edited.
-    """
-    queryset = OriginBox.objects.all()
-    serializer_class = OriginBoxSerializer
-
-
 class FrequencySheetViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows frequency sheet document type
@@ -123,10 +107,88 @@ class FrequencySheetViewSet(viewsets.ModelViewSet):
     serializer_class = FrequencySheetSerializer
 
 
-class ReferencePeriod(viewsets.ModelViewSet):
+class ReferencePeriodViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows origin box subtype
     to be viewed or edited.
     """
     queryset = ReferencePeriod.objects.all()
     serializer_class = ReferencePeriodSerializer
+
+
+@api_view(["GET"])
+def get_archival_relation(request):
+    queryset = ArchivalRelation.objects.all()
+    serializer = ArchivalRelationSerializer(queryset, many=True)
+    return Response(serializer.data, status=200)
+
+
+@api_view(["GET"])
+def retrieve_archival_relation(request, pk):
+    queryset = ArchivalRelation.objects.get(pk=pk)
+    serializer = ArchivalRelationSerializer(queryset)
+
+    origin_box = serializer.data['origin_box_id']
+    boxes = list()
+    for box in origin_box:
+        boxes_dict = {}
+        box_n = OriginBox.objects.get(pk=box)
+        boxes_dict['number'] = box_n.number
+        boxes_dict['year'] = box_n.year
+        boxes_dict['subjects_list'] = list()
+        for subjects in box_n.subject.all():
+            boxes_dict['subjects_list'].append({
+                'name': subjects.name,
+                'date': subjects.dates
+            })
+        boxes.append(boxes_dict)
+
+    final_dict = serializer.data
+    final_dict['origin_box'] = boxes
+    return Response(final_dict, status=200)
+
+
+@api_view(["POST"])
+def post_archival_relation(request):
+    box_list = request.data['box_list']
+    boxes = list()
+    
+    for box_n in box_list:
+        box = OriginBox.objects.create(number=box_n['number'], year=box_n['year'])
+        for subject in box_n['subjects_list']:
+            sub = OriginBoxSubject.objects.create(name=subject['name'],
+                                                  dates=subject['dates'])
+            box.subject.add(sub.id)
+        boxes.append(box)
+
+
+    sender_unity_id = Unity.objects.get(pk=request.data['sender_unity'])
+    document_id = DocumentType.objects.get(pk=request.data['document_type_id'])
+
+    archival_relation = ArchivalRelation.objects.create(
+        process_number=request.data['process_number'],
+        sender_unity=sender_unity_id,
+        notes=request.data['notes'],
+        number=request.data['number'],
+        received_date=request.data['received_date'],
+        number_of_boxes=request.data['number_of_boxes'],
+        document_url=request.data['document_url'],
+        cover_sheet=request.data['cover_sheet'],
+        filer_user=request.data['filer_user'],
+        document_type_id=document_id,
+    )
+
+    if request.data['abbreviation_id'] != '':
+        box_abbreviation_id = BoxAbbreviations.objects.get(pk=request.data['abbreviation_id'])
+        archival_relation.abbreviation_id = box_abbreviation_id
+        archival_relation.save()
+
+    if request.data['shelf_id'] != '': 
+        shelf_number_id = Shelf.objects.get(pk=request.data['shelf_id'])
+        archival_relation.shelf_id = shelf_number_id
+        archival_relation.save()
+
+    for box in boxes:
+        archival_relation.origin_box_id.add(box.id)
+
+    return Response(status=201)
