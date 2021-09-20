@@ -749,7 +749,7 @@ def test_archival_relation_post():
         "number": "1",
         "received_date": "2020-11-11",
         "number_of_boxes": 1,
-        "document_url": "http://www.t.com/",
+        "document_url": "https://www.t.com/",
         "cover_sheet": "1",
         "filer_user": "1",
         "abbreviation_id": "",
