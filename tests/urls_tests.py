@@ -613,25 +613,25 @@ class TestStatusEndpoints:
 
 @pytest.mark.django_db(transaction=False)
 class TestFrequencySheetsEndpoints:
+    data = {
+        "person_name": "teste",
+        "cpf": "teste",
+        "role": "teste",
+        "category": "teste",
+        "workplace": "teste",
+        "municipal_area": "teste",
+        "notes": "Nenhuma no momento",
+        "process_number": "1",
+        "reference_period": ["2020-11-11"],
+        "abbreviation_id": "",
+        "shelf_id": ""
+    }
+
     def test_create(self):
         api_client = APIClient()
 
-        data = {
-            "person_name": "teste",
-            "cpf": "teste",
-            "role": "teste",
-            "category": "teste",
-            "workplace": "teste",
-            "municipal_area": "teste",
-            "notes": "Nenhuma no momento",
-            "process_number": "1",
-            "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": ""
-        }
-
         response = api_client.post(
-            '/frequency-sheet/', data=data,
+            '/frequency-sheet/', data=self.data,
             header={"Content-Type": "application/json"})
 
         assert response.status_code == 201
@@ -645,42 +645,16 @@ class TestFrequencySheetsEndpoints:
     def test_retrieve(self):
         api_client = APIClient()
 
-        data = {
-            "person_name": "teste",
-            "cpf": "teste",
-            "role": "teste",
-            "category": "teste",
-            "workplace": "teste",
-            "municipal_area": "teste",
-            "notes": "Nenhuma no momento",
-            "process_number": "1",
-            "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": ""
-        }
-
         response = api_client.post(
-            '/frequency-sheet/', data=data,
+            '/frequency-sheet/', data=self.data,
             header={"Content-Type": "application/json"})
+        assert response.status_code == 201
+
         response = api_client.get('/frequency-sheet/{}/'.format(response.data['id']))
         assert response.status_code == 200
 
     def test_update(self):
         api_client = APIClient()
-
-        data = {
-            "person_name": "teste",
-            "cpf": "teste",
-            "role": "teste",
-            "category": "teste",
-            "workplace": "teste",
-            "municipal_area": "teste",
-            "notes": "Nenhuma no momento",
-            "process_number": "1",
-            "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": ""
-        }
 
         data_2 = {
             "person_name": "teste2",
@@ -697,8 +671,10 @@ class TestFrequencySheetsEndpoints:
         }
 
         response = api_client.post(
-            '/frequency-sheet/', data=data,
+            '/frequency-sheet/', data=self.data,
             header={"Content-Type": "application/json"})
+        assert response.status_code == 201
+
         response_2 = api_client.put(
             '/frequency-sheet/{}/'.format(response.data['id']), data=data_2,
             header={"Content-Type": "application/json"})
@@ -707,243 +683,12 @@ class TestFrequencySheetsEndpoints:
     def test_destroy(self):
         api_client = APIClient()
 
-        data = {
-            "person_name": "teste",
-            "cpf": "teste",
-            "role": "teste",
-            "category": "teste",
-            "workplace": "teste",
-            "municipal_area": "teste",
-            "notes": "Nenhuma no momento",
-            "process_number": "1",
-            "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": ""
-        }
-
         response = api_client.post(
-            '/frequency-sheet/', data=data,
+            '/frequency-sheet/', data=self.data,
             header={"Content-Type": "application/json"})
-        response_2 = api_client.delete(
-            '/frequency-sheet/{}/'.format(response.data['id']), data=data,
-            header={"Content-Type": "application/json"})
-        assert response_2.status_code == 204
-
-
-@pytest.mark.django_db(transaction=False)
-class TestFrequencyRelationEndpoints:
-    def test_create(self):
-        data_subject = {
-            "document_name": "teste",
-            "temporality": "2021-11-11"
-        }
-
-        data_sender = {
-            "telephone_number": "",
-            "note": "",
-            "unity_name": "",
-            "unity_abbreviation": "",
-            "administrative_bond": "",
-            "bond_abbreviation": "",
-            "type_of_unity": "",
-            "municipality": ""
-        }
-
-        api_client = APIClient()
-
-        response_type = api_client.post(
-            '/document-type/', data=data_subject,
-            header={"Content-Type": "application/json"})
-        assert response_type.status_code == 201
-
-        response_sender = api_client.post(
-            '/unity/', data=data_sender,
-            header={"Content-Type": "application/json"})
-        assert response_sender.status_code == 201
-
-        data = {
-            "process_number": "1",
-            "sender_unity": response_sender.data['id'],
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "filer_user": "teste",
-            "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": "",
-            "document_type_id": response_type.data['id'],
-        }
-
-        response = api_client.post(
-            '/frequency-relation/', data=data,
-            header={"Content-Type": "application/json"})
-
         assert response.status_code == 201
-
-    def test_list(self):
-        api_client = APIClient()
-        response = api_client.get('/frequency-relation/')
-        assert response.status_code == 200
-
-    def test_retrieve(self):
-        data_subject = {
-            "document_name": "teste",
-            "temporality": "2021-11-11"
-        }
-
-        data_sender = {
-            "telephone_number": "",
-            "note": "",
-            "unity_name": "",
-            "unity_abbreviation": "",
-            "administrative_bond": "",
-            "bond_abbreviation": "",
-            "type_of_unity": "",
-            "municipality": ""
-        }
-
-        api_client = APIClient()
-
-        response_type = api_client.post(
-            '/document-type/', data=data_subject,
-            header={"Content-Type": "application/json"})
-        assert response_type.status_code == 201
-
-        response_sender = api_client.post(
-            '/unity/', data=data_sender,
-            header={"Content-Type": "application/json"})
-        assert response_sender.status_code == 201
-
-        data = {
-            "process_number": "1",
-            "sender_unity": response_sender.data['id'],
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "filer_user": "teste",
-            "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": "",
-            "document_type_id": response_type.data['id'],
-        }
-
-        response = api_client.post(
-            '/frequency-relation/', data=data,
-            header={"Content-Type": "application/json"})
-        response = api_client.get('/frequency-relation/{}/'.format(response.data['id']))
-        assert response.status_code == 200
-
-    def test_update(self):
-        data_subject = {
-            "document_name": "teste",
-            "temporality": "2021-11-11"
-        }
-
-        data_sender = {
-            "telephone_number": "",
-            "note": "",
-            "unity_name": "",
-            "unity_abbreviation": "",
-            "administrative_bond": "",
-            "bond_abbreviation": "",
-            "type_of_unity": "",
-            "municipality": ""
-        }
-
-        api_client = APIClient()
-
-        response_type = api_client.post(
-            '/document-type/', data=data_subject,
-            header={"Content-Type": "application/json"})
-        assert response_type.status_code == 201
-
-        response_sender = api_client.post(
-            '/unity/', data=data_sender,
-            header={"Content-Type": "application/json"})
-        assert response_sender.status_code == 201
-
-        data = {
-            "process_number": "1",
-            "sender_unity": response_sender.data['id'],
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "filer_user": "teste",
-            "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": "",
-            "document_type_id": response_type.data['id'],
-        }
-
-        data_2 = {
-            "process_number": "2",
-            "sender_unity": response_sender.data['id'],
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "filer_user": "teste",
-            "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": "",
-            "document_type_id": response_type.data['id'],
-        }
-
-        response = api_client.post(
-            '/frequency-relation/', data=data,
-            header={"Content-Type": "application/json"})
-        response_2 = api_client.put(
-            '/frequency-relation/{}/'.format(response.data['id']), data=data_2,
-            header={"Content-Type": "application/json"})
-        assert response_2.status_code == 200
-
-    def test_destroy(self):
-        data_subject = {
-            "document_name": "teste",
-            "temporality": "2021-11-11"
-        }
-
-        data_sender = {
-            "telephone_number": "",
-            "note": "",
-            "unity_name": "",
-            "unity_abbreviation": "",
-            "administrative_bond": "",
-            "bond_abbreviation": "",
-            "type_of_unity": "",
-            "municipality": ""
-        }
-
-        api_client = APIClient()
-
-        response_type = api_client.post(
-            '/document-type/', data=data_subject,
-            header={"Content-Type": "application/json"})
-        assert response_type.status_code == 201
-
-        response_sender = api_client.post(
-            '/unity/', data=data_sender,
-            header={"Content-Type": "application/json"})
-        assert response_sender.status_code == 201
-
-        data = {
-            "process_number": "1",
-            "sender_unity": response_sender.data['id'],
-            "notes": "teste",
-            "number": "1",
-            "received_date": "2021-11-11",
-            "filer_user": "teste",
-            "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": "",
-            "document_type_id": response_type.data['id'],
-        }
-
-        response = api_client.post(
-            '/frequency-relation/', data=data,
-            header={"Content-Type": "application/json"})
-
         response_2 = api_client.delete(
-            '/frequency-relation/{}/'.format(response.data['id']), data=data,
+            '/frequency-sheet/{}/'.format(response.data['id']), data=self.data,
             header={"Content-Type": "application/json"})
         assert response_2.status_code == 204
 
