@@ -758,6 +758,6 @@ def test_archival_relation_post():
     }
 
     response_archival = api_client.post(
-        '/archival-relation-post/', data=data,
+        '/archival-relation/', data=data,
         format='json')
     assert response_archival.status_code == 201
