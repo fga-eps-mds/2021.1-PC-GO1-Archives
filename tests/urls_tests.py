@@ -614,29 +614,7 @@ class TestStatusEndpoints:
 @pytest.mark.django_db(transaction=False)
 class TestFrequencySheetsEndpoints:
     def test_create(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
         api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
 
         data = {
             "person_name": "teste",
@@ -648,8 +626,8 @@ class TestFrequencySheetsEndpoints:
             "notes": "Nenhuma no momento",
             "process_number": "1",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id']
+            "abbreviation_id": "",
+            "shelf_id": ""
         }
 
         response = api_client.post(
@@ -665,29 +643,7 @@ class TestFrequencySheetsEndpoints:
         assert response.status_code == 200
 
     def test_retrieve(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
         api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
 
         data = {
             "person_name": "teste",
@@ -699,8 +655,8 @@ class TestFrequencySheetsEndpoints:
             "notes": "Nenhuma no momento",
             "process_number": "1",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id']
+            "abbreviation_id": "",
+            "shelf_id": ""
         }
 
         response = api_client.post(
@@ -710,29 +666,7 @@ class TestFrequencySheetsEndpoints:
         assert response.status_code == 200
 
     def test_update(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
         api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
 
         data = {
             "person_name": "teste",
@@ -744,8 +678,8 @@ class TestFrequencySheetsEndpoints:
             "notes": "Nenhuma no momento",
             "process_number": "1",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id']
+            "abbreviation_id": "",
+            "shelf_id": ""
         }
 
         data_2 = {
@@ -758,8 +692,8 @@ class TestFrequencySheetsEndpoints:
             "notes": "Nenhuma no momento",
             "process_number": "1",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id']
+            "abbreviation_id": "",
+            "shelf_id": ""
         }
 
         response = api_client.post(
@@ -771,29 +705,7 @@ class TestFrequencySheetsEndpoints:
         assert response_2.status_code == 200
 
     def test_destroy(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
         api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
 
         data = {
             "person_name": "teste",
@@ -805,8 +717,8 @@ class TestFrequencySheetsEndpoints:
             "notes": "Nenhuma no momento",
             "process_number": "1",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id']
+            "abbreviation_id": "",
+            "shelf_id": ""
         }
 
         response = api_client.post(
@@ -818,456 +730,9 @@ class TestFrequencySheetsEndpoints:
         assert response_2.status_code == 204
 
 
-# @pytest.mark.django_db(transaction=False)
-# class TestAdministrativeProcessEndpoints:
-#     def test_create(self):
-#         data_shelf = {
-#             "shelfe_number": 1,
-#             "shelfp_number": 1
-#         }
-
-#         data_pw = {
-#             "name": "Biel Rossi",
-#             "cpf": "123456789",
-#             "office": "DF",
-#             "class_worker": "nao",
-#             "capacity": "nao",
-#             "county": "df"
-#         }
-
-#         data_abbreviation = {
-#             "number": 123,
-#             "abbreviation": "SGA",
-#             "name": "SAGA",
-#             "year": 2020
-#         }
-
-#         data_status = {
-#             "filed": True,
-#             "eliminated": False,
-#             "sent_from": "teste",
-#             "requested_document": "teste",
-#             "send_date": "2021-02-01"
-#         }
-
-#         data_subject = {
-#             "subject_name": "teste",
-#             "temporality": "2021-02-01"
-#         }
-
-#         data_unity = {
-#             "telephone_number": "1",
-#             "note": "teste",
-#             "unity_name": "teste",
-#             "unity_abbreviation": "teste",
-#             "administrative_bond": "teste",
-#             "bond_abbreviation": "teste",
-#             "type_of_unity": "teste",
-#             "municipality": "teste"
-#         }
-
-#         api_client = APIClient()
-
-#         response_shelf = api_client.post(
-#             '/shelf/', data=data_shelf,
-#             header={"Content-Type": "application/json"})
-#         assert response_shelf.status_code == 201
-
-#         response_pw = api_client.post(
-#             '/public-worker/', data=data_pw,
-#             header={"Content-Type": "application/json"})
-#         assert response_pw.status_code == 201
-
-#         response_abbreviation = api_client.post(
-#             '/box-abbreviation/', data=data_abbreviation,
-#             header={"Content-Type": "application/json"})
-#         assert response_abbreviation.status_code == 201
-
-#         response_status = api_client.post(
-#             '/status/', data=data_status,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         response_subject = api_client.post(
-#             '/document-subject/', data=data_subject,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         response_unity = api_client.post(
-#             '/unity/', data=data_unity,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         data = {
-#             "process_number": "1",
-#             "sender_unity": "t",
-#             "notes": "t",
-#             "notice_date": "2020-11-11",
-#             "interested": "t",
-#             "cpf_cnpj": "1",
-#             "archiving_date": "2020-11-11",
-#             "reference_month_year": ["2020-11-11"],
-#             "sender_worker_id": response_pw.data['id'],
-#             "abbreviation_id": response_abbreviation.data['id'],
-#             "shelf_id": response_shelf.data['id'],
-#             "status_id": response_status.data['id'],
-#             "subject_id": response_subject.data['id'],
-#             "dest_unity_id": response_unity.data['id']
-#         }
-
-#         response = api_client.post(
-#             '/administrative-process/', data=data,
-#             header={"Content-Type": "application/json"})
-
-#         assert response.status_code == 201
-
-#     def test_list(self):
-#         api_client = APIClient()
-#         response = api_client.get('/frequency-sheet/')
-#         assert response.status_code == 200
-
-#     def test_retrieve(self):
-#         data_shelf = {
-#             "shelfe_number": 1,
-#             "shelfp_number": 1
-#         }
-
-#         data_pw = {
-#             "name": "Biel Rossi",
-#             "cpf": "123456789",
-#             "office": "DF",
-#             "class_worker": "nao",
-#             "capacity": "nao",
-#             "county": "df"
-#         }
-
-#         data_abbreviation = {
-#             "number": 123,
-#             "abbreviation": "SGA",
-#             "name": "SAGA",
-#             "year": 2020
-#         }
-
-#         data_status = {
-#             "filed": True,
-#             "eliminated": False,
-#             "sent_from": "teste",
-#             "requested_document": "teste",
-#             "send_date": "2021-02-01"
-#         }
-
-#         data_subject = {
-#             "subject_name": "teste",
-#             "temporality": "2021-02-01"
-#         }
-
-#         data_unity = {
-#             "telephone_number": "1",
-#             "note": "teste",
-#             "unity_name": "teste",
-#             "unity_abbreviation": "teste",
-#             "administrative_bond": "teste",
-#             "bond_abbreviation": "teste",
-#             "type_of_unity": "teste",
-#             "municipality": "teste"
-#         }
-
-#         api_client = APIClient()
-
-#         response_shelf = api_client.post(
-#             '/shelf/', data=data_shelf,
-#             header={"Content-Type": "application/json"})
-#         assert response_shelf.status_code == 201
-
-#         response_pw = api_client.post(
-#             '/public-worker/', data=data_pw,
-#             header={"Content-Type": "application/json"})
-#         assert response_pw.status_code == 201
-
-#         response_abbreviation = api_client.post(
-#             '/box-abbreviation/', data=data_abbreviation,
-#             header={"Content-Type": "application/json"})
-#         assert response_abbreviation.status_code == 201
-
-#         response_status = api_client.post(
-#             '/status/', data=data_status,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         response_subject = api_client.post(
-#             '/document-subject/', data=data_subject,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         response_unity = api_client.post(
-#             '/unity/', data=data_unity,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         data = {
-#             "process_number": "1",
-#             "sender_unity": "t",
-#             "notes": "t",
-#             "notice_date": "2020-11-11",
-#             "interested": "t",
-#             "cpf_cnpj": "1",
-#             "archiving_date": "2020-11-11",
-#             "reference_month_year": ["2020-11-11", "2020-11-12"],
-#             "sender_worker_id": response_pw.data['id'],
-#             "abbreviation_id": response_abbreviation.data['id'],
-#             "shelf_id": response_shelf.data['id'],
-#             "status_id": response_status.data['id'],
-#             "subject_id": response_subject.data['id'],
-#             "dest_unity_id": response_unity.data['id']
-#         }
-
-#         response = api_client.post(
-#             '/administrative-process/', data=data,
-#             header={"Content-Type": "application/json"})
-
-#         response = api_client.get('/administrative-process/{}/'
-#                                   .format(response.data['id']))
-#         assert response.status_code == 200
-
-#     def test_update(self):
-#         data_shelf = {
-#             "shelfe_number": 1,
-#             "shelfp_number": 1
-#         }
-
-#         data_pw = {
-#             "name": "Biel Rossi",
-#             "cpf": "123456789",
-#             "office": "DF",
-#             "class_worker": "nao",
-#             "capacity": "nao",
-#             "county": "df"
-#         }
-
-#         data_abbreviation = {
-#             "number": 123,
-#             "abbreviation": "SGA",
-#             "name": "SAGA",
-#             "year": 2020
-#         }
-
-#         data_status = {
-#             "filed": True,
-#             "eliminated": False,
-#             "sent_from": "teste",
-#             "requested_document": "teste",
-#             "send_date": "2021-02-01"
-#         }
-
-#         data_subject = {
-#             "subject_name": "teste",
-#             "temporality": "2021-02-01"
-#         }
-
-#         data_unity = {
-#             "telephone_number": "1",
-#             "note": "teste",
-#             "unity_name": "teste",
-#             "unity_abbreviation": "teste",
-#             "administrative_bond": "teste",
-#             "bond_abbreviation": "teste",
-#             "type_of_unity": "teste",
-#             "municipality": "teste"
-#         }
-
-#         api_client = APIClient()
-
-#         response_shelf = api_client.post(
-#             '/shelf/', data=data_shelf,
-#             header={"Content-Type": "application/json"})
-#         assert response_shelf.status_code == 201
-
-#         response_pw = api_client.post(
-#             '/public-worker/', data=data_pw,
-#             header={"Content-Type": "application/json"})
-#         assert response_pw.status_code == 201
-
-#         response_abbreviation = api_client.post(
-#             '/box-abbreviation/', data=data_abbreviation,
-#             header={"Content-Type": "application/json"})
-#         assert response_abbreviation.status_code == 201
-
-#         response_status = api_client.post(
-#             '/status/', data=data_status,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         response_subject = api_client.post(
-#             '/document-subject/', data=data_subject,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         response_unity = api_client.post(
-#             '/unity/', data=data_unity,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         data = {
-#             "process_number": "1",
-#             "sender_unity": "t",
-#             "notes": "t",
-#             "notice_date": "2020-11-11",
-#             "interested": "t",
-#             "cpf_cnpj": "1",
-#             "archiving_date": "2020-11-11",
-#             "reference_month_year": ["2020-11-11", "2020-11-12"],
-#             "sender_worker_id": response_pw.data['id'],
-#             "abbreviation_id": response_abbreviation.data['id'],
-#             "shelf_id": response_shelf.data['id'],
-#             "status_id": response_status.data['id'],
-#             "subject_id": response_subject.data['id'],
-#             "dest_unity_id": response_unity.data['id']
-#         }
-
-#         data = {
-#             "process_number": "2",
-#             "sender_unity": "t",
-#             "notes": "t",
-#             "notice_date": "2020-11-11",
-#             "interested": "t",
-#             "cpf_cnpj": "1",
-#             "archiving_date": "2020-11-11",
-#             "reference_month_year": ["2020-11-11", "2020-11-12"],
-#             "sender_worker_id": response_pw.data['id'],
-#             "abbreviation_id": response_abbreviation.data['id'],
-#             "shelf_id": response_shelf.data['id'],
-#             "status_id": response_status.data['id'],
-#             "subject_id": response_subject.data['id'],
-#             "dest_unity_id": response_unity.data['id']
-#         }
-
-#         response = api_client.post(
-#             '/administrative-process/', data=data,
-#             header={"Content-Type": "application/json"})
-#         response_2 = api_client.put(
-#             '/administrative-process/{}/'.format(response.data['id']), data=data_2,
-#             header={"Content-Type": "application/json"})
-#         assert response_2.status_code == 200
-
-#     def test_destroy(self):
-#         data_shelf = {
-#             "shelfe_number": 1,
-#             "shelfp_number": 1
-#         }
-
-#         data_pw = {
-#             "name": "Biel Rossi",
-#             "cpf": "123456789",
-#             "office": "DF",
-#             "class_worker": "nao",
-#             "capacity": "nao",
-#             "county": "df"
-#         }
-
-#         data_abbreviation = {
-#             "number": 123,
-#             "abbreviation": "SGA",
-#             "name": "SAGA",
-#             "year": 2020
-#         }
-
-#         data_status = {
-#             "filed": True,
-#             "eliminated": False,
-#             "sent_from": "teste",
-#             "requested_document": "teste",
-#             "send_date": "2021-02-01"
-#         }
-
-#         data_subject = {
-#             "subject_name": "teste",
-#             "temporality": "2021-02-01"
-#         }
-
-#         data_unity = {
-#             "telephone_number": "1",
-#             "note": "teste",
-#             "unity_name": "teste",
-#             "unity_abbreviation": "teste",
-#             "administrative_bond": "teste",
-#             "bond_abbreviation": "teste",
-#             "type_of_unity": "teste",
-#             "municipality": "teste"
-#         }
-
-#         api_client = APIClient()
-
-#         response_shelf = api_client.post(
-#             '/shelf/', data=data_shelf,
-#             header={"Content-Type": "application/json"})
-#         assert response_shelf.status_code == 201
-
-#         response_pw = api_client.post(
-#             '/public-worker/', data=data_pw,
-#             header={"Content-Type": "application/json"})
-#         assert response_pw.status_code == 201
-
-#         response_abbreviation = api_client.post(
-#             '/box-abbreviation/', data=data_abbreviation,
-#             header={"Content-Type": "application/json"})
-#         assert response_abbreviation.status_code == 201
-
-#         response_status = api_client.post(
-#             '/status/', data=data_status,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         response_subject = api_client.post(
-#             '/document-subject/', data=data_subject,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         response_unity = api_client.post(
-#             '/unity/', data=data_unity,
-#             header={"Content-Type": "application/json"})
-#         assert response_status.status_code == 201
-
-#         data = {
-#             "process_number": "1",
-#             "sender_unity": "t",
-#             "notes": "t",
-#             "notice_date": "2020-11-11",
-#             "interested": "t",
-#             "cpf_cnpj": "1",
-#             "archiving_date": "2020-11-11",
-#             "reference_month_year": ["2020-11-11", "2020-11-12"],
-#             "sender_worker_id": response_pw.data['id'],
-#             "abbreviation_id": response_abbreviation.data['id'],
-#             "shelf_id": response_shelf.data['id'],
-#             "status_id": response_status.data['id'],
-#             "subject_id": response_subject.data['id'],
-#             "dest_unity_id": response_unity.data['id']
-#         }
-
-#         response = api_client.post(
-#             '/administrative-process/', data=data,
-#             header={"Content-Type": "application/json"})
-#         response_2 = api_client.delete(
-#             '/administrative-process/{}/'.format(response.data['id']), data=data,
-#             header={"Content-Type": "application/json"})
-#         assert response_2.status_code == 204
-
-
 @pytest.mark.django_db(transaction=False)
 class TestFrequencyRelationEndpoints:
     def test_create(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
         data_subject = {
             "document_name": "teste",
             "temporality": "2021-11-11"
@@ -1285,16 +750,6 @@ class TestFrequencyRelationEndpoints:
         }
 
         api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
 
         response_type = api_client.post(
             '/document-type/', data=data_subject,
@@ -1314,8 +769,8 @@ class TestFrequencyRelationEndpoints:
             "received_date": "2021-11-11",
             "filer_user": "teste",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
+            "abbreviation_id": "",
+            "shelf_id": "",
             "document_type_id": response_type.data['id'],
         }
 
@@ -1331,18 +786,6 @@ class TestFrequencyRelationEndpoints:
         assert response.status_code == 200
 
     def test_retrieve(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
         data_subject = {
             "document_name": "teste",
             "temporality": "2021-11-11"
@@ -1360,16 +803,6 @@ class TestFrequencyRelationEndpoints:
         }
 
         api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
 
         response_type = api_client.post(
             '/document-type/', data=data_subject,
@@ -1389,8 +822,8 @@ class TestFrequencyRelationEndpoints:
             "received_date": "2021-11-11",
             "filer_user": "teste",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
+            "abbreviation_id": "",
+            "shelf_id": "",
             "document_type_id": response_type.data['id'],
         }
 
@@ -1401,18 +834,6 @@ class TestFrequencyRelationEndpoints:
         assert response.status_code == 200
 
     def test_update(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
         data_subject = {
             "document_name": "teste",
             "temporality": "2021-11-11"
@@ -1430,16 +851,6 @@ class TestFrequencyRelationEndpoints:
         }
 
         api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
 
         response_type = api_client.post(
             '/document-type/', data=data_subject,
@@ -1459,8 +870,8 @@ class TestFrequencyRelationEndpoints:
             "received_date": "2021-11-11",
             "filer_user": "teste",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
+            "abbreviation_id": "",
+            "shelf_id": "",
             "document_type_id": response_type.data['id'],
         }
 
@@ -1472,8 +883,8 @@ class TestFrequencyRelationEndpoints:
             "received_date": "2021-11-11",
             "filer_user": "teste",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
+            "abbreviation_id": "",
+            "shelf_id": "",
             "document_type_id": response_type.data['id'],
         }
 
@@ -1486,18 +897,6 @@ class TestFrequencyRelationEndpoints:
         assert response_2.status_code == 200
 
     def test_destroy(self):
-        data_shelf = {
-            "shelfe_number": 1,
-            "shelfp_number": 1
-        }
-
-        data_abbreviation = {
-            "number": 123,
-            "abbreviation": "SGA",
-            "name": "SAGA",
-            "year": 2020
-        }
-
         data_subject = {
             "document_name": "teste",
             "temporality": "2021-11-11"
@@ -1515,16 +914,6 @@ class TestFrequencyRelationEndpoints:
         }
 
         api_client = APIClient()
-
-        response_shelf = api_client.post(
-            '/shelf/', data=data_shelf,
-            header={"Content-Type": "application/json"})
-        assert response_shelf.status_code == 201
-
-        response_abbreviation = api_client.post(
-            '/box-abbreviation/', data=data_abbreviation,
-            header={"Content-Type": "application/json"})
-        assert response_abbreviation.status_code == 201
 
         response_type = api_client.post(
             '/document-type/', data=data_subject,
@@ -1544,8 +933,8 @@ class TestFrequencyRelationEndpoints:
             "received_date": "2021-11-11",
             "filer_user": "teste",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": response_abbreviation.data['id'],
-            "shelf_id": response_shelf.data['id'],
+            "abbreviation_id": "",
+            "shelf_id": "",
             "document_type_id": response_type.data['id'],
         }
 
