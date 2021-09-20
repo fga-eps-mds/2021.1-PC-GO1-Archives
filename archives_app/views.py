@@ -106,14 +106,14 @@ class FrequencySheetViewSet(viewsets.ModelViewSet):
     serializer_class = FrequencySheetSerializer
 
 
-@api_view(["GET"])
+@api_view(['GET',])
 def get_archival_relation(request):
     queryset = ArchivalRelation.objects.all()
     serializer = ArchivalRelationSerializer(queryset, many=True)
     return Response(serializer.data, status=200)
 
 
-@api_view(["GET"])
+@api_view(['GET',])
 def retrieve_archival_relation(request, pk):
     queryset = ArchivalRelation.objects.get(pk=pk)
     serializer = ArchivalRelationSerializer(queryset)
@@ -138,7 +138,7 @@ def retrieve_archival_relation(request, pk):
     return Response(final_dict, status=200)
 
 
-@api_view(["POST"])
+@api_view(['POST',])
 def post_archival_relation(request):
     box_list = request.data['box_list']
     boxes = list()
