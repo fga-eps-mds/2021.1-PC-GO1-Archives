@@ -32,9 +32,9 @@ jobs:
           delay: 30
           rollbackonhealthcheckfailed: true 
         env:
-          HD_SECRET_KEY = ${{secrets.SECRET_KEY}}
-          HD_DEBUG=True
-          HD_POSTGRES_HOST=db
-          HD_POSTGRES_DB=postgres
-          HD_POSTGRES_USER=postgres
-          HD_POSTGRES_PASSWORD=password
+          HD_SECRET_KEY: ${{secrets.SECRET_KEY}}
+          HD_DEBUG: true
+          HD_POSTGRES_HOST: "db"
+          HD_POSTGRES_DB: "postgres"
+          HD_POSTGRES_USER: "postgres"
+          HD_POSTGRES_PASSWORD: "password"
