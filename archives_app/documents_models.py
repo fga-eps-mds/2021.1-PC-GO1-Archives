@@ -22,10 +22,6 @@ class Relation(Document):
     received_date = models.DateField()
 
 
-class ReferencePeriod(models.Model):
-    period_month_year = models.DateField()
-
-
 class OriginBoxSubject(models.Model):
     name = models.CharField(max_length=100)
     dates = ArrayField(models.DateField())
@@ -45,7 +41,7 @@ class ArchivalRelation(Relation):
 
 
 class FrequencyRelation(Relation):
-    reference_period = models.ManyToManyField(ReferencePeriod)
+    reference_period = ArrayField(models.DateField())
 
 
 class FrequencySheet(models.Model):
@@ -55,7 +51,7 @@ class FrequencySheet(models.Model):
     category = models.CharField(max_length=100, blank=True, null=True)
     workplace = models.CharField(max_length=100)
     municipal_area = models.CharField(max_length=100)
-    reference_period = models.ManyToManyField(ReferencePeriod)
+    reference_period = ArrayField(models.DateField())
     abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
                                         blank=True, null=True)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True,

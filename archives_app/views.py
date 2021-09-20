@@ -8,12 +8,11 @@ from .fields_serializers import FrontCoverSerializer, StatusSerializer, ShelfSer
 from .fields_models import BoxAbbreviations, PublicWorker, DocumentSubject, DocumentType
 from .fields_models import Unity, Shelf, FrontCover, Status
 from .documents_models import (ArchivalRelation, FrequencyRelation, AdministrativeProcess,
-                               OriginBox, FrequencySheet, ReferencePeriod, OriginBoxSubject)
+                               OriginBox, FrequencySheet, OriginBoxSubject)
 from .documents_serializers import (FrequencySheetSerializer,
                                     AdministrativeProcessSerializer,
                                     FrequencyRelationSerializer,
-                                    ArchivalRelationSerializer,
-                                    ReferencePeriodSerializer)
+                                    ArchivalRelationSerializer)
 
 
 class DocumentSubjectViewSet(viewsets.ModelViewSet):
@@ -107,15 +106,6 @@ class FrequencySheetViewSet(viewsets.ModelViewSet):
     serializer_class = FrequencySheetSerializer
 
 
-class ReferencePeriodViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows origin box subtype
-    to be viewed or edited.
-    """
-    queryset = ReferencePeriod.objects.all()
-    serializer_class = ReferencePeriodSerializer
-
-
 @api_view(["GET"])
 def get_archival_relation(request):
     queryset = ArchivalRelation.objects.all()
@@ -152,7 +142,7 @@ def retrieve_archival_relation(request, pk):
 def post_archival_relation(request):
     box_list = request.data['box_list']
     boxes = list()
-    
+
     for box_n in box_list:
         box = OriginBox.objects.create(number=box_n['number'], year=box_n['year'])
         for subject in box_n['subjects_list']:
@@ -160,7 +150,6 @@ def post_archival_relation(request):
                                                   dates=subject['dates'])
             box.subject.add(sub.id)
         boxes.append(box)
-
 
     sender_unity_id = Unity.objects.get(pk=request.data['sender_unity'])
     document_id = DocumentType.objects.get(pk=request.data['document_type_id'])
@@ -179,11 +168,13 @@ def post_archival_relation(request):
     )
 
     if request.data['abbreviation_id'] != '':
-        box_abbreviation_id = BoxAbbreviations.objects.get(pk=request.data['abbreviation_id'])
+        box_abbreviation_id = BoxAbbreviations.objects.get(
+            pk=request.data['abbreviation_id']
+        )
         archival_relation.abbreviation_id = box_abbreviation_id
         archival_relation.save()
 
-    if request.data['shelf_id'] != '': 
+    if request.data['shelf_id'] != '':
         shelf_number_id = Shelf.objects.get(pk=request.data['shelf_id'])
         archival_relation.shelf_id = shelf_number_id
         archival_relation.save()

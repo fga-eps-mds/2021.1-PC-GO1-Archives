@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from archives_app.documents_models import (FrequencyRelation, ArchivalRelation,
                                            AdministrativeProcess, OriginBox,
-                                           FrequencySheet, ReferencePeriod)
+                                           FrequencySheet)
 
 
 class ArchivalRelationSerializer(serializers.ModelSerializer):
@@ -52,11 +52,4 @@ class FrequencySheetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FrequencySheet
-        fields = '__all__'
-
-
-class ReferencePeriodSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ReferencePeriod
         fields = '__all__'

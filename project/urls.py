@@ -15,7 +15,6 @@ router.register(r'status', views.StatusViewSet)
 router.register(r'administrative-process', views.AdministrativeProcessViewSet)
 router.register(r'frequency-relation', views.FrequencyRelationViewSet)
 router.register(r'frequency-sheet', views.FrequencySheetViewSet)
-router.register(r'reference-period', views.ReferencePeriodViewSet)
 
 
 # Wire up our API using automatic URL routing.

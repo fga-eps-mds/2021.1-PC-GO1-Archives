@@ -626,10 +626,6 @@ class TestFrequencySheetsEndpoints:
             "year": 2020
         }
 
-        data_ref_period = {
-            "period_month_year": "2021-11-11"
-        }
-
         api_client = APIClient()
 
         response_shelf = api_client.post(
@@ -642,11 +638,6 @@ class TestFrequencySheetsEndpoints:
             header={"Content-Type": "application/json"})
         assert response_abbreviation.status_code == 201
 
-        response_ref_period = api_client.post(
-            '/reference-period/', data=data_ref_period,
-            header={"Content-Type": "application/json"})
-        assert response_ref_period.status_code == 201
-
         data = {
             "person_name": "teste",
             "cpf": "teste",
@@ -656,7 +647,7 @@ class TestFrequencySheetsEndpoints:
             "municipal_area": "teste",
             "notes": "Nenhuma no momento",
             "process_number": "1",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
@@ -686,10 +677,6 @@ class TestFrequencySheetsEndpoints:
             "year": 2020
         }
 
-        data_ref_period = {
-            "period_month_year": "2021-11-11"
-        }
-
         api_client = APIClient()
 
         response_shelf = api_client.post(
@@ -702,11 +689,6 @@ class TestFrequencySheetsEndpoints:
             header={"Content-Type": "application/json"})
         assert response_abbreviation.status_code == 201
 
-        response_ref_period = api_client.post(
-            '/reference-period/', data=data_ref_period,
-            header={"Content-Type": "application/json"})
-        assert response_ref_period.status_code == 201
-
         data = {
             "person_name": "teste",
             "cpf": "teste",
@@ -716,7 +698,7 @@ class TestFrequencySheetsEndpoints:
             "municipal_area": "teste",
             "notes": "Nenhuma no momento",
             "process_number": "1",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
@@ -740,10 +722,6 @@ class TestFrequencySheetsEndpoints:
             "year": 2020
         }
 
-        data_ref_period = {
-            "period_month_year": "2021-11-11"
-        }
-
         api_client = APIClient()
 
         response_shelf = api_client.post(
@@ -756,11 +734,6 @@ class TestFrequencySheetsEndpoints:
             header={"Content-Type": "application/json"})
         assert response_abbreviation.status_code == 201
 
-        response_ref_period = api_client.post(
-            '/reference-period/', data=data_ref_period,
-            header={"Content-Type": "application/json"})
-        assert response_ref_period.status_code == 201
-
         data = {
             "person_name": "teste",
             "cpf": "teste",
@@ -770,7 +743,7 @@ class TestFrequencySheetsEndpoints:
             "municipal_area": "teste",
             "notes": "Nenhuma no momento",
             "process_number": "1",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
@@ -784,7 +757,7 @@ class TestFrequencySheetsEndpoints:
             "municipal_area": "teste",
             "notes": "Nenhuma no momento",
             "process_number": "1",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
@@ -810,10 +783,6 @@ class TestFrequencySheetsEndpoints:
             "year": 2020
         }
 
-        data_ref_period = {
-            "period_month_year": "2021-11-11"
-        }
-
         api_client = APIClient()
 
         response_shelf = api_client.post(
@@ -826,11 +795,6 @@ class TestFrequencySheetsEndpoints:
             header={"Content-Type": "application/json"})
         assert response_abbreviation.status_code == 201
 
-        response_ref_period = api_client.post(
-            '/reference-period/', data=data_ref_period,
-            header={"Content-Type": "application/json"})
-        assert response_ref_period.status_code == 201
-
         data = {
             "person_name": "teste",
             "cpf": "teste",
@@ -840,7 +804,7 @@ class TestFrequencySheetsEndpoints:
             "municipal_area": "teste",
             "notes": "Nenhuma no momento",
             "process_number": "1",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id']
         }
@@ -1309,10 +1273,6 @@ class TestFrequencyRelationEndpoints:
             "temporality": "2021-11-11"
         }
 
-        data_ref_period = {
-            "period_month_year": "2021-11-11"
-        }
-
         data_sender = {
             "telephone_number": "",
             "note": "",
@@ -1341,11 +1301,6 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_type.status_code == 201
 
-        response_ref_period = api_client.post(
-            '/reference-period/', data=data_ref_period,
-            header={"Content-Type": "application/json"})
-        assert response_ref_period.status_code == 201
-
         response_sender = api_client.post(
             '/unity/', data=data_sender,
             header={"Content-Type": "application/json"})
@@ -1358,7 +1313,7 @@ class TestFrequencyRelationEndpoints:
             "number": "1",
             "received_date": "2021-11-11",
             "filer_user": "teste",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1393,10 +1348,6 @@ class TestFrequencyRelationEndpoints:
             "temporality": "2021-11-11"
         }
 
-        data_ref_period = {
-            "period_month_year": "2021-11-11"
-        }
-
         data_sender = {
             "telephone_number": "",
             "note": "",
@@ -1425,11 +1376,6 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_type.status_code == 201
 
-        response_ref_period = api_client.post(
-            '/reference-period/', data=data_ref_period,
-            header={"Content-Type": "application/json"})
-        assert response_ref_period.status_code == 201
-
         response_sender = api_client.post(
             '/unity/', data=data_sender,
             header={"Content-Type": "application/json"})
@@ -1442,7 +1388,7 @@ class TestFrequencyRelationEndpoints:
             "number": "1",
             "received_date": "2021-11-11",
             "filer_user": "teste",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1472,10 +1418,6 @@ class TestFrequencyRelationEndpoints:
             "temporality": "2021-11-11"
         }
 
-        data_ref_period = {
-            "period_month_year": "2021-11-11"
-        }
-
         data_sender = {
             "telephone_number": "",
             "note": "",
@@ -1504,11 +1446,6 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_type.status_code == 201
 
-        response_ref_period = api_client.post(
-            '/reference-period/', data=data_ref_period,
-            header={"Content-Type": "application/json"})
-        assert response_ref_period.status_code == 201
-
         response_sender = api_client.post(
             '/unity/', data=data_sender,
             header={"Content-Type": "application/json"})
@@ -1521,7 +1458,7 @@ class TestFrequencyRelationEndpoints:
             "number": "1",
             "received_date": "2021-11-11",
             "filer_user": "teste",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1534,7 +1471,7 @@ class TestFrequencyRelationEndpoints:
             "number": "1",
             "received_date": "2021-11-11",
             "filer_user": "teste",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
@@ -1566,10 +1503,6 @@ class TestFrequencyRelationEndpoints:
             "temporality": "2021-11-11"
         }
 
-        data_ref_period = {
-            "period_month_year": "2021-11-11"
-        }
-
         data_sender = {
             "telephone_number": "",
             "note": "",
@@ -1598,11 +1531,6 @@ class TestFrequencyRelationEndpoints:
             header={"Content-Type": "application/json"})
         assert response_type.status_code == 201
 
-        response_ref_period = api_client.post(
-            '/reference-period/', data=data_ref_period,
-            header={"Content-Type": "application/json"})
-        assert response_ref_period.status_code == 201
-
         response_sender = api_client.post(
             '/unity/', data=data_sender,
             header={"Content-Type": "application/json"})
@@ -1615,7 +1543,7 @@ class TestFrequencyRelationEndpoints:
             "number": "1",
             "received_date": "2021-11-11",
             "filer_user": "teste",
-            "reference_period": response_ref_period.data['id'],
+            "reference_period": ["2020-11-11"],
             "abbreviation_id": response_abbreviation.data['id'],
             "shelf_id": response_shelf.data['id'],
             "document_type_id": response_type.data['id'],
