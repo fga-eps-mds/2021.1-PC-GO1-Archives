@@ -27,8 +27,8 @@ class Unity(models.Model):
     bond_abbreviation = models.CharField(max_length=20, blank=True)
     type_of_unity = models.CharField(max_length=30, blank=True)
     municipality = models.CharField(max_length=100, blank=True)
-    telephone_number = models.CharField(max_length=8, blank=True)
-    note = models.CharField(max_length=100, blank=True)
+    telephone_number = models.CharField(max_length=11, blank=True)
+    notes = models.CharField(max_length=300, blank=True)
 
 
 class BoxAbbreviations(models.Model):
@@ -48,7 +48,7 @@ class FrontCover(models.Model):
 
 
 class Status(models.Model):
-    filed = models.BooleanField(blank=True)
+    is_filed = models.BooleanField(blank=True)
     eliminated = models.BooleanField(blank=True)
     sent_from = models.CharField(max_length=100, blank=True)
     requested_document = models.CharField(max_length=100, blank=True)

@@ -315,7 +315,7 @@ class TestUnityEndpoints:
             "type_of_unity": "",
             "municipality": "",
             "telephone_number": "",
-            "note": ""
+            "notes": ""
         }
 
         api_client = APIClient()
@@ -339,7 +339,7 @@ class TestUnityEndpoints:
             "type_of_unity": "",
             "municipality": "",
             "telephone_number": "",
-            "note": ""
+            "notes": ""
         }
 
         api_client = APIClient()
@@ -359,7 +359,7 @@ class TestUnityEndpoints:
             "type_of_unity": "",
             "municipality": "",
             "telephone_number": "",
-            "note": ""
+            "notes": ""
         }
         data4 = {
             "name_of_unity": "4",
@@ -369,7 +369,7 @@ class TestUnityEndpoints:
             "type_of_unity": "",
             "municipality": "",
             "telephone_number": "",
-            "note": ""
+            "notes": ""
         }
         api_client = APIClient()
         intermediary = api_client.post(
@@ -390,7 +390,7 @@ class TestUnityEndpoints:
             "type_of_unity": "",
             "municipality": "",
             "telephone_number": "",
-            "note": ""
+            "notes": ""
         }
 
         api_client = APIClient()
@@ -537,7 +537,7 @@ class TestFrontCoverEndpoints:
 class TestStatusEndpoints:
     def test_create(self):
         data = {
-            "filed": True,
+            "is_filed": True,
             "unity_that_forwarded": "",
             "document_requested": "",
             "send_date": ""
@@ -557,7 +557,7 @@ class TestStatusEndpoints:
 
     def test_retrieve(self):
         data2 = {
-            "filed": False,
+            "is_filed": False,
             "unity_that_forwarded": "",
             "document_requested": "",
             "send_date": ""
@@ -573,13 +573,13 @@ class TestStatusEndpoints:
 
     def test_update(self):
         data3 = {
-            "filed": False,
+            "is_filed": False,
             "unity_that_forwarded": "",
             "document_requested": "",
             "send_date": ""
         }
         data4 = {
-            "filed": True,
+            "is_filed": True,
             "unity_that_forwarded": "",
             "document_requested": "",
             "send_date": ""
@@ -596,7 +596,7 @@ class TestStatusEndpoints:
 
     def test_destroy(self):
         data5 = {
-            "filed": True,
+            "is_filed": True,
             "unity_that_forwarded": "",
             "document_requested": "",
             "send_date": ""
