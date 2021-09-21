@@ -6,7 +6,7 @@ name: Implantação
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ 36_US01_Cadastro_De_Documentos, tentativa_deploy ]
+    branches: [ tentativa_deploy ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,13 +25,8 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "pc-go-archives" #Must be unique in Heroku
-          heroku_email: "ivandinizdobbin2@gmail.com"
+          heroku_app_name: "pc-go-archives-backend" #Must be unique in Heroku
+          heroku_email: "bielrossiborba@gmail.com"
           usedocker: true
         env:
           HD_SECRET_KEY: ${{secrets.SECRET_KEY}}
-          HD_DEBUG: true
-          HD_POSTGRES_HOST: "db"
-          HD_POSTGRES_DB: "postgres"
-          HD_POSTGRES_USER: "postgres"
-          HD_POSTGRES_PASSWORD: "password"
