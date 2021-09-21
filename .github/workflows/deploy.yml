@@ -32,5 +32,5 @@ jobs:
           HD_SECRET_KEY: ${{secrets.SECRET_KEY}}
       - run: |
           heroku stack:set container
-          git push heroku master
+          git push heroku HEAD:master
         
