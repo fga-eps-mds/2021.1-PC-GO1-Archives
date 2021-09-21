@@ -28,9 +28,6 @@ jobs:
           heroku_app_name: "pc-go-archives" #Must be unique in Heroku
           heroku_email: "ivandinizdobbin2@gmail.com"
           usedocker: true
-          healthcheck: "https://pc-go-archives.herokuapp.com/health"
-          delay: 30
-          rollbackonhealthcheckfailed: true 
         env:
           HD_SECRET_KEY: ${{secrets.SECRET_KEY}}
           HD_DEBUG: true
