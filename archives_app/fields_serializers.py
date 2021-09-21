@@ -1,11 +1,9 @@
 from rest_framework import serializers
-from .fields_models import BoxAbbreviations, FrontCover, PublicWorker, DocumentSubject
+from .fields_models import BoxAbbreviations, FrontCover, DocumentSubject
 from .fields_models import DocumentType, Shelf, Status, Unity
 
 
 class DocumentSubjectSerializer(serializers.ModelSerializer):
-    subject_name = serializers.CharField(max_length=100, required=False)
-    temporality = serializers.DateField(required=False)
 
     class Meta:
 
@@ -14,36 +12,13 @@ class DocumentSubjectSerializer(serializers.ModelSerializer):
 
 
 class DocumentTypeSerializer(serializers.ModelSerializer):
-    document_name = serializers.CharField(max_length=100, required=False)
-    temporality = serializers.DateField(required=False)
 
     class Meta:
         model = DocumentType
         fields = '__all__'
 
 
-class PublicWorkerSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(max_length=100, required=False)
-    cpf = serializers.CharField(max_length=11, required=False)
-    office = serializers.CharField(max_length=100, required=False)
-    class_worker = serializers.CharField(required=False)
-    capacity = serializers.CharField(required=False)
-    county = serializers.CharField(required=False)
-
-    class Meta:
-        model = PublicWorker
-        fields = '__all__'
-
-
 class UnitySerializer(serializers.ModelSerializer):
-    unity_name = serializers.CharField(max_length=100, required=False)
-    unity_abbreviation = serializers.CharField(max_length=20, required=False)
-    administrative_bond = serializers.CharField(max_length=100, required=False)
-    bond_abbreviation = serializers.CharField(max_length=20, required=False)
-    type_of_unity = serializers.CharField(max_length=30, required=False)
-    municipality = serializers.CharField(max_length=100, required=False)
-    telephone_number = serializers.CharField(max_length=11, required=False)
-    notes = serializers.CharField(max_length=300, required=False)
 
     class Meta:
         model = Unity
@@ -51,10 +26,6 @@ class UnitySerializer(serializers.ModelSerializer):
 
 
 class BoxAbbreviationsSerializer(serializers.ModelSerializer):
-    number = serializers.IntegerField(required=False)
-    abbreviation = serializers.CharField(max_length=20, required=False)
-    name = serializers.CharField(max_length=100, required=False)
-    year = serializers.IntegerField(required=False)
 
     class Meta:
         model = BoxAbbreviations
@@ -62,8 +33,6 @@ class BoxAbbreviationsSerializer(serializers.ModelSerializer):
 
 
 class ShelfSerializer(serializers.ModelSerializer):
-    shelfe_number = serializers.IntegerField(required=False)
-    shelfp_number = serializers.IntegerField(required=False)
 
     class Meta:
         model = Shelf
@@ -71,7 +40,6 @@ class ShelfSerializer(serializers.ModelSerializer):
 
 
 class FrontCoverSerializer(serializers.ModelSerializer):
-    box_abbreviation = serializers.CharField(max_length=30, required=False)
 
     class Meta:
         model = FrontCover
@@ -79,11 +47,6 @@ class FrontCoverSerializer(serializers.ModelSerializer):
 
 
 class StatusSerializer(serializers.ModelSerializer):
-    is_filed = serializers.BooleanField(required=False)
-    eliminated = serializers.BooleanField(required=False)
-    sent_from = serializers.CharField(max_length=100, required=False)
-    requested_document = serializers.CharField(max_length=100, required=False)
-    send_date = serializers.DateField(required=False)
 
     class Meta:
         model = Status

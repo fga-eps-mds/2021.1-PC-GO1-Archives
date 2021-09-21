@@ -1,10 +1,10 @@
 from rest_framework import viewsets, views
 from rest_framework.response import Response
-from .fields_serializers import BoxAbbreviationsSerializer, PublicWorkerSerializer
+from .fields_serializers import BoxAbbreviationsSerializer
 from .fields_serializers import (DocumentSubjectSerializer, DocumentTypeSerializer,
                                  UnitySerializer)
 from .fields_serializers import FrontCoverSerializer, StatusSerializer, ShelfSerializer
-from .fields_models import BoxAbbreviations, PublicWorker, DocumentSubject, DocumentType
+from .fields_models import BoxAbbreviations, DocumentSubject, DocumentType
 from .fields_models import Unity, Shelf, FrontCover, Status
 from .documents_models import (ArchivalRelation, FrequencyRelation, AdministrativeProcess,
                                OriginBox, FrequencySheet, OriginBoxSubject)
@@ -28,14 +28,6 @@ class DocumentTypeViewSet(viewsets.ModelViewSet):
     """
     queryset = DocumentType.objects.all()
     serializer_class = DocumentTypeSerializer
-
-
-class PublicWorkerViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = PublicWorker.objects.all()
-    serializer_class = PublicWorkerSerializer
 
 
 class UnityViewSet(viewsets.ModelViewSet):

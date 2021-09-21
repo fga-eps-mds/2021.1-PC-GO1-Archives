@@ -5,7 +5,6 @@ from archives_app import views
 
 router = routers.DefaultRouter()
 router.register(r'box-abbreviation', views.BoxAbbreviationViewSet)
-router.register(r'public-worker', views.PublicWorkerViewSet)
 router.register(r'document-subject', views.DocumentSubjectViewSet)
 router.register(r'document-type', views.DocumentTypeViewSet)
 router.register(r'unity', views.UnityViewSet)
