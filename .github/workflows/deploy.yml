@@ -39,5 +39,7 @@ jobs:
         run: heroku git:remote --app $HEROKU_APP_NAME
         env:
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+      - name: Pull from Heroku
+        run: git pull heroku main --rebase
       - name: Push to Heroku
         run: git push heroku tentativa_deploy:main
