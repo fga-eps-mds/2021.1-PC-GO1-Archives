@@ -38,6 +38,6 @@ jobs:
       - name: Add Heroku remote
         run: git remote add heroku https://git.heroku.com/evening-brushlands-51986.git 
       - name: Pull from Heroku
-        run: git pull heroku main
+        run: git pull heroku main --no-rebase
       - name: Push to Heroku
         run: git push heroku tentativa_deploy:main
