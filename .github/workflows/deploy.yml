@@ -42,4 +42,4 @@ jobs:
       - name: Pull from Heroku
         run: git pull heroku main 
       - name: Push to Heroku
-        run: git push heroku tentativa_deploy:main   
+        run: git push heroku tentativa_deploy:main
