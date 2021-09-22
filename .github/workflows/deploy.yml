@@ -36,10 +36,8 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_EMAIL: "bielrossiborba@gmail.com"
       - name: Add Heroku remote
-        run: git remote add heroku https://git.heroku.com/evening-brushlands-51986.git 
-      - name: Checkout
-        run: git checkout tentativa_deploy        
+        run: git remote add heroku https://git.heroku.com/evening-brushlands-51986.git       
       - name: Pull from Heroku
-        run: git pull heroku main 
+        run: git pull heroku main --allow-unrelated-histories
       - name: Push to Heroku
         run: git push heroku tentativa_deploy:main
