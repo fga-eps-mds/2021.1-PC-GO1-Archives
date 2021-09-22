@@ -11,7 +11,7 @@ router.register(r'document_type', views.DocumentTypeViewSet)
 router.register(r'unity', views.UnityViewSet)
 router.register(r'shelf', views.ShelfViewSet)
 router.register(r'front_cover', views.FrontCoverViewSet)
-# router.register(r'status', views.StatusViewSet)
+router.register(r'status', views.StatusViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
