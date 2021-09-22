@@ -30,8 +30,9 @@ jobs:
           usedocker: true
         env:
           HD_SECRET_KEY: ${{secrets.SECRET_KEY}}
+      - run: heroku git:remote --app $HEROKU_APP_NAME
       - run: |
           heroku container:login
-          heroku container:push web -a $(appname)
-          heroku container:release web -a $(appname)
+          heroku container:push web -a $HEROKU_APP_NAME
+          heroku container:release web -a $HEROKU_APP_NAME
         
