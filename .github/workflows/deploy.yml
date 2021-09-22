@@ -36,10 +36,8 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_EMAIL: "bielrossiborba@gmail.com"
       - name: Add Heroku remote
-        run: heroku git:remote --app $HEROKU_APP_NAME
+        run: git remote add heroku https://git.heroku.com/$HEROKU_APP_NAME.git 
         env:
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-      - name: Pull from Heroku
-        run: git pull heroku main --rebase
       - name: Push to Heroku
         run: git push heroku tentativa_deploy:main
