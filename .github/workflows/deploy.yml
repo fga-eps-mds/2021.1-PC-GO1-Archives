@@ -37,7 +37,9 @@ jobs:
           HEROKU_EMAIL: "bielrossiborba@gmail.com"
       - name: Add Heroku remote
         run: git remote add heroku https://git.heroku.com/evening-brushlands-51986.git 
+      - name: Checkout
+        run: git checkout tentativa_deploy        
       - name: Pull from Heroku
-        run: git pull heroku main --no-rebase
+        run: git pull heroku main 
       - name: Push to Heroku
         run: git push heroku tentativa_deploy:main
