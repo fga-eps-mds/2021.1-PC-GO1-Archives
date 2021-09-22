@@ -31,7 +31,7 @@ jobs:
         env:
           HD_SECRET_KEY: ${{secrets.SECRET_KEY}}
       - run: |
-        heroku container:login
-        heroku container:push web -a $(appname)
-        heroku container:release web -a $(appname)
+          heroku container:login
+          heroku container:push web -a $(appname)
+          heroku container:release web -a $(appname)
         
