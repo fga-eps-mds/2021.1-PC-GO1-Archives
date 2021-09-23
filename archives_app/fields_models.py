@@ -30,8 +30,11 @@ class BoxAbbreviations(models.Model):
 
 
 class Shelf(models.Model):
-    shelfe_number = models.IntegerField(blank=True, null=True)
-    shelfp_number = models.IntegerField(blank=True, null=True)
+    number = models.IntegerField()
+
+
+class Rack(models.Model):
+    number = models.IntegerField()
 
 
 class FrontCover(models.Model):

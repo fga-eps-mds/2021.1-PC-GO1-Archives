@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from archives_app.fields_models import (BoxAbbreviations, DocumentType,
                                         DocumentSubject, Status, Shelf,
-                                        Unity)
+                                        Unity, Rack)
 
 
 class Document(models.Model):
@@ -12,6 +12,8 @@ class Document(models.Model):
                                         blank=True, null=True)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True,
                                  null=True)
+    rack_id = models.ForeignKey(Rack, on_delete=models.PROTECT, blank=True,
+                                null=True)
     notes = models.CharField(max_length=300, blank=True, null=True)
     filer_user = models.CharField(max_length=150)
 
@@ -56,6 +58,8 @@ class FrequencySheet(models.Model):
                                         blank=True, null=True)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True,
                                  null=True)
+    rack_id = models.ForeignKey(Rack, on_delete=models.PROTECT, blank=True,
+                                null=True)
     notes = models.CharField(max_length=300, blank=True, null=True)
     process_number = models.CharField(max_length=20, blank=True, null=True)
 

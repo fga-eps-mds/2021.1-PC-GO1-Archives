@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .fields_models import BoxAbbreviations, FrontCover, DocumentSubject
-from .fields_models import DocumentType, Shelf, Status, Unity
+from .fields_models import DocumentType, Shelf, Status, Unity, Rack
 
 
 class DocumentSubjectSerializer(serializers.ModelSerializer):
@@ -36,6 +36,13 @@ class ShelfSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shelf
+        fields = '__all__'
+
+
+class RackSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Rack
         fields = '__all__'
 
 

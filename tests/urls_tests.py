@@ -315,11 +315,10 @@ class TestUnityEndpoints:
 
 
 @pytest.mark.django_db(transaction=False)
-class TestshelfEndpoints:
+class TestShelfEndpoints:
     def test_create(self):
         data = {
-            "shelfe_number": 0,
-            "shelfp_number": 0
+            "number": 0,
         }
 
         api_client = APIClient()
@@ -335,47 +334,43 @@ class TestshelfEndpoints:
         assert response.status_code == 200
 
     def test_retrieve(self):
-        data2 = {
-            "shelfe_number": 0,
-            "shelfp_number": 3
+        data = {
+            "number": 0,
         }
 
         api_client = APIClient()
         intermediary = api_client.post(
-            '/shelf/', data=data2,
+            '/shelf/', data=data,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.get('/shelf/2/')
         assert response.status_code == 200
 
     def test_update(self):
-        data3 = {
-            "shelfe_number": 0,
-            "shelfp_number": 1
+        data = {
+            "number": 0,
         }
-        data4 = {
-            "shelfe_number": 0,
-            "shelfp_number": 2
+        data_2 = {
+            "number": 0,
         }
         api_client = APIClient()
         intermediary = api_client.post(
-            '/shelf/', data=data3,
+            '/shelf/', data=data,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.put(
-            '/shelf/3/', data=data4,
+            '/shelf/3/', data=data_2,
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
     def test_destroy(self):
-        data5 = {
-            "shelfe_number": 0,
-            "shelfp_number": 4
+        data = {
+            "number": 0,
         }
 
         api_client = APIClient()
         intermediary = api_client.post(
-            '/shelf/', data=data5,
+            '/shelf/', data=data,
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.delete('/shelf/4/')
