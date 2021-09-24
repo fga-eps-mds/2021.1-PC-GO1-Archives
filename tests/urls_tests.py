@@ -528,6 +528,7 @@ def test_archival_relation_get():
     response = api_client.get('/archival-relation/')
     assert response.status_code == 200
 
+
 def archival_relation_data():
     api_client = APIClient()
 
