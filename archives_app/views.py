@@ -153,24 +153,29 @@ class ArchivalRelationView(views.APIView):
 class ArchivalRelationDetailsView(views.APIView):
 
     def get(self, request, pk):
-        queryset = ArchivalRelation.objects.get(pk=pk)
-        serializer = ArchivalRelationSerializer(queryset)
+        try:
+            queryset = ArchivalRelation.objects.get(pk=pk)
+            serializer = ArchivalRelationSerializer(queryset)
 
-        origin_box = serializer.data['origin_box_id']
-        boxes = list()
-        for box in origin_box:
-            boxes_dict = {}
-            box_n = OriginBox.objects.get(pk=box)
-            boxes_dict['number'] = box_n.number
-            boxes_dict['year'] = box_n.year
-            boxes_dict['subjects_list'] = list()
-            for subjects in box_n.subject.all():
-                boxes_dict['subjects_list'].append({
-                    'name': subjects.name,
-                    'date': subjects.dates
-                })
-            boxes.append(boxes_dict)
+            origin_box = serializer.data['origin_box_id']
+            boxes = list()
+            for box in origin_box:
+                boxes_dict = {}
+                box_n = OriginBox.objects.get(pk=box)
+                boxes_dict['number'] = box_n.number
+                boxes_dict['year'] = box_n.year
+                boxes_dict['subjects_list'] = list()
+                for subjects in box_n.subject.all():
+                    boxes_dict['subjects_list'].append({
+                        'name': subjects.name,
+                        'date': subjects.dates
+                    })
+                boxes.append(boxes_dict)
 
-        final_dict = serializer.data
-        final_dict['origin_box'] = boxes
-        return Response(final_dict, status=200)
+            final_dict = serializer.data
+            final_dict['origin_box'] = boxes
+            return Response(final_dict, status=200)
+
+        except ArchivalRelation.DoesNotExist:
+            error_dict = {"detail": "Not found."}
+            return Response(error_dict, status=404)

@@ -530,6 +530,77 @@ def test_archival_relation_get():
 
 
 @pytest.mark.django_db(transaction=False)
+def test_archival_relation_get_pk():
+    api_client = APIClient()
+
+    data_sender = {
+        "telephone_number": "",
+        "note": "",
+        "unity_name": "",
+        "unity_abbreviation": "",
+        "administrative_bond": "",
+        "bond_abbreviation": "",
+        "type_of_unity": "",
+        "municipality": ""
+    }
+
+    response_sender = api_client.post(
+        '/unity/', data=data_sender,
+        header={"Content-Type": "application/json"})
+    assert response_sender.status_code == 201
+
+    data_type = {
+        "document_name": "teste",
+        "temporality": "2021-11-11"
+    }
+
+    response_type = api_client.post(
+        '/document-type/', data=data_type,
+        header={"Content-Type": "application/json"})
+    assert response_type.status_code == 201
+
+    data = {
+        "box_list": [
+            {
+                "number": "1",
+                "year": 2020,
+                "subjects_list": [
+                    {
+                        "name": "teste",
+                        "dates": ["2020-11-11"]
+                    }
+                ]
+            },
+        ],
+        "process_number": "1",
+        "sender_unity": response_sender.data['id'],
+        "notes": "1",
+        "number": "1",
+        "received_date": "2020-11-11",
+        "number_of_boxes": 1,
+        "document_url": "https://www.t.com/",
+        "cover_sheet": "1",
+        "filer_user": "1",
+        "abbreviation_id": "",
+        "shelf_id": "",
+        "document_type_id": response_type.data['id']
+    }
+
+    response_archival = api_client.post(
+        '/archival-relation/', data=data,
+        format='json')
+    assert response_archival.status_code == 201
+
+    response_archival_get = api_client.get(
+        '/archival-relation/')
+    assert response_archival_get.status_code == 200
+
+    response = api_client.get('/archival-relation/{}'.format(
+        response_archival_get.data[0]['id']))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db(transaction=False)
 def test_archival_relation_post():
     api_client = APIClient()
 
