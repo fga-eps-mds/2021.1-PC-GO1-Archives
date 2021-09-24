@@ -3,6 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 from archives_app.fields_models import (BoxAbbreviations, DocumentType,
                                         DocumentSubject, Shelf,
                                         Unity, Rack)
+from django.core.validators import MinValueValidator
 
 
 class Document(models.Model):
@@ -31,12 +32,13 @@ class OriginBoxSubject(models.Model):
 
 class OriginBox(models.Model):
     number = models.CharField(max_length=20)
-    year = models.IntegerField()
+    year = models.IntegerField(validators=[MinValueValidator(1900)])
     subject = models.ManyToManyField(OriginBoxSubject)
 
 
 class ArchivalRelation(Relation):
-    number_of_boxes = models.IntegerField(blank=True, null=True)
+    number_of_boxes = models.IntegerField(validators=[MinValueValidator(0)],
+                                          blank=True, null=True)
     origin_box_id = models.ManyToManyField(OriginBox)
     document_url = models.URLField(blank=True, null=True)
     cover_sheet = models.CharField(max_length=100, blank=True, null=True)

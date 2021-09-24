@@ -9,7 +9,7 @@ class TestBoxAbreviationsEndpoints:
             "number": 8,
             "abbreviation": "",
             "name": "",
-            "year": 0
+            "year": 2020
         }
 
         api_client = APIClient()
@@ -29,7 +29,7 @@ class TestBoxAbreviationsEndpoints:
             "number": 8,
             "abbreviation": "",
             "name": "",
-            "year": 0
+            "year": 2020
         }
 
         api_client = APIClient()
@@ -45,13 +45,13 @@ class TestBoxAbreviationsEndpoints:
             "number": 8,
             "abbreviation": "",
             "name": "",
-            "year": 0
+            "year": 2020
         }
         data4 = {
             "number": 9,
             "abbreviation": "",
             "name": "",
-            "year": 0
+            "year": 2020
         }
         api_client = APIClient()
         intermediary = api_client.post(
@@ -68,7 +68,7 @@ class TestBoxAbreviationsEndpoints:
             "number": 10,
             "abbreviation": "",
             "name": "",
-            "year": 0
+            "year": 2020
         }
 
         api_client = APIClient()
