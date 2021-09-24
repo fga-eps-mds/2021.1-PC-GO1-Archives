@@ -39,11 +39,3 @@ class Rack(models.Model):
 
 class FrontCover(models.Model):
     box_abbreviation = models.CharField(max_length=30, blank=True, null=True)
-
-
-class Status(models.Model):
-    is_filed = models.BooleanField(blank=True, null=True)
-    eliminated = models.BooleanField(blank=True, null=True)
-    sent_from = models.CharField(max_length=100, blank=True, null=True)
-    requested_document = models.CharField(max_length=100, blank=True, null=True)
-    send_date = models.DateField(blank=True, null=True)

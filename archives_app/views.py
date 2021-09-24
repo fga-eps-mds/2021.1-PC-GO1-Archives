@@ -3,9 +3,9 @@ from rest_framework.response import Response
 from .fields_serializers import BoxAbbreviationsSerializer
 from .fields_serializers import (DocumentSubjectSerializer, DocumentTypeSerializer,
                                  UnitySerializer, RackSerializer)
-from .fields_serializers import FrontCoverSerializer, StatusSerializer, ShelfSerializer
+from .fields_serializers import FrontCoverSerializer, ShelfSerializer
 from .fields_models import BoxAbbreviations, DocumentSubject, DocumentType
-from .fields_models import Unity, Shelf, FrontCover, Status, Rack
+from .fields_models import Unity, Shelf, FrontCover, Rack
 from .documents_models import (ArchivalRelation, FrequencyRelation, AdministrativeProcess,
                                OriginBox, FrequencySheet, OriginBoxSubject)
 from .documents_serializers import (FrequencySheetSerializer,
@@ -68,14 +68,6 @@ class FrontCoverViewSet(viewsets.ModelViewSet):
     """
     queryset = FrontCover.objects.all()
     serializer_class = FrontCoverSerializer
-
-
-class StatusViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Status.objects.all()
-    serializer_class = StatusSerializer
 
 
 class FrequencyRelationViewSet(viewsets.ModelViewSet):

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from archives_app.fields_models import (BoxAbbreviations, DocumentType,
-                                        DocumentSubject, Status, Shelf,
+                                        DocumentSubject, Shelf,
                                         Unity, Rack)
 
 
@@ -70,8 +70,13 @@ class AdministrativeProcess(Document):
     cpf_cnpj = models.CharField(max_length=15, blank=True, null=True)
     subject_id = models.ForeignKey(DocumentSubject, on_delete=models.PROTECT)
     dest_unity_id = models.ForeignKey(Unity, on_delete=models.PROTECT, blank=True,
-                                      null=True)
+                                      null=True, related_name='unity')
     reference_month_year = models.DateField(blank=True, null=True)
     sender_user = models.CharField(max_length=150, blank=True, null=True)
     archiving_date = models.DateField(blank=True, null=True)
-    status_id = models.ForeignKey(Status, on_delete=models.PROTECT)
+    is_filed = models.BooleanField(blank=True, null=True)
+    is_eliminated = models.BooleanField(blank=True, null=True)
+    send_date = models.DateField(blank=True, null=True)
+    administrative_process_number = models.CharField(max_length=15, blank=True, null=True)
+    unity_id = models.ForeignKey(Unity, on_delete=models.PROTECT, blank=True,
+                                 null=True, related_name='unfiled_unity')
