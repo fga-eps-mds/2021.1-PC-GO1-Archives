@@ -12,6 +12,7 @@ from .documents_serializers import (FrequencySheetSerializer,
                                     AdministrativeProcessSerializer,
                                     FrequencyRelationSerializer,
                                     ArchivalRelationSerializer)
+import json
 
 
 class DocumentSubjectViewSet(viewsets.ModelViewSet):
@@ -179,3 +180,28 @@ class ArchivalRelationDetailsView(views.APIView):
         except ArchivalRelation.DoesNotExist:
             error_dict = {"detail": "Not found."}
             return Response(error_dict, status=404)
+
+
+class SearchView(views.APIView):
+
+    def get(self, request):
+        query = request.query_params.get("filter")
+        archival_relation = ArchivalRelation.objects.all()
+        frequency_sheet = FrequencySheet.objects.all()
+        administrative_process = AdministrativeProcess.objects.all()
+        frequency_relation = FrequencyRelation.objects.all() 
+
+        if query:
+            filter_dict = json.loads(query)
+
+            archival_relation = archival_relation.filter(**filter_dict)
+            frequency_relation = frequency_relation.filter(**filter_dict)
+            frequency_sheet = frequency_sheet.filter(**filter_dict)
+            administrative_process = administrative_process.filter(**filter_dict)
+
+        return_dict = { "archival_relation": ArchivalRelationSerializer(archival_relation, many=True).data,
+                        "frequecy_relation": FrequencyRelationSerializer(frequency_relation, many=True).data,
+                        "frequency_sheet": FrequencySheetSerializer(frequency_sheet, many=True).data,
+                        "administrative_process":AdministrativeProcessSerializer(administrative_process, many=True).data }
+
+        return Response(return_dict, status=200)
