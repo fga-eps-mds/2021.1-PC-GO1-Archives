@@ -23,5 +23,6 @@ urlpatterns = [
     # path('archival-relation-post/', views.post_archival_relation),
     path('archival-relation/', views.ArchivalRelationView.as_view()),
     path('archival-relation/<int:pk>', views.ArchivalRelationDetailsView.as_view()),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('search/', views.SearchView.as_view()),
 ]

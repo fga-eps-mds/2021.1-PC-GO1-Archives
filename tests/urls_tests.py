@@ -618,3 +618,18 @@ def test_archival_relation_post():
         '/archival-relation/', data=data,
         format='json')
     assert response_archival.status_code == 201
+
+
+@pytest.mark.django_db(transaction=False)
+def test_search():
+    api_client = APIClient()
+
+    data = archival_relation_data()
+
+    response_archival = api_client.post(
+        '/archival-relation/', data=data,
+        format='json')
+    assert response_archival.status_code == 201
+
+    response = api_client.get('/search/?filter=%7B%22notes%22:%221%22%7D')
+    assert response.status_code == 200

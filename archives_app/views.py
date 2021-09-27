@@ -12,6 +12,7 @@ from .documents_serializers import (FrequencySheetSerializer,
                                     AdministrativeProcessSerializer,
                                     FrequencyRelationSerializer,
                                     ArchivalRelationSerializer)
+import json
 
 
 class DocumentSubjectViewSet(viewsets.ModelViewSet):
@@ -179,3 +180,51 @@ class ArchivalRelationDetailsView(views.APIView):
         except ArchivalRelation.DoesNotExist:
             error_dict = {"detail": "Not found."}
             return Response(error_dict, status=404)
+
+
+class SearchView(views.APIView):
+    archival_relation_fields = [field.name for field in
+                                ArchivalRelation._meta.get_fields()]
+    frequency_relation_fields = [field.name for field in
+                                 FrequencyRelation._meta.get_fields()]
+    frequency_sheet_fields = [field.name for field in
+                              FrequencySheet._meta.get_fields()]
+    administrative_process_fields = [field.name for field in
+                                     AdministrativeProcess._meta.get_fields()]
+
+    def get(self, request):
+        query = request.query_params.get("filter")
+        archival_relation = ArchivalRelation.objects.all()
+        frequency_sheet = FrequencySheet.objects.all()
+        administrative_process = AdministrativeProcess.objects.all()
+        frequency_relation = FrequencyRelation.objects.all()
+        return_dict = {}
+        if query:
+            filter_dict = json.loads(query)
+
+            if list(filter_dict.keys())[0] in self.archival_relation_fields:
+                archival_relation = archival_relation.filter(**filter_dict)
+                return_dict = {"archival_relation": ArchivalRelationSerializer(
+                    archival_relation, many=True).data}
+
+            if list(filter_dict.keys())[0] in self.frequency_relation_fields:
+                frequency_relation = frequency_relation.filter(**filter_dict)
+                return_dict['frequecy_relation'] = FrequencyRelationSerializer(
+                    frequency_relation,
+                    many=True).data
+
+            if list(filter_dict.keys())[0] in self.frequency_sheet_fields:
+                frequency_sheet = frequency_sheet.filter(**filter_dict)
+                return_dict['frequency_sheet'] = FrequencySheetSerializer(
+                    frequency_sheet,
+                    many=True).data
+
+            if list(filter_dict.keys())[0] in self.administrative_process_fields:
+                administrative_process = administrative_process.filter(**filter_dict)
+                return_dict['administrative_process'] = AdministrativeProcessSerializer(
+                    administrative_process,
+                    many=True).data
+
+        if return_dict == {}:
+            return Response("Documento nao encontrado", status=404)
+        return Response(return_dict, status=200)
