@@ -31,6 +31,8 @@ DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'https://pc-go-frontend.herokuapp.com']
+
 CORS_ALLOW_ALL_ORIGINS: True
 
 # Application definition
