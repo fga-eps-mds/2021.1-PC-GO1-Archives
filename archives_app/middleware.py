@@ -17,8 +17,7 @@ class IsTokenValidMiddleware(object):
         load_dotenv()
         VERIFY_TOKEN = os.environ.get('VERIFY_TOKEN')
         req = requests.post(VERIFY_TOKEN + 'api/token/verify/',
-                            data={'token': request.META['HTTP_AUTHORIZATION']})
-
+                            data={'token': request.META['HTTP_AUTHORIZATION'][3:]})
         if req.status_code == 401:
             return HttpResponseForbidden()
         return
