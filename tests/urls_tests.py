@@ -1,6 +1,5 @@
 import pytest
 from rest_framework.test import APIClient
-from .serializers import ObjectSerializer
 
 
 @pytest.mark.django_db(transaction=False)
