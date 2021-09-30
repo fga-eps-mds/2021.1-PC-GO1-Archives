@@ -1,5 +1,6 @@
 import pytest
 from rest_framework.test import APIClient
+from .serializers import ObjectSerializer
 
 
 @pytest.mark.django_db(transaction=False)
@@ -610,6 +611,14 @@ def test_archival_relation_get_pk():
     response = api_client.get('/archival-relation/{}'.format(
         response_archival_get.data[0]['id']))
     assert response.status_code == 200
+
+
+@pytest.mark.django_db(transaction=False)
+def test_archival_relation_get_pk_except():
+    api_client = APIClient()
+
+    response = api_client.get('/archival-relation/4000')
+    assert response.status_code == 404
 
 
 @pytest.mark.django_db(transaction=False)
