@@ -4,36 +4,105 @@ from archives_app.documents_models import (FrequencyRelation, ArchivalRelation,
                                            FrequencySheet)
 
 
-class ArchivalRelationSerializer(serializers.ModelSerializer):
-    # abbreviation_id = serializers.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
-    #                                     required=False)
-    # shelf_id = serializers.ForeignKey(Shelf, on_delete=models.PROTECT, required=False)
-    # notes = serializers.CharField(max_length=300, required=False)
-    # number_of_boxes = serializers.IntegerField(required=False)
-    # document_url = serializers.URLField(required=False)
-    # cover_sheet = serializers.CharField(max_length=100, required=False)
+class ObjectNames(serializers.ModelSerializer):
+    def get_shelf_number(self, obj):
+        if obj.shelf_id is not None:
+            return obj.shelf_id.number
+        return 0
+
+    def get_rack_number(self, obj):
+        if obj.rack_id is not None:
+            return obj.rack_id.number
+        return 0
+
+    def get_abbreviation_name(self, obj):
+        if obj.abbreviation_id is not None:
+            return obj.abbreviation_id.name
+        return ""
+
+    shelf_number = serializers.SerializerMethodField('get_shelf_number')
+    rack_number = serializers.SerializerMethodField('get_rack_number')
+    abbreviation_name = serializers.SerializerMethodField('get_abbreviation_name')
+
+
+class ArchivalRelationSerializer(ObjectNames):
 
     class Meta:
         model = ArchivalRelation
-        fields = '__all__'
+        fields = (
+            "id",
+            "process_number",
+            "sender_unity",
+            "notes",
+            "number",
+            "received_date",
+            "number_of_boxes",
+            "document_url",
+            "cover_sheet",
+            "filer_user",
+            "document_type_id",
+            "abbreviation_name",
+            "shelf_number",
+            "rack_number",
+            "origin_box_id",
+            "abbreviation_id",
+            "shelf_id",
+            "rack_id"
+        )
 
 
-class FrequencyRelationSerializer(serializers.ModelSerializer):
-    # abbreviation_id = serializers.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
-    #                                     required=False)
-    # shelf_id = serializers.ForeignKey(Shelf, on_delete=models.PROTECT, required=False)
-    # notes = serializers.CharField(max_length=300, required=False)
+class FrequencyRelationSerializer(ObjectNames):
 
     class Meta:
         model = FrequencyRelation
-        fields = '__all__'
+        fields = (
+            "id",
+            "process_number",
+            "notes",
+            "filer_user",
+            "number",
+            "received_date",
+            "reference_period",
+            "sender_unity",
+            "abbreviation_name",
+            "shelf_number",
+            "rack_number",
+            "document_type_id",
+            "abbreviation_id",
+            "shelf_id",
+            "rack_id"
+        )
 
 
-class AdministrativeProcessSerializer(serializers.ModelSerializer):
+class AdministrativeProcessSerializer(ObjectNames):
 
     class Meta:
         model = AdministrativeProcess
-        fields = '__all__'
+        fields = ("id",
+                  "process_number",
+                  "notes",
+                  "filer_user",
+                  "notice_date",
+                  "interested",
+                  "cpf_cnpj",
+                  "reference_month_year",
+                  "sender_user",
+                  "archiving_date",
+                  "is_filed",
+                  "is_eliminated",
+                  "send_date",
+                  "administrative_process_number",
+                  "sender_unity",
+                  "abbreviation_name",
+                  "subject_id",
+                  "dest_unity_id",
+                  "unity_id",
+                  "shelf_number",
+                  "rack_number",
+                  "abbreviation_id",
+                  "shelf_id",
+                  "rack_id"
+                  )
 
 
 class OriginBoxSerializer(serializers.ModelSerializer):
@@ -43,13 +112,23 @@ class OriginBoxSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FrequencySheetSerializer(serializers.ModelSerializer):
-    # abbreviation_id = serializers.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
-    #                                         required=False)
-    # shelf_id = serializers.ForeignKey(Shelf, on_delete=models.PROTECT, required=False)
-    # notes = serializers.CharField(max_length=300, required=False)
-    # process_number = serializers.CharField(max_length=20, required=False)
+class FrequencySheetSerializer(ObjectNames):
 
     class Meta:
         model = FrequencySheet
-        fields = '__all__'
+        fields = ("id",
+                  "person_name",
+                  "cpf",
+                  "role",
+                  "category",
+                  "workplace",
+                  "municipal_area",
+                  "reference_period",
+                  "notes",
+                  "process_number",
+                  "abbreviation_id",
+                  "shelf_id",
+                  "rack_id",
+                  "abbreviation_name",
+                  "shelf_number",
+                  "rack_number")

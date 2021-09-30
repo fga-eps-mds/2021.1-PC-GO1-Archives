@@ -145,6 +145,11 @@ class ArchivalRelationView(views.APIView):
             archival_relation.shelf_id = shelf_number_id
             archival_relation.save()
 
+        if request.data['rack_id'] != '':
+            rack_number_id = Rack.objects.get(pk=request.data['rack_id'])
+            archival_relation.rack_id = rack_number_id
+            archival_relation.save()
+
         for box in boxes:
             archival_relation.origin_box_id.add(box.id)
 

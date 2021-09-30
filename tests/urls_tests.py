@@ -453,7 +453,8 @@ class TestFrequencySheetsEndpoints:
         "process_number": "1",
         "reference_period": ["2020-11-11"],
         "abbreviation_id": "",
-        "shelf_id": ""
+        "shelf_id": "",
+        "rack_id": ""
     }
 
     def test_create(self):
@@ -582,6 +583,7 @@ def archival_relation_data():
         "filer_user": "1",
         "abbreviation_id": "",
         "shelf_id": "",
+        "rack_id": "",
         "document_type_id": response_type.data['id']
     }
 
@@ -602,6 +604,8 @@ def test_archival_relation_get_pk():
     response_archival_get = api_client.get(
         '/archival-relation/')
     assert response_archival_get.status_code == 200
+
+    print(response_archival_get.data[0])
 
     response = api_client.get('/archival-relation/{}'.format(
         response_archival_get.data[0]['id']))
