@@ -1,5 +1,8 @@
 import pytest
 from rest_framework.test import APIClient
+from archives_app.documents_serializers import FrequencySheetSerializer
+from archives_app.documents_models import FrequencySheet
+from archives_app.fields_models import Shelf, Rack, BoxAbbreviations
 
 
 @pytest.mark.django_db(transaction=False)
@@ -645,3 +648,31 @@ def test_search():
 
     response = api_client.get('/search/?filter=%7B%22notes%22:%221%22%7D')
     assert response.status_code == 200
+
+
+@pytest.mark.django_db(transaction=False)
+def test_get_shelf_number():
+
+    s = Shelf.objects.create(number=123)
+    r = Rack.objects.create(number=123)
+    b = BoxAbbreviations.objects.create(name="a")
+
+    f = FrequencySheet.objects.create(
+        person_name="teste",
+        cpf="1",
+        role="teste",
+        category="teste",
+        workplace="teste",
+        municipal_area="teste",
+        reference_period=["2020-11-11"],
+        abbreviation_id=b,
+        shelf_id=s,
+        rack_id=r,
+        notes=None,
+        process_number="1"
+    )
+
+    f_s = FrequencySheetSerializer(f)
+    assert f_s.get_shelf_number(f) == 123
+    assert f_s.get_rack_number(f) == 123
+    assert f_s.get_abbreviation_name(f) == 'a'
