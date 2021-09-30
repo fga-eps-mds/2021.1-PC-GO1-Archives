@@ -198,14 +198,20 @@ class SearchView(views.APIView):
         frequency_sheet = FrequencySheet.objects.all()
         administrative_process = AdministrativeProcess.objects.all()
         frequency_relation = FrequencyRelation.objects.all()
-        return_dict = {}
+        return_dict = {
+            "archival_relation": [],
+            "frequecy_relation": [],
+            "frequency_sheet": [],
+            "administrative_process": []
+        }
+
         if query:
             filter_dict = json.loads(query)
 
             if list(filter_dict.keys())[0] in self.archival_relation_fields:
                 archival_relation = archival_relation.filter(**filter_dict)
-                return_dict = {"archival_relation": ArchivalRelationSerializer(
-                    archival_relation, many=True).data}
+                return_dict['archival_relation'] = ArchivalRelationSerializer(
+                    archival_relation, many=True).data
 
             if list(filter_dict.keys())[0] in self.frequency_relation_fields:
                 frequency_relation = frequency_relation.filter(**filter_dict)
@@ -225,6 +231,11 @@ class SearchView(views.APIView):
                     administrative_process,
                     many=True).data
 
-        if return_dict == {}:
-            return Response("Documento nao encontrado", status=404)
+        if (
+            return_dict['archival_relation'] == [] and
+            return_dict['administrative_process'] == [] and
+            return_dict['frequency_sheet'] == [] and
+            return_dict['frequecy_relation'] == []
+        ):
+            return Response(return_dict, status=404)
         return Response(return_dict, status=200)
