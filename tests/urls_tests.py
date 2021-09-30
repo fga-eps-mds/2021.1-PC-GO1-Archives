@@ -1,5 +1,8 @@
 import pytest
 from rest_framework.test import APIClient
+from archives_app.documents_serializers import FrequencySheetSerializer
+from archives_app.documents_models import FrequencySheet
+from archives_app.fields_models import Shelf, Rack, BoxAbbreviations
 
 
 @pytest.mark.django_db(transaction=False)
@@ -453,7 +456,8 @@ class TestFrequencySheetsEndpoints:
         "process_number": "1",
         "reference_period": ["2020-11-11"],
         "abbreviation_id": "",
-        "shelf_id": ""
+        "shelf_id": "",
+        "rack_id": ""
     }
 
     def test_create(self):
@@ -582,6 +586,7 @@ def archival_relation_data():
         "filer_user": "1",
         "abbreviation_id": "",
         "shelf_id": "",
+        "rack_id": "",
         "document_type_id": response_type.data['id']
     }
 
@@ -603,9 +608,19 @@ def test_archival_relation_get_pk():
         '/archival-relation/')
     assert response_archival_get.status_code == 200
 
+    print(response_archival_get.data[0])
+
     response = api_client.get('/archival-relation/{}'.format(
         response_archival_get.data[0]['id']))
     assert response.status_code == 200
+
+
+@pytest.mark.django_db(transaction=False)
+def test_archival_relation_get_pk_except():
+    api_client = APIClient()
+
+    response = api_client.get('/archival-relation/4000')
+    assert response.status_code == 404
 
 
 @pytest.mark.django_db(transaction=False)
@@ -633,3 +648,31 @@ def test_search():
 
     response = api_client.get('/search/?filter=%7B%22notes%22:%221%22%7D')
     assert response.status_code == 200
+
+
+@pytest.mark.django_db(transaction=False)
+def test_get_shelf_number():
+
+    s = Shelf.objects.create(number=123)
+    r = Rack.objects.create(number=123)
+    b = BoxAbbreviations.objects.create(name="a")
+
+    f = FrequencySheet.objects.create(
+        person_name="teste",
+        cpf="1",
+        role="teste",
+        category="teste",
+        workplace="teste",
+        municipal_area="teste",
+        reference_period=["2020-11-11"],
+        abbreviation_id=b,
+        shelf_id=s,
+        rack_id=r,
+        notes=None,
+        process_number="1"
+    )
+
+    f_s = FrequencySheetSerializer(f)
+    assert f_s.get_shelf_number(f) == 123
+    assert f_s.get_rack_number(f) == 123
+    assert f_s.get_abbreviation_name(f) == 'a'
