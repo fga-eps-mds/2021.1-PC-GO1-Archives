@@ -237,5 +237,5 @@ class SearchView(views.APIView):
             return_dict['frequency_sheet'] == [] and
             return_dict['frequecy_relation'] == []
         ):
-            return Response(return_dict, status=404)
+            return Response(return_dict, status=200)
         return Response(return_dict, status=200)
