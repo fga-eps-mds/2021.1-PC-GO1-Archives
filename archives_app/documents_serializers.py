@@ -8,12 +8,12 @@ class ObjectNames(serializers.ModelSerializer):
     def get_shelf_number(self, obj):
         if obj.shelf_id is not None:
             return obj.shelf_id.number
-        return None
+        return 0
 
     def get_rack_number(self, obj):
         if obj.rack_id is not None:
             return obj.rack_id.number
-        return None
+        return 0
 
     def get_abbreviation_name(self, obj):
         if obj.abbreviation_id is not None:
