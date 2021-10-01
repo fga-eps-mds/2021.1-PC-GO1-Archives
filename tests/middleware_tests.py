@@ -1,7 +1,6 @@
 from mock import patch, Mock
 from archives_app.middleware import IsTokenValidMiddleware
 import unittest
-from django.test import RequestFactory
 
 
 class TestMiddleware(unittest.TestCase):

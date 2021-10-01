@@ -9,6 +9,7 @@ from archives_app.fields_models import Shelf, Rack, BoxAbbreviations
 TESTS_MIDDLEWARE = [mc for mc in settings.MIDDLEWARE
                     if mc != 'archives_app.middleware.IsTokenValidMiddleware']
 
+
 @pytest.mark.django_db(transaction=False)
 class TestBoxAbreviationsEndpoints:
 

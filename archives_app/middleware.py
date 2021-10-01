@@ -5,6 +5,7 @@ import os
 
 VERIFY_TOKEN = os.environ.get('VERIFY_TOKEN')
 
+
 class IsTokenValidMiddleware(object):
 
     def __init__(self, get_response):
