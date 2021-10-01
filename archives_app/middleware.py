@@ -7,6 +7,11 @@ VERIFY_TOKEN = os.environ.get('VERIFY_TOKEN')
 
 
 class IsTokenValidMiddleware(object):
+    """
+    Middleware class that intercepts all
+    requisitios to perform a JWT token check
+    and see if the user is logged in or not.
+    """
 
     def __init__(self, get_response):
         self.get_response = get_response
