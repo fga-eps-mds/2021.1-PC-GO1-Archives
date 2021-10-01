@@ -1,12 +1,19 @@
 import pytest
 from rest_framework.test import APIClient
+from django.test import override_settings
+from django.conf import settings
 from archives_app.documents_serializers import FrequencySheetSerializer
 from archives_app.documents_models import FrequencySheet
 from archives_app.fields_models import Shelf, Rack, BoxAbbreviations
 
+TESTS_MIDDLEWARE = [mc for mc in settings.MIDDLEWARE
+                    if mc != 'archives_app.middleware.IsTokenValidMiddleware']
+
 
 @pytest.mark.django_db(transaction=False)
 class TestBoxAbreviationsEndpoints:
+
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_create(self):
         data = {
             "number": 8,
@@ -21,12 +28,14 @@ class TestBoxAbreviationsEndpoints:
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_list(self):
 
         api_client = APIClient()
         response = api_client.get('/box-abbreviation/')
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_retrieve(self):
         data2 = {
             "number": 8,
@@ -43,6 +52,7 @@ class TestBoxAbreviationsEndpoints:
         response = api_client.get('/box-abbreviation/2/')
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_update(self):
         data3 = {
             "number": 8,
@@ -66,93 +76,11 @@ class TestBoxAbreviationsEndpoints:
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
-    def test_destroy(self):
-        data5 = {
-            "number": 10,
-            "abbreviation": "",
-            "name": "",
-            "year": 2020
-        }
-
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/box-abbreviation/', data=data5,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.delete('/box-abbreviation/4/')
-        assert response.status_code == 204
-
-
-@pytest.mark.django_db(transaction=False)
-class TestDocumentSubjectEndpoints:
-    def test_create(self):
-        data = {
-            "subject_name": "",
-            "temporality": ""
-        }
-
-        api_client = APIClient()
-        response = api_client.post(
-            '/document-subject/', data=data,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 201
-
-    def test_list(self):
-
-        api_client = APIClient()
-        response = api_client.get('/document-subject/')
-        assert response.status_code == 200
-
-    def test_retrieve(self):
-        data2 = {
-            "subject_name": "1",
-            "temporality": ""
-        }
-
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/document-subject/', data=data2,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.get('/document-subject/2/')
-        assert response.status_code == 200
-
-    def test_update(self):
-        data3 = {
-            "subject_name": "2",
-            "temporality": ""
-        }
-        data4 = {
-            "subject_name": "3",
-            "temporality": ""
-        }
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/document-subject/', data=data3,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.put(
-            '/document-subject/3/', data=data4,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 200
-
-    def test_destroy(self):
-        data5 = {
-            "subject_name": "4",
-            "temporality": ""
-        }
-
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/document-subject/', data=data5,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.delete('/document-subject/4/')
-        assert response.status_code == 204
-
 
 @pytest.mark.django_db(transaction=False)
 class TestDocumentTypeEndpoints:
+
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_create(self):
         data = {
             "subject_name": "",
@@ -165,12 +93,14 @@ class TestDocumentTypeEndpoints:
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_list(self):
 
         api_client = APIClient()
         response = api_client.get('/document-type/')
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_retrieve(self):
         data2 = {
             "subject_name": "1",
@@ -185,6 +115,7 @@ class TestDocumentTypeEndpoints:
         response = api_client.get('/document-type/2/')
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_update(self):
         data3 = {
             "subject_name": "2",
@@ -204,6 +135,7 @@ class TestDocumentTypeEndpoints:
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_destroy(self):
         data5 = {
             "subject_name": "4",
@@ -221,6 +153,8 @@ class TestDocumentTypeEndpoints:
 
 @pytest.mark.django_db(transaction=False)
 class TestUnityEndpoints:
+
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_create(self):
         data = {
             "name_of_unity": "1",
@@ -239,12 +173,14 @@ class TestUnityEndpoints:
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_list(self):
 
         api_client = APIClient()
         response = api_client.get('/unity/')
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_retrieve(self):
         data2 = {
             "name_of_unity": "2",
@@ -265,6 +201,7 @@ class TestUnityEndpoints:
         response = api_client.get('/unity/2/')
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_update(self):
         data3 = {
             "name_of_unity": "3",
@@ -296,6 +233,7 @@ class TestUnityEndpoints:
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_destroy(self):
         data5 = {
             "name_of_unity": "5",
@@ -318,7 +256,9 @@ class TestUnityEndpoints:
 
 
 @pytest.mark.django_db(transaction=False)
-class TestShelfEndpoints:
+class TestshelfEndpoints:
+
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_create(self):
         data = {
             "number": 0,
@@ -330,12 +270,14 @@ class TestShelfEndpoints:
             header={"Content-Type": "application/json"})
         assert response.status_code == 201
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_list(self):
 
         api_client = APIClient()
         response = api_client.get('/shelf/')
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_retrieve(self):
         data = {
             "number": 0,
@@ -349,6 +291,7 @@ class TestShelfEndpoints:
         response = api_client.get('/shelf/2/')
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_update(self):
         data = {
             "number": 0,
@@ -366,6 +309,7 @@ class TestShelfEndpoints:
             header={"Content-Type": "application/json"})
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_destroy(self):
         data = {
             "number": 0,
@@ -377,69 +321,6 @@ class TestShelfEndpoints:
             header={"Content-Type": "application/json"})
         assert intermediary.status_code == 201
         response = api_client.delete('/shelf/4/')
-        assert response.status_code == 204
-
-
-@pytest.mark.django_db(transaction=False)
-class TestFrontCoverEndpoints:
-    def test_create(self):
-        data = {
-            "box_abbreviation": ""
-        }
-
-        api_client = APIClient()
-        response = api_client.post(
-            '/front-cover/', data=data,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 201
-
-    def test_list(self):
-
-        api_client = APIClient()
-        response = api_client.get('/front-cover/')
-        assert response.status_code == 200
-
-    def test_retrieve(self):
-        data2 = {
-            "box_abbreviation": ""
-        }
-
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/front-cover/', data=data2,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.get('/front-cover/2/')
-        assert response.status_code == 200
-
-    def test_update(self):
-        data3 = {
-            "box_abbreviation": ""
-        }
-        data4 = {
-            "box_abbreviation": ""
-        }
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/front-cover/', data=data3,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.put(
-            '/front-cover/3/', data=data4,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 200
-
-    def test_destroy(self):
-        data5 = {
-            "box_abbreviation": ""
-        }
-
-        api_client = APIClient()
-        intermediary = api_client.post(
-            '/front-cover/', data=data5,
-            header={"Content-Type": "application/json"})
-        assert intermediary.status_code == 201
-        response = api_client.delete('/front-cover/4/')
         assert response.status_code == 204
 
 
@@ -460,6 +341,7 @@ class TestFrequencySheetsEndpoints:
         "rack_id": ""
     }
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_create(self):
         api_client = APIClient()
 
@@ -469,12 +351,14 @@ class TestFrequencySheetsEndpoints:
 
         assert response.status_code == 201
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_list(self):
 
         api_client = APIClient()
         response = api_client.get('/frequency-sheet/')
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_retrieve(self):
         api_client = APIClient()
 
@@ -486,6 +370,7 @@ class TestFrequencySheetsEndpoints:
         response = api_client.get('/frequency-sheet/{}/'.format(response.data['id']))
         assert response.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_update(self):
         api_client = APIClient()
 
@@ -513,6 +398,7 @@ class TestFrequencySheetsEndpoints:
             header={"Content-Type": "application/json"})
         assert response_2.status_code == 200
 
+    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
     def test_destroy(self):
         api_client = APIClient()
 
@@ -527,12 +413,14 @@ class TestFrequencySheetsEndpoints:
 
 
 @pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
 def test_archival_relation_get():
     api_client = APIClient()
     response = api_client.get('/archival-relation/')
     assert response.status_code == 200
 
 
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
 def archival_relation_data():
     api_client = APIClient()
 
@@ -594,6 +482,7 @@ def archival_relation_data():
 
 
 @pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
 def test_archival_relation_get_pk():
     api_client = APIClient()
 
@@ -616,6 +505,7 @@ def test_archival_relation_get_pk():
 
 
 @pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
 def test_archival_relation_get_pk_except():
     api_client = APIClient()
 
@@ -624,6 +514,7 @@ def test_archival_relation_get_pk_except():
 
 
 @pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
 def test_archival_relation_post():
     api_client = APIClient()
 
@@ -636,6 +527,7 @@ def test_archival_relation_post():
 
 
 @pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
 def test_search():
     api_client = APIClient()
 
@@ -651,6 +543,7 @@ def test_search():
 
 
 @pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
 def test_get_shelf_number():
 
     s = Shelf.objects.create(number=123)
