@@ -216,7 +216,7 @@ class SearchView(views.APIView):
                     contains = '{}__number__icontains'.format(
                         list(filter_dict.keys())[0])
                 filter_dict_fk = {
-                    contains:list(filter_dict.values())[0]
+                    contains: list(filter_dict.values())[0]
                 }
 
             if list(filter_dict.keys())[0] in self.archival_relation_fields:
