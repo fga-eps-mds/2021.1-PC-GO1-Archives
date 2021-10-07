@@ -207,35 +207,51 @@ class SearchView(views.APIView):
 
         if query:
             filter_dict = json.loads(query)
+            filter_dict_fk = {}
+
+            if 'id' in list(filter_dict.keys())[0]:
+                if 'abbreviation_id' in list(filter_dict.keys())[0]:
+                    contains = 'abbreviation_id__name__icontains'
+                else:
+                    contains = '{}__number__icontains'.format(
+                        list(filter_dict.keys())[0])
+                filter_dict_fk = {
+                    contains: list(filter_dict.values())[0]
+                }
 
             if list(filter_dict.keys())[0] in self.archival_relation_fields:
-                archival_relation = archival_relation.filter(**filter_dict)
+                if not filter_dict_fk:
+                    archival_relation = archival_relation.filter(**filter_dict)
+                else:
+                    archival_relation = archival_relation.filter(**filter_dict_fk)
                 return_dict['archival_relation'] = ArchivalRelationSerializer(
                     archival_relation, many=True).data
 
             if list(filter_dict.keys())[0] in self.frequency_relation_fields:
-                frequency_relation = frequency_relation.filter(**filter_dict)
+                if not filter_dict_fk:
+                    frequency_relation = frequency_relation.filter(**filter_dict)
+                else:
+                    frequency_relation = frequency_relation.filter(**filter_dict_fk)
                 return_dict['frequecy_relation'] = FrequencyRelationSerializer(
                     frequency_relation,
                     many=True).data
 
             if list(filter_dict.keys())[0] in self.frequency_sheet_fields:
-                frequency_sheet = frequency_sheet.filter(**filter_dict)
+                if not filter_dict_fk:
+                    frequency_sheet = frequency_sheet.filter(**filter_dict)
+                else:
+                    frequency_sheet = frequency_sheet.filter(**filter_dict_fk)
                 return_dict['frequency_sheet'] = FrequencySheetSerializer(
                     frequency_sheet,
                     many=True).data
 
             if list(filter_dict.keys())[0] in self.administrative_process_fields:
-                administrative_process = administrative_process.filter(**filter_dict)
+                if not filter_dict_fk:
+                    administrative_process = administrative_process.filter(**filter_dict)
+                else:
+                    administrative_process = administrative_process.filter(**filter_dict_fk)
                 return_dict['administrative_process'] = AdministrativeProcessSerializer(
                     administrative_process,
                     many=True).data
 
-        if (
-            return_dict['archival_relation'] == [] and
-            return_dict['administrative_process'] == [] and
-            return_dict['frequency_sheet'] == [] and
-            return_dict['frequecy_relation'] == []
-        ):
-            return Response(return_dict, status=200)
         return Response(return_dict, status=200)

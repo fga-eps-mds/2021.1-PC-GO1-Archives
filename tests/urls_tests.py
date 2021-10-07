@@ -538,7 +538,7 @@ def test_search():
         format='json')
     assert response_archival.status_code == 201
 
-    response = api_client.get('/search/?filter=%7B%22notes%22:%221%22%7D')
+    response = api_client.get('/search/?filter={"process_number":"1"}')
     assert response.status_code == 200
 
 
@@ -569,3 +569,31 @@ def test_get_shelf_number():
     assert f_s.get_shelf_number(f) == 123
     assert f_s.get_rack_number(f) == 123
     assert f_s.get_abbreviation_name(f) == 'a'
+
+
+@pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
+def test_search_without_shelf():
+
+    api_client = APIClient()
+
+    data = archival_relation_data()
+
+    data_shelf = {
+        "number": 123,
+    }
+
+    response_shelf = api_client.post(
+        '/shelf/', data=data_shelf,
+        header={"Content-Type": "application/json"})
+    assert response_shelf.status_code == 201
+
+    data['shelf_id'] = response_shelf.data['id']
+
+    response_archival = api_client.post(
+        '/archival-relation/', data=data,
+        format='json')
+    assert response_archival.status_code == 201
+
+    response = api_client.get('/search/?filter={"shelf_id":123}')
+    assert response.status_code == 200
