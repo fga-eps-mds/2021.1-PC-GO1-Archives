@@ -442,7 +442,7 @@ def archival_relation_data():
 
     data_type = {
         "document_name": "teste",
-        "temporality": "2021-11-11"
+        "temporality": "1"
     }
 
     response_type = api_client.post(
@@ -475,7 +475,7 @@ def archival_relation_data():
         "abbreviation_id": "",
         "shelf_id": "",
         "rack_id": "",
-        "document_type_id": response_type.data['id']
+        "document_type_id": [response_type.data['id']]
     }
 
     return data
@@ -557,7 +557,7 @@ def test_get_shelf_number():
         category="teste",
         workplace="teste",
         municipal_area="teste",
-        reference_period=["2020-11-11"],
+        reference_period="2020-11-11",
         abbreviation_id=b,
         shelf_id=s,
         rack_id=r,

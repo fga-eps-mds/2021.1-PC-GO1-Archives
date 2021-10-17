@@ -20,7 +20,7 @@ class Document(models.Model):
 
 
 class Relation(Document):
-    document_type_id = models.ForeignKey(DocumentType, on_delete=models.PROTECT)
+    document_type_id = models.ManyToManyField(DocumentType)
     number = models.CharField(max_length=20)
     received_date = models.DateField()
 
@@ -55,7 +55,7 @@ class FrequencySheet(models.Model):
     category = models.CharField(max_length=100, blank=True, null=True)
     workplace = models.CharField(max_length=100)
     municipal_area = models.CharField(max_length=100)
-    reference_period = ArrayField(models.DateField())
+    reference_period = models.DateField()
     abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
                                         blank=True, null=True)
     shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True,
