@@ -20,9 +20,10 @@ router.register(r'frequency-sheet', views.FrequencySheetViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
-    # path('archival-relation-post/', views.post_archival_relation),
     path('archival-relation/', views.ArchivalRelationView.as_view()),
     path('archival-relation/<int:pk>', views.ArchivalRelationDetailsView.as_view()),
+    path('year-by-abbreviation/<str:abvt>', views.YearByAbbreviation.as_view()),
+    path('number-by-year-abbrevation/<str:abvt>/<int:year>', views.NumberByYearAndAbbreviation.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('search/', views.SearchView.as_view()),
 ]
