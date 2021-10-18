@@ -118,7 +118,6 @@ class ArchivalRelationView(views.APIView):
             boxes.append(box)
 
         sender_unity_id = Unity.objects.get(pk=request.data['sender_unity'])
-        document_id = DocumentType.objects.get(pk=request.data['document_type_id'])
 
         archival_relation = ArchivalRelation.objects.create(
             process_number=request.data['process_number'],
@@ -130,7 +129,7 @@ class ArchivalRelationView(views.APIView):
             document_url=request.data['document_url'],
             cover_sheet=request.data['cover_sheet'],
             filer_user=request.data['filer_user'],
-            document_type_id=document_id,
+            temporality_date=request.data['temporality_date']
         )
 
         if request.data['abbreviation_id'] != '':
@@ -147,6 +146,10 @@ class ArchivalRelationView(views.APIView):
 
         for box in boxes:
             archival_relation.origin_box_id.add(box.id)
+
+        for document in request.data['document_type_id']:
+            document_id = DocumentType.objects.get(pk=document)
+            archival_relation.document_type_id.add(document_id)
 
         return Response(status=201)
 
