@@ -267,7 +267,6 @@ class YearByAbbreviation(views.APIView):
         return Response(serializer.data, status=200)
 
 
-
 class NumberByYearAndAbbreviation(views.APIView):
     def get(self, request, abvt, year):
         queryset = BoxAbbreviations.objects.filter(
@@ -276,4 +275,3 @@ class NumberByYearAndAbbreviation(views.APIView):
             return Response('Nao foi encontrado objeto com este valor', status=204)
         serializer = BoxAbbreviationsSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
-       

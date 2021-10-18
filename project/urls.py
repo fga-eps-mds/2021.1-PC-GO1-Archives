@@ -23,7 +23,8 @@ urlpatterns = [
     path('archival-relation/', views.ArchivalRelationView.as_view()),
     path('archival-relation/<int:pk>', views.ArchivalRelationDetailsView.as_view()),
     path('year-by-abbreviation/<str:abvt>', views.YearByAbbreviation.as_view()),
-    path('number-by-year-abbrevation/<str:abvt>/<int:year>', views.NumberByYearAndAbbreviation.as_view()),
+    path('number-by-year-abbrevation/<str:abvt>/<int:year>',
+         views.NumberByYearAndAbbreviation.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('search/', views.SearchView.as_view()),
 ]

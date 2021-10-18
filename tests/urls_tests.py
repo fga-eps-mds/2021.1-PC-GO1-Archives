@@ -611,7 +611,7 @@ def test_get_year_by_abbreviation():
         "number": 1,
         "abbreviation": 'a',
         "name": "abc",
-        "year": 2020        
+        "year": 2020
     }
 
     response_box = api_client.post(
@@ -635,7 +635,7 @@ def test_get_number_by_year_and_abbreviation():
         "number": 1,
         "abbreviation": 'a',
         "name": "abc",
-        "year": 2021    
+        "year": 2021
     }
 
     response_box = api_client.post(
