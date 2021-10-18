@@ -48,7 +48,7 @@ class ArchivalRelationSerializer(ObjectNames):
             "origin_box_id",
             "abbreviation_id",
             "shelf_id",
-            "rack_id",
+            "rack_id"
         )
 
 
@@ -64,7 +64,7 @@ class FrequencyRelationSerializer(ObjectNames):
             "number",
             "received_date",
             "reference_period",
-            "temporality_date"
+            "temporality_date",
             "sender_unity",
             "abbreviation_name",
             "shelf_number",
@@ -72,7 +72,7 @@ class FrequencyRelationSerializer(ObjectNames):
             "document_type_id",
             "abbreviation_id",
             "shelf_id",
-            "rack_id",
+            "rack_id"
         )
 
 
@@ -92,7 +92,7 @@ class AdministrativeProcessSerializer(ObjectNames):
                   "archiving_date",
                   "is_filed",
                   "is_eliminated",
-                  "temporality_date"
+                  "temporality_date",
                   "send_date",
                   "administrative_process_number",
                   "sender_unity",
@@ -104,7 +104,7 @@ class AdministrativeProcessSerializer(ObjectNames):
                   "rack_number",
                   "abbreviation_id",
                   "shelf_id",
-                  "rack_id",
+                  "rack_id"
                   )
 
 
