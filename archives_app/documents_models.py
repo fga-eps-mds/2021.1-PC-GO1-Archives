@@ -23,6 +23,7 @@ class Relation(Document):
     document_type_id = models.ManyToManyField(DocumentType)
     number = models.CharField(max_length=20)
     received_date = models.DateField()
+    temporality_date = models.DateField(blank=True, null=True)
 
 
 class OriginBoxSubject(models.Model):
@@ -82,3 +83,4 @@ class AdministrativeProcess(Document):
     administrative_process_number = models.CharField(max_length=15, blank=True, null=True)
     unity_id = models.ForeignKey(Unity, on_delete=models.PROTECT, blank=True,
                                  null=True, related_name='unfiled_unity')
+    temporality_date = models.DateField(blank=True, null=True)

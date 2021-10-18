@@ -338,7 +338,8 @@ class TestFrequencySheetsEndpoints:
         "reference_period": ["2020-11-11"],
         "abbreviation_id": "",
         "shelf_id": "",
-        "rack_id": ""
+        "rack_id": "",
+        "temporality_date": "2020-11-11"
     }
 
     @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
@@ -475,7 +476,8 @@ def archival_relation_data():
         "abbreviation_id": "",
         "shelf_id": "",
         "rack_id": "",
-        "document_type_id": [response_type.data['id']]
+        "document_type_id": [response_type.data['id']],
+        "temporality_date": "2020-11-11"
     }
 
     return data

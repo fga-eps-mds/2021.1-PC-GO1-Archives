@@ -129,6 +129,7 @@ class ArchivalRelationView(views.APIView):
             document_url=request.data['document_url'],
             cover_sheet=request.data['cover_sheet'],
             filer_user=request.data['filer_user'],
+            temporality_date=request.data['temporality_date']
         )
 
         if request.data['abbreviation_id'] != '':
