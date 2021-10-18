@@ -599,3 +599,51 @@ def test_search_without_shelf():
 
     response = api_client.get('/search/?filter={"shelf_id":123}')
     assert response.status_code == 200
+
+
+@pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
+def test_get_year_by_abbreviation():
+    api_client = APIClient()
+
+    response = api_client.get('/year-by-abbreviation/a')
+    assert response.status_code == 204
+
+    data_box = {
+        "number": 1,
+        "abbreviation": 'a',
+        "name": "abc",
+        "year": 2020
+    }
+
+    response_box = api_client.post(
+        '/box-abbreviation/', data=data_box,
+        header={"Content-Type": "application/json"})
+    assert response_box.status_code == 201
+
+    response = api_client.get('/year-by-abbreviation/a')
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
+def test_get_number_by_year_and_abbreviation():
+    api_client = APIClient()
+
+    response = api_client.get('/number-by-year-abbrevation/a/2021')
+    assert response.status_code == 204
+
+    data_box = {
+        "number": 1,
+        "abbreviation": 'a',
+        "name": "abc",
+        "year": 2021
+    }
+
+    response_box = api_client.post(
+        '/box-abbreviation/', data=data_box,
+        header={"Content-Type": "application/json"})
+    assert response_box.status_code == 201
+
+    response = api_client.get('/number-by-year-abbrevation/a/2021')
+    assert response.status_code == 200

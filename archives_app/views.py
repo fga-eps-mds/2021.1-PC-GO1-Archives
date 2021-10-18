@@ -258,3 +258,23 @@ class SearchView(views.APIView):
                     many=True).data
 
         return Response(return_dict, status=200)
+
+
+class YearByAbbreviation(views.APIView):
+    def get(self, request, abvt):
+        queryset = BoxAbbreviations.objects.filter(
+            abbreviation=abvt)
+        if not queryset:
+            return Response('Nao foi encontrado objeto com este valor', status=204)
+        serializer = BoxAbbreviationsSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
+
+
+class NumberByYearAndAbbreviation(views.APIView):
+    def get(self, request, abvt, year):
+        queryset = BoxAbbreviations.objects.filter(
+            abbreviation=abvt, year=year)
+        if not queryset:
+            return Response('Nao foi encontrado objeto com este valor', status=204)
+        serializer = BoxAbbreviationsSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
