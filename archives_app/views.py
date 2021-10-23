@@ -135,9 +135,7 @@ class ArchivalRelationView(views.APIView):
             process_number=request.data['process_number'],
             sender_unity=sender_unity_id,
             notes=request.data['notes'],
-            number=request.data['number'],
             received_date=request.data['received_date'],
-            number_of_boxes=request.data['number_of_boxes'],
             document_url=request.data['document_url'],
             cover_sheet=request.data['cover_sheet'],
             filer_user=request.data['filer_user']

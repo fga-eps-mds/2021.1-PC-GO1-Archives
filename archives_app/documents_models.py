@@ -20,7 +20,6 @@ class Document(models.Model):
 
 
 class Relation(Document):
-    number = models.CharField(max_length=20)
     received_date = models.DateField()
 
 
@@ -43,8 +42,6 @@ class DocumentTypes(models.Model):
 
 
 class ArchivalRelation(Relation):
-    number_of_boxes = models.IntegerField(validators=[MinValueValidator(0)],
-                                          blank=True, null=True)
     origin_box_id = models.ManyToManyField(OriginBox)
     document_url = models.URLField(blank=True, null=True)
     cover_sheet = models.CharField(max_length=100, blank=True, null=True)
