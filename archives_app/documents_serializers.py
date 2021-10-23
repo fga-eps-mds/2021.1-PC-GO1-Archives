@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from archives_app.documents_models import (FrequencyRelation, ArchivalRelation,
                                            AdministrativeProcess, OriginBox,
-                                           FrequencySheet)
+                                           FrequencySheet, DocumentTypes)
 
 
 class ObjectNames(serializers.ModelSerializer):
@@ -39,16 +39,15 @@ class ArchivalRelationSerializer(ObjectNames):
             "number_of_boxes",
             "document_url",
             "cover_sheet",
-            "temporality_date",
             "filer_user",
-            "document_type_id",
             "abbreviation_name",
             "shelf_number",
             "rack_number",
             "origin_box_id",
             "abbreviation_id",
             "shelf_id",
-            "rack_id"
+            "rack_id",
+            "document_types"
         )
 
 
@@ -112,6 +111,13 @@ class OriginBoxSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OriginBox
+        fields = '__all__'
+
+
+class DocumentTypesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DocumentTypes
         fields = '__all__'
 
 

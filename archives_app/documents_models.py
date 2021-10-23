@@ -20,10 +20,8 @@ class Document(models.Model):
 
 
 class Relation(Document):
-    document_type_id = models.ManyToManyField(DocumentType)
     number = models.CharField(max_length=20)
     received_date = models.DateField()
-    temporality_date = models.DateField(blank=True, null=True)
 
 
 class OriginBoxSubject(models.Model):
@@ -37,16 +35,28 @@ class OriginBox(models.Model):
     subject = models.ManyToManyField(OriginBoxSubject)
 
 
+class DocumentTypes(models.Model):
+    document_type_id = models.ForeignKey(DocumentType, on_delete=models.PROTECT)
+    year = models.IntegerField(validators=[MinValueValidator(1900)])
+    month = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True)
+    temporality_date = models.IntegerField(validators=[MinValueValidator(1900)])
+
+
 class ArchivalRelation(Relation):
     number_of_boxes = models.IntegerField(validators=[MinValueValidator(0)],
                                           blank=True, null=True)
     origin_box_id = models.ManyToManyField(OriginBox)
     document_url = models.URLField(blank=True, null=True)
     cover_sheet = models.CharField(max_length=100, blank=True, null=True)
+    document_types = models.ManyToManyField(DocumentTypes)
 
 
 class FrequencyRelation(Relation):
     reference_period = ArrayField(models.DateField())
+    temporality_date = models.IntegerField(validators=[MinValueValidator(1900)],
+                                           blank=True, null=True)
+    document_type_id = models.ForeignKey(DocumentType, on_delete=models.PROTECT,
+                                         blank=True, null=True)
 
 
 class FrequencySheet(models.Model):
@@ -83,4 +93,5 @@ class AdministrativeProcess(Document):
     administrative_process_number = models.CharField(max_length=15, blank=True, null=True)
     unity_id = models.ForeignKey(Unity, on_delete=models.PROTECT, blank=True,
                                  null=True, related_name='unfiled_unity')
-    temporality_date = models.DateField(blank=True, null=True)
+    temporality_date = models.IntegerField(validators=[MinValueValidator(1900)],
+                                           blank=True, null=True)
