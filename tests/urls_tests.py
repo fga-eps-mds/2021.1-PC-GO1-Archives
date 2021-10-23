@@ -462,22 +462,25 @@ def archival_relation_data():
                         "dates": ["2020-11-11"]
                     }
                 ]
-            },
+            }
+        ],
+        "document_types": [
+            {
+                "document_type_id": response_type.data['id'],
+                "year": 2020,
+                "month": 1,
+                "temporality_date": 2030
+            }
         ],
         "process_number": "1",
         "sender_unity": response_sender.data['id'],
         "notes": "1",
-        "number": "1",
         "received_date": "2020-11-11",
-        "number_of_boxes": 1,
         "document_url": "https://www.t.com/",
         "cover_sheet": "1",
         "filer_user": "1",
         "abbreviation_id": "",
-        "shelf_id": "",
-        "rack_id": "",
-        "document_type_id": [response_type.data['id']],
-        "temporality_date": "2020-11-11"
+        "shelf_id": ""
     }
 
     return data
@@ -498,8 +501,6 @@ def test_archival_relation_get_pk():
     response_archival_get = api_client.get(
         '/archival-relation/')
     assert response_archival_get.status_code == 200
-
-    print(response_archival_get.data[0])
 
     response = api_client.get('/archival-relation/{}'.format(
         response_archival_get.data[0]['id']))
@@ -526,6 +527,36 @@ def test_archival_relation_post():
         '/archival-relation/', data=data,
         format='json')
     assert response_archival.status_code == 201
+
+
+@pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
+def test_delete_archival_relation():
+    api_client = APIClient()
+
+    data = archival_relation_data()
+
+    response_archival = api_client.post(
+        '/archival-relation/', data=data,
+        format='json')
+    assert response_archival.status_code == 201
+
+    response_archival_get = api_client.get(
+        '/archival-relation/')
+    assert response_archival_get.status_code == 200
+
+    response = api_client.delete('/archival-relation/{}'.format(
+        response_archival_get.data[0]['id']))
+    assert response.status_code == 204
+
+
+@pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
+def test_delete_archival_relation_except():
+    api_client = APIClient()
+
+    response = api_client.delete('/archival-relation/10000000000')
+    assert response.status_code == 404
 
 
 @pytest.mark.django_db(transaction=False)

@@ -7,7 +7,7 @@ from .fields_serializers import FrontCoverSerializer, ShelfSerializer
 from .fields_models import BoxAbbreviations, DocumentSubject, DocumentType
 from .fields_models import Unity, Shelf, FrontCover, Rack
 from .documents_models import (ArchivalRelation, FrequencyRelation, AdministrativeProcess,
-                               OriginBox, FrequencySheet, OriginBoxSubject)
+                               OriginBox, FrequencySheet, OriginBoxSubject, DocumentTypes)
 from .documents_serializers import (FrequencySheetSerializer,
                                     AdministrativeProcessSerializer,
                                     FrequencyRelationSerializer,
@@ -117,19 +117,28 @@ class ArchivalRelationView(views.APIView):
                 box.subject.add(sub.id)
             boxes.append(box)
 
+        documents_list = request.data['document_types']
+        docs = list()
+
+        for doc_n in documents_list:
+            d_id = DocumentType.objects.get(pk=doc_n['document_type_id'])
+            d_t = DocumentTypes.objects.create(
+                document_type_id=d_id,
+                year=doc_n['year'],
+                month=doc_n['month'],
+                temporality_date=doc_n['temporality_date'])
+            docs.append(d_t)
+
         sender_unity_id = Unity.objects.get(pk=request.data['sender_unity'])
 
         archival_relation = ArchivalRelation.objects.create(
             process_number=request.data['process_number'],
             sender_unity=sender_unity_id,
             notes=request.data['notes'],
-            number=request.data['number'],
             received_date=request.data['received_date'],
-            number_of_boxes=request.data['number_of_boxes'],
             document_url=request.data['document_url'],
             cover_sheet=request.data['cover_sheet'],
-            filer_user=request.data['filer_user'],
-            temporality_date=request.data['temporality_date']
+            filer_user=request.data['filer_user']
         )
 
         if request.data['abbreviation_id'] != '':
@@ -147,14 +156,22 @@ class ArchivalRelationView(views.APIView):
         for box in boxes:
             archival_relation.origin_box_id.add(box.id)
 
-        for document in request.data['document_type_id']:
-            document_id = DocumentType.objects.get(pk=document)
-            archival_relation.document_type_id.add(document_id)
+        for doc in docs:
+            archival_relation.document_types.add(doc.id)
 
         return Response(status=201)
 
 
 class ArchivalRelationDetailsView(views.APIView):
+
+    def delete(self, request, pk):
+        try:
+            obj = ArchivalRelation.objects.get(pk=pk)
+            obj.delete()
+            return Response(status=204)
+        except ArchivalRelation.DoesNotExist:
+            error_dict = {"detail": "Not found."}
+            return Response(error_dict, status=404)
 
     def get(self, request, pk):
         try:
@@ -176,8 +193,23 @@ class ArchivalRelationDetailsView(views.APIView):
                     })
                 boxes.append(boxes_dict)
 
+            doc_types = serializer.data['document_types']
+            docs = list()
+            for doc in doc_types:
+                docs_dict = {}
+                doc_n = DocumentTypes.objects.get(pk=doc)
+                doc_type = DocumentTypeSerializer(doc_n.document_type_id)
+                doc_type = doc_type.data
+                docs_dict['document_type_id'] = doc_type['id']
+                docs_dict['document_type_name'] = doc_type['document_name']
+                docs_dict['year'] = doc_n.year
+                docs_dict['month'] = doc_n.month
+                docs_dict['temporality_date'] = doc_n.temporality_date
+                docs.append(docs_dict)
+
             final_dict = serializer.data
             final_dict['origin_box'] = boxes
+            final_dict['document_types'] = docs
             return Response(final_dict, status=200)
 
         except ArchivalRelation.DoesNotExist:
