@@ -2,9 +2,6 @@ import pytest
 from rest_framework.test import APIClient
 from django.test import override_settings
 from django.conf import settings
-from archives_app.documents_serializers import FrequencySheetSerializer
-from archives_app.documents_models import FrequencySheet
-from archives_app.fields_models import Shelf, Rack, BoxAbbreviations
 
 TESTS_MIDDLEWARE = [mc for mc in settings.MIDDLEWARE
                     if mc != 'archives_app.middleware.IsTokenValidMiddleware']
@@ -336,9 +333,6 @@ class TestFrequencySheetsEndpoints:
         "notes": "Nenhuma no momento",
         "process_number": "1",
         "reference_period": ["2020-11-11"],
-        "abbreviation_id": "",
-        "shelf_id": "",
-        "rack_id": "",
         "temporality_date": "2020-11-11"
     }
 
@@ -385,8 +379,6 @@ class TestFrequencySheetsEndpoints:
             "notes": "Nenhuma no momento",
             "process_number": "1",
             "reference_period": ["2020-11-11"],
-            "abbreviation_id": "",
-            "shelf_id": ""
         }
 
         response = api_client.post(
@@ -417,7 +409,7 @@ class TestFrequencySheetsEndpoints:
 @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
 def test_archival_relation_get():
     api_client = APIClient()
-    response = api_client.get('/archival-relation/')
+    response = api_client.get('/box-archiving/')
     assert response.status_code == 200
 
 
@@ -452,18 +444,17 @@ def archival_relation_data():
     assert response_type.status_code == 201
 
     data = {
-        "box_list": [
-            {
-                "number": "1",
-                "year": 2020,
-                "subjects_list": [
-                    {
-                        "name": "teste",
-                        "dates": ["2020-11-11"]
-                    }
-                ]
-            }
-        ],
+        "origin_box_id":
+        {
+            "number": "1",
+            "year": 2020,
+            "subjects_list": [
+                {
+                    "name": "teste",
+                    "dates": ["2020-11-11"]
+                }
+            ]
+        },
         "document_types": [
             {
                 "document_type_id": response_type.data['id'],
@@ -494,15 +485,15 @@ def test_archival_relation_get_pk():
     data = archival_relation_data()
 
     response_archival = api_client.post(
-        '/archival-relation/', data=data,
+        '/box-archiving/', data=data,
         format='json')
     assert response_archival.status_code == 201
 
     response_archival_get = api_client.get(
-        '/archival-relation/')
+        '/box-archiving/')
     assert response_archival_get.status_code == 200
 
-    response = api_client.get('/archival-relation/{}'.format(
+    response = api_client.get('/box-archiving/{}'.format(
         response_archival_get.data[0]['id']))
     assert response.status_code == 200
 
@@ -512,7 +503,7 @@ def test_archival_relation_get_pk():
 def test_archival_relation_get_pk_except():
     api_client = APIClient()
 
-    response = api_client.get('/archival-relation/4000')
+    response = api_client.get('/box-archiving/4000')
     assert response.status_code == 404
 
 
@@ -524,7 +515,7 @@ def test_archival_relation_post():
     data = archival_relation_data()
 
     response_archival = api_client.post(
-        '/archival-relation/', data=data,
+        '/box-archiving/', data=data,
         format='json')
     assert response_archival.status_code == 201
 
@@ -537,15 +528,15 @@ def test_delete_archival_relation():
     data = archival_relation_data()
 
     response_archival = api_client.post(
-        '/archival-relation/', data=data,
+        '/box-archiving/', data=data,
         format='json')
     assert response_archival.status_code == 201
 
     response_archival_get = api_client.get(
-        '/archival-relation/')
+        '/box-archiving/')
     assert response_archival_get.status_code == 200
 
-    response = api_client.delete('/archival-relation/{}'.format(
+    response = api_client.delete('/box-archiving/{}'.format(
         response_archival_get.data[0]['id']))
     assert response.status_code == 204
 
@@ -555,7 +546,7 @@ def test_delete_archival_relation():
 def test_delete_archival_relation_except():
     api_client = APIClient()
 
-    response = api_client.delete('/archival-relation/10000000000')
+    response = api_client.delete('/box-archiving/10000000000')
     assert response.status_code == 404
 
 
@@ -567,41 +558,12 @@ def test_search():
     data = archival_relation_data()
 
     response_archival = api_client.post(
-        '/archival-relation/', data=data,
+        '/box-archiving/', data=data,
         format='json')
     assert response_archival.status_code == 201
 
     response = api_client.get('/search/?filter={"process_number":"1"}')
     assert response.status_code == 200
-
-
-@pytest.mark.django_db(transaction=False)
-@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-def test_get_shelf_number():
-
-    s = Shelf.objects.create(number=123)
-    r = Rack.objects.create(number=123)
-    b = BoxAbbreviations.objects.create(name="a")
-
-    f = FrequencySheet.objects.create(
-        person_name="teste",
-        cpf="1",
-        role="teste",
-        category="teste",
-        workplace="teste",
-        municipal_area="teste",
-        reference_period="2020-11-11",
-        abbreviation_id=b,
-        shelf_id=s,
-        rack_id=r,
-        notes=None,
-        process_number="1"
-    )
-
-    f_s = FrequencySheetSerializer(f)
-    assert f_s.get_shelf_number(f) == 123
-    assert f_s.get_rack_number(f) == 123
-    assert f_s.get_abbreviation_name(f) == 'a'
 
 
 @pytest.mark.django_db(transaction=False)
@@ -624,7 +586,7 @@ def test_search_without_shelf():
     data['shelf_id'] = response_shelf.data['id']
 
     response_archival = api_client.post(
-        '/archival-relation/', data=data,
+        '/box-archiving/', data=data,
         format='json')
     assert response_archival.status_code == 201
 

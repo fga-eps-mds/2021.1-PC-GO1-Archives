@@ -1,10 +1,11 @@
 from rest_framework import serializers
-from archives_app.documents_models import (FrequencyRelation, ArchivalRelation,
+from archives_app.documents_models import (FrequencyRelation, BoxArchiving,
                                            AdministrativeProcess, OriginBox,
                                            FrequencySheet, DocumentTypes)
 
 
-class ObjectNames(serializers.ModelSerializer):
+class BoxArchivingSerializer(serializers.ModelSerializer):
+
     def get_shelf_number(self, obj):
         if obj.shelf_id is not None:
             return obj.shelf_id.number
@@ -24,11 +25,8 @@ class ObjectNames(serializers.ModelSerializer):
     rack_number = serializers.SerializerMethodField('get_rack_number')
     abbreviation_name = serializers.SerializerMethodField('get_abbreviation_name')
 
-
-class ArchivalRelationSerializer(ObjectNames):
-
     class Meta:
-        model = ArchivalRelation
+        model = BoxArchiving
         fields = (
             "id",
             "process_number",
@@ -49,7 +47,7 @@ class ArchivalRelationSerializer(ObjectNames):
         )
 
 
-class FrequencyRelationSerializer(ObjectNames):
+class FrequencyRelationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FrequencyRelation
@@ -57,22 +55,17 @@ class FrequencyRelationSerializer(ObjectNames):
             "id",
             "process_number",
             "notes",
-            "filer_user",
+            "document_date"
             "received_date",
-            "reference_period",
             "temporality_date",
+            "reference_period",
+            "filer_user",
             "sender_unity",
-            "abbreviation_name",
-            "shelf_number",
-            "rack_number",
             "document_type_id",
-            "abbreviation_id",
-            "shelf_id",
-            "rack_id"
         )
 
 
-class AdministrativeProcessSerializer(ObjectNames):
+class AdministrativeProcessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AdministrativeProcess
@@ -92,15 +85,9 @@ class AdministrativeProcessSerializer(ObjectNames):
                   "send_date",
                   "administrative_process_number",
                   "sender_unity",
-                  "abbreviation_name",
                   "subject_id",
                   "dest_unity_id",
                   "unity_id",
-                  "shelf_number",
-                  "rack_number",
-                  "abbreviation_id",
-                  "shelf_id",
-                  "rack_id"
                   )
 
 
@@ -118,7 +105,7 @@ class DocumentTypesSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FrequencySheetSerializer(ObjectNames):
+class FrequencySheetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FrequencySheet
@@ -132,9 +119,5 @@ class FrequencySheetSerializer(ObjectNames):
                   "reference_period",
                   "notes",
                   "process_number",
-                  "abbreviation_id",
-                  "shelf_id",
-                  "rack_id",
-                  "abbreviation_name",
-                  "shelf_number",
-                  "rack_number")
+                  "document_type_id"
+                  )

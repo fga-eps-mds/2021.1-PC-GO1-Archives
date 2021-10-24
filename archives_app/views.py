@@ -2,22 +2,22 @@ from rest_framework import viewsets, views
 from rest_framework.response import Response
 from .fields_serializers import BoxAbbreviationsSerializer
 from .fields_serializers import (DocumentSubjectSerializer, DocumentTypeSerializer,
-                                 UnitySerializer, RackSerializer)
+                                 UnitySerializer, RackSerializer, PublicWorkerSerializer)
 from .fields_serializers import FrontCoverSerializer, ShelfSerializer
 from .fields_models import BoxAbbreviations, DocumentSubject, DocumentType
-from .fields_models import Unity, Shelf, FrontCover, Rack
-from .documents_models import (ArchivalRelation, FrequencyRelation, AdministrativeProcess,
+from .fields_models import Unity, Shelf, FrontCover, Rack, PublicWorker
+from .documents_models import (BoxArchiving, FrequencyRelation, AdministrativeProcess,
                                OriginBox, FrequencySheet, OriginBoxSubject, DocumentTypes)
 from .documents_serializers import (FrequencySheetSerializer,
                                     AdministrativeProcessSerializer,
                                     FrequencyRelationSerializer,
-                                    ArchivalRelationSerializer)
+                                    BoxArchivingSerializer)
 import json
 
 
 class DocumentSubjectViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows document subjects to be viewed or edited.
     """
     queryset = DocumentSubject.objects.all()
     serializer_class = DocumentSubjectSerializer
@@ -25,7 +25,7 @@ class DocumentSubjectViewSet(viewsets.ModelViewSet):
 
 class DocumentTypeViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    API endpoint that allows document types to be viewed or edited.
     """
     queryset = DocumentType.objects.all()
     serializer_class = DocumentTypeSerializer
@@ -33,15 +33,23 @@ class DocumentTypeViewSet(viewsets.ModelViewSet):
 
 class UnityViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows unitys to be viewed or edited.
     """
     queryset = Unity.objects.all()
     serializer_class = UnitySerializer
 
 
+class PublicWorkerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows public workers to be viewed or edited.
+    """
+    queryset = PublicWorker.objects.all()
+    serializer_class = PublicWorkerSerializer
+
+
 class BoxAbbreviationViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows abbreviations to be viewed or edited.
     """
     queryset = BoxAbbreviations.objects.all()
     serializer_class = BoxAbbreviationsSerializer
@@ -49,7 +57,7 @@ class BoxAbbreviationViewSet(viewsets.ModelViewSet):
 
 class ShelfViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows shelfs to be viewed or edited.
     """
     queryset = Shelf.objects.all()
     serializer_class = ShelfSerializer
@@ -57,7 +65,7 @@ class ShelfViewSet(viewsets.ModelViewSet):
 
 class RackViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows racks to be viewed or edited.
     """
     queryset = Rack.objects.all()
     serializer_class = RackSerializer
@@ -98,24 +106,21 @@ class FrequencySheetViewSet(viewsets.ModelViewSet):
     serializer_class = FrequencySheetSerializer
 
 
-class ArchivalRelationView(views.APIView):
+class BoxArchivingView(views.APIView):
 
     def get(self, request):
-        queryset = ArchivalRelation.objects.all()
-        serializer = ArchivalRelationSerializer(queryset, many=True)
+        queryset = BoxArchiving.objects.all()
+        serializer = BoxArchivingSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
     def post(self, request):
-        box_list = request.data['box_list']
-        boxes = list()
+        origin_box = request.data['origin_box_id']
 
-        for box_n in box_list:
-            box = OriginBox.objects.create(number=box_n['number'], year=box_n['year'])
-            for subject in box_n['subjects_list']:
-                sub = OriginBoxSubject.objects.create(name=subject['name'],
-                                                      dates=subject['dates'])
-                box.subject.add(sub.id)
-            boxes.append(box)
+        box = OriginBox.objects.create(number=origin_box['number'], year=origin_box['year'])
+        for subject in origin_box['subjects_list']:
+            sub = OriginBoxSubject.objects.create(name=subject['name'],
+                                                  dates=subject['dates'])
+            box.subject.add(sub.id)
 
         documents_list = request.data['document_types']
         docs = list()
@@ -131,7 +136,7 @@ class ArchivalRelationView(views.APIView):
 
         sender_unity_id = Unity.objects.get(pk=request.data['sender_unity'])
 
-        archival_relation = ArchivalRelation.objects.create(
+        box_archiving = BoxArchiving.objects.create(
             process_number=request.data['process_number'],
             sender_unity=sender_unity_id,
             notes=request.data['notes'],
@@ -145,53 +150,40 @@ class ArchivalRelationView(views.APIView):
             box_abbreviation_id = BoxAbbreviations.objects.get(
                 pk=request.data['abbreviation_id']
             )
-            archival_relation.abbreviation_id = box_abbreviation_id
-            archival_relation.save()
+            box_archiving.abbreviation_id = box_abbreviation_id
+            box_archiving.save()
 
         if request.data['shelf_id'] != '':
             shelf_number_id = Shelf.objects.get(pk=request.data['shelf_id'])
-            archival_relation.shelf_id = shelf_number_id
-            archival_relation.save()
+            box_archiving.shelf_id = shelf_number_id
+            box_archiving.save()
 
-        for box in boxes:
-            archival_relation.origin_box_id.add(box.id)
+        if box is not None:
+            print(box.id)
+            box_archiving.origin_box_id = box
+            box_archiving.save()
 
         for doc in docs:
-            archival_relation.document_types.add(doc.id)
+            box_archiving.document_types.add(doc.id)
 
         return Response(status=201)
 
 
-class ArchivalRelationDetailsView(views.APIView):
+class BoxArchivingDetailsView(views.APIView):
 
     def delete(self, request, pk):
         try:
-            obj = ArchivalRelation.objects.get(pk=pk)
+            obj = BoxArchiving.objects.get(pk=pk)
             obj.delete()
             return Response(status=204)
-        except ArchivalRelation.DoesNotExist:
+        except BoxArchiving.DoesNotExist:
             error_dict = {"detail": "Not found."}
             return Response(error_dict, status=404)
 
     def get(self, request, pk):
         try:
-            queryset = ArchivalRelation.objects.get(pk=pk)
-            serializer = ArchivalRelationSerializer(queryset)
-
-            origin_box = serializer.data['origin_box_id']
-            boxes = list()
-            for box in origin_box:
-                boxes_dict = {}
-                box_n = OriginBox.objects.get(pk=box)
-                boxes_dict['number'] = box_n.number
-                boxes_dict['year'] = box_n.year
-                boxes_dict['subjects_list'] = list()
-                for subjects in box_n.subject.all():
-                    boxes_dict['subjects_list'].append({
-                        'name': subjects.name,
-                        'date': subjects.dates
-                    })
-                boxes.append(boxes_dict)
+            queryset = BoxArchiving.objects.get(pk=pk)
+            serializer = BoxArchivingSerializer(queryset)
 
             doc_types = serializer.data['document_types']
             docs = list()
@@ -207,19 +199,31 @@ class ArchivalRelationDetailsView(views.APIView):
                 docs_dict['temporality_date'] = doc_n.temporality_date
                 docs.append(docs_dict)
 
+            box_id = serializer.data['origin_box_id']
+            box_dict = {}
+            box = OriginBox.objects.get(pk=box_id)
+            box_dict['number'] = box.number
+            box_dict['year'] = box.year
+            box_dict['subject_list'] = list()
+            for subject in box.subject.all():
+                box_dict['subject_list'].append({
+                    'name': subject.name,
+                    'date': subject.dates
+                })
+
             final_dict = serializer.data
-            final_dict['origin_box'] = boxes
+            final_dict['origin_box'] = box_dict
             final_dict['document_types'] = docs
             return Response(final_dict, status=200)
 
-        except ArchivalRelation.DoesNotExist:
+        except BoxArchiving.DoesNotExist:
             error_dict = {"detail": "Not found."}
             return Response(error_dict, status=404)
 
 
 class SearchView(views.APIView):
     archival_relation_fields = [field.name for field in
-                                ArchivalRelation._meta.get_fields()]
+                                BoxArchiving._meta.get_fields()]
     frequency_relation_fields = [field.name for field in
                                  FrequencyRelation._meta.get_fields()]
     frequency_sheet_fields = [field.name for field in
@@ -229,12 +233,12 @@ class SearchView(views.APIView):
 
     def get(self, request):
         query = request.query_params.get("filter")
-        archival_relation = ArchivalRelation.objects.all()
+        box_archiving = BoxArchiving.objects.all()
         frequency_sheet = FrequencySheet.objects.all()
         administrative_process = AdministrativeProcess.objects.all()
         frequency_relation = FrequencyRelation.objects.all()
         return_dict = {
-            "archival_relation": [],
+            "box_archiving": [],
             "frequecy_relation": [],
             "frequency_sheet": [],
             "administrative_process": []
@@ -256,11 +260,11 @@ class SearchView(views.APIView):
 
             if list(filter_dict.keys())[0] in self.archival_relation_fields:
                 if not filter_dict_fk:
-                    archival_relation = archival_relation.filter(**filter_dict)
+                    box_archiving = box_archiving.filter(**filter_dict)
                 else:
-                    archival_relation = archival_relation.filter(**filter_dict_fk)
-                return_dict['archival_relation'] = ArchivalRelationSerializer(
-                    archival_relation, many=True).data
+                    box_archiving = box_archiving.filter(**filter_dict_fk)
+                return_dict['box_archiving'] = BoxArchivingSerializer(
+                    box_archiving, many=True).data
 
             if list(filter_dict.keys())[0] in self.frequency_relation_fields:
                 if not filter_dict_fk:

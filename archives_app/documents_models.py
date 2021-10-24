@@ -9,12 +9,6 @@ from django.core.validators import MinValueValidator
 class Document(models.Model):
     process_number = models.CharField(max_length=20)
     sender_unity = models.ForeignKey(Unity, on_delete=models.PROTECT)
-    abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
-                                        blank=True, null=True)
-    shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True,
-                                 null=True)
-    rack_id = models.ForeignKey(Rack, on_delete=models.PROTECT, blank=True,
-                                null=True)
     notes = models.CharField(max_length=300, blank=True, null=True)
     filer_user = models.CharField(max_length=150)
 
@@ -41,14 +35,22 @@ class DocumentTypes(models.Model):
     temporality_date = models.IntegerField(validators=[MinValueValidator(1900)])
 
 
-class ArchivalRelation(Relation):
-    origin_box_id = models.ManyToManyField(OriginBox)
+class BoxArchiving(Relation):
+    abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
+                                        blank=True, null=True)
+    shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True,
+                                 null=True)
+    rack_id = models.ForeignKey(Rack, on_delete=models.PROTECT, blank=True,
+                                null=True)
+    origin_box_id = models.ForeignKey(OriginBox, on_delete=models.PROTECT,
+                                      blank=True, null=True)
     document_url = models.URLField(blank=True, null=True)
     cover_sheet = models.CharField(max_length=100, blank=True, null=True)
     document_types = models.ManyToManyField(DocumentTypes)
 
 
 class FrequencyRelation(Relation):
+    document_date = models.DateField()
     reference_period = ArrayField(models.DateField())
     temporality_date = models.IntegerField(validators=[MinValueValidator(1900)],
                                            blank=True, null=True)
@@ -64,12 +66,8 @@ class FrequencySheet(models.Model):
     workplace = models.CharField(max_length=100)
     municipal_area = models.CharField(max_length=100)
     reference_period = models.DateField()
-    abbreviation_id = models.ForeignKey(BoxAbbreviations, on_delete=models.PROTECT,
-                                        blank=True, null=True)
-    shelf_id = models.ForeignKey(Shelf, on_delete=models.PROTECT, blank=True,
-                                 null=True)
-    rack_id = models.ForeignKey(Rack, on_delete=models.PROTECT, blank=True,
-                                null=True)
+    document_type_id = models.ForeignKey(DocumentType, on_delete=models.PROTECT,
+                                         blank=True, null=True)
     notes = models.CharField(max_length=300, blank=True, null=True)
     process_number = models.CharField(max_length=20, blank=True, null=True)
 
