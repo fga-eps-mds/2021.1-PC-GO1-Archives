@@ -15,10 +15,10 @@ class DocumentType(models.Model):
 class PublicWorker(models.Model):
     name = models.CharField(max_length=150)
     cpf = models.CharField(max_length=11)
-    role = models.CharField(max_length=100)
+    role = models.CharField(max_length=100, blank=True, null=True)
     category = models.CharField(max_length=100, blank=True, null=True)
-    workplace = models.CharField(max_length=100)
-    municipal_area = models.CharField(max_length=100)
+    workplace = models.CharField(max_length=100, blank=True, null=True)
+    municipal_area = models.CharField(max_length=100, blank=True, null=True)
 
 
 class Unity(models.Model):
