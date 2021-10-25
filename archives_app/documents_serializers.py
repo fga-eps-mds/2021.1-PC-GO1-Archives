@@ -55,7 +55,7 @@ class FrequencyRelationSerializer(serializers.ModelSerializer):
             "id",
             "process_number",
             "notes",
-            "document_date"
+            "document_date",
             "received_date",
             "temporality_date",
             "reference_period",
