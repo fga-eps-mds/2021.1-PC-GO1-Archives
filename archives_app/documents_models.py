@@ -70,6 +70,8 @@ class FrequencySheet(models.Model):
                                          blank=True, null=True)
     notes = models.CharField(max_length=300, blank=True, null=True)
     process_number = models.CharField(max_length=20, blank=True, null=True)
+    temporality_date = models.IntegerField(validators=[MinValueValidator(1900)],
+                                           blank=True, null=True)
 
 
 class AdministrativeProcess(Document):

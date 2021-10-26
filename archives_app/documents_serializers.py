@@ -119,5 +119,6 @@ class FrequencySheetSerializer(serializers.ModelSerializer):
                   "reference_period",
                   "notes",
                   "process_number",
-                  "document_type_id"
+                  "document_type_id",
+                  "temporality_date"
                   )
