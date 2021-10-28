@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from archives_app.fields_models import (BoxAbbreviations, DocumentType,
                                         DocumentSubject, Shelf,
-                                        Unity, Rack)
+                                        Unity, Rack, PublicWorker)
 from django.core.validators import MinValueValidator
 
 
@@ -59,7 +59,8 @@ class FrequencyRelation(Relation):
 
 
 class FrequencySheet(models.Model):
-    person_name = models.CharField(max_length=150)
+    person_id = models.ForeignKey(PublicWorker, on_delete=models.PROTECT,
+                                  blank=True, null=True)
     cpf = models.CharField(max_length=11)
     role = models.CharField(max_length=100)
     category = models.CharField(max_length=100, blank=True, null=True)
