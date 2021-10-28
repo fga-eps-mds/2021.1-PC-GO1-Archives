@@ -33,4 +33,4 @@ jobs:
           cat .env
 
       - name: Executar flake8  
-        run: sudo docker-compose run web flake8
+        run: sudo docker-compose run web_archives flake8
