@@ -110,7 +110,7 @@ class FrequencySheetSerializer(serializers.ModelSerializer):
     class Meta:
         model = FrequencySheet
         fields = ("id",
-                  "person_name",
+                  "person_id",
                   "cpf",
                   "role",
                   "category",
