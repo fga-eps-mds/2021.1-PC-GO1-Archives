@@ -322,99 +322,15 @@ class TestshelfEndpoints:
 
 
 @pytest.mark.django_db(transaction=False)
-class TestFrequencySheetsEndpoints:
-    data = {
-        "person_name": "teste",
-        "cpf": "teste",
-        "role": "teste",
-        "category": "teste",
-        "workplace": "teste",
-        "municipal_area": "teste",
-        "notes": "Nenhuma no momento",
-        "process_number": "1",
-        "reference_period": ["2020-11-11"],
-        "temporality_date": "2020-11-11"
-    }
-
-    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-    def test_create(self):
-        api_client = APIClient()
-
-        response = api_client.post(
-            '/frequency-sheet/', data=self.data,
-            header={"Content-Type": "application/json"})
-
-        assert response.status_code == 201
-
-    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-    def test_list(self):
-
-        api_client = APIClient()
-        response = api_client.get('/frequency-sheet/')
-        assert response.status_code == 200
-
-    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-    def test_retrieve(self):
-        api_client = APIClient()
-
-        response = api_client.post(
-            '/frequency-sheet/', data=self.data,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 201
-
-        response = api_client.get('/frequency-sheet/{}/'.format(response.data['id']))
-        assert response.status_code == 200
-
-    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-    def test_update(self):
-        api_client = APIClient()
-
-        data_2 = {
-            "person_name": "teste2",
-            "cpf": "teste",
-            "role": "teste",
-            "category": "teste",
-            "workplace": "teste",
-            "municipal_area": "teste",
-            "notes": "Nenhuma no momento",
-            "process_number": "1",
-            "reference_period": ["2020-11-11"],
-        }
-
-        response = api_client.post(
-            '/frequency-sheet/', data=self.data,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 201
-
-        response_2 = api_client.put(
-            '/frequency-sheet/{}/'.format(response.data['id']), data=data_2,
-            header={"Content-Type": "application/json"})
-        assert response_2.status_code == 200
-
-    @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-    def test_destroy(self):
-        api_client = APIClient()
-
-        response = api_client.post(
-            '/frequency-sheet/', data=self.data,
-            header={"Content-Type": "application/json"})
-        assert response.status_code == 201
-        response_2 = api_client.delete(
-            '/frequency-sheet/{}/'.format(response.data['id']), data=self.data,
-            header={"Content-Type": "application/json"})
-        assert response_2.status_code == 204
-
-
-@pytest.mark.django_db(transaction=False)
 @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-def test_archival_relation_get():
+def test_box_archiving_relation_get():
     api_client = APIClient()
     response = api_client.get('/box-archiving/')
     assert response.status_code == 200
 
 
 @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-def archival_relation_data():
+def box_archiving():
     api_client = APIClient()
 
     data_sender = {
@@ -479,28 +395,28 @@ def archival_relation_data():
 
 @pytest.mark.django_db(transaction=False)
 @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-def test_archival_relation_get_pk():
+def test_box_archiving_relation_get_pk():
     api_client = APIClient()
 
-    data = archival_relation_data()
+    data = box_archiving()
 
-    response_archival = api_client.post(
+    response_box_archiving = api_client.post(
         '/box-archiving/', data=data,
         format='json')
-    assert response_archival.status_code == 201
+    assert response_box_archiving.status_code == 201
 
-    response_archival_get = api_client.get(
+    response_box_archiving_get = api_client.get(
         '/box-archiving/')
-    assert response_archival_get.status_code == 200
+    assert response_box_archiving_get.status_code == 200
 
     response = api_client.get('/box-archiving/{}'.format(
-        response_archival_get.data[0]['id']))
+        response_box_archiving_get.data[0]['id']))
     assert response.status_code == 200
 
 
 @pytest.mark.django_db(transaction=False)
 @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-def test_archival_relation_get_pk_except():
+def test_box_archiving_relation_get_pk_except():
     api_client = APIClient()
 
     response = api_client.get('/box-archiving/4000')
@@ -509,41 +425,41 @@ def test_archival_relation_get_pk_except():
 
 @pytest.mark.django_db(transaction=False)
 @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-def test_archival_relation_post():
+def test_box_archiving_relation_post():
     api_client = APIClient()
 
-    data = archival_relation_data()
+    data = box_archiving()
 
-    response_archival = api_client.post(
+    response_box_archiving = api_client.post(
         '/box-archiving/', data=data,
         format='json')
-    assert response_archival.status_code == 201
+    assert response_box_archiving.status_code == 201
 
 
 @pytest.mark.django_db(transaction=False)
 @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-def test_delete_archival_relation():
+def test_delete_box_archiving_relation():
     api_client = APIClient()
 
-    data = archival_relation_data()
+    data = box_archiving()
 
-    response_archival = api_client.post(
+    response_box_archiving = api_client.post(
         '/box-archiving/', data=data,
         format='json')
-    assert response_archival.status_code == 201
+    assert response_box_archiving.status_code == 201
 
-    response_archival_get = api_client.get(
+    response_box_archiving_get = api_client.get(
         '/box-archiving/')
-    assert response_archival_get.status_code == 200
+    assert response_box_archiving_get.status_code == 200
 
     response = api_client.delete('/box-archiving/{}'.format(
-        response_archival_get.data[0]['id']))
+        response_box_archiving_get.data[0]['id']))
     assert response.status_code == 204
 
 
 @pytest.mark.django_db(transaction=False)
 @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-def test_delete_archival_relation_except():
+def test_delete_box_archiving_relation_except():
     api_client = APIClient()
 
     response = api_client.delete('/box-archiving/10000000000')
@@ -555,12 +471,12 @@ def test_delete_archival_relation_except():
 def test_search():
     api_client = APIClient()
 
-    data = archival_relation_data()
+    data = box_archiving()
 
-    response_archival = api_client.post(
+    response_box_archiving = api_client.post(
         '/box-archiving/', data=data,
         format='json')
-    assert response_archival.status_code == 201
+    assert response_box_archiving.status_code == 201
 
     response = api_client.get('/search/?filter={"process_number":"1"}')
     assert response.status_code == 200
@@ -568,11 +484,11 @@ def test_search():
 
 @pytest.mark.django_db(transaction=False)
 @override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
-def test_search_without_shelf():
+def test_search_without_specific_fields_from_box_archiving():
 
     api_client = APIClient()
 
-    data = archival_relation_data()
+    data = box_archiving()
 
     data_shelf = {
         "number": 123,
@@ -585,12 +501,200 @@ def test_search_without_shelf():
 
     data['shelf_id'] = response_shelf.data['id']
 
-    response_archival = api_client.post(
+    response_box_archiving = api_client.post(
         '/box-archiving/', data=data,
         format='json')
-    assert response_archival.status_code == 201
+    assert response_box_archiving.status_code == 201
 
     response = api_client.get('/search/?filter={"shelf_id":123}')
+    assert response.status_code == 200
+
+    data_rack = {
+        "number": 123,
+    }
+
+    response_rack = api_client.post(
+        '/rack/', data=data_rack,
+        header={"Content-Type": "application/json"})
+    assert response_rack.status_code == 201
+
+    data['rack_id'] = response_rack.data['id']
+
+    response_box_archiving = api_client.post(
+        '/box-archiving/', data=data,
+        format='json')
+    assert response_box_archiving.status_code == 201
+
+    response = api_client.get('/search/?filter={"rack_id":123}')
+    assert response.status_code == 200
+
+    data_abbreviation = {
+        "number": "123",
+        "abbreviation": "a",
+        "name": "a",
+        "year": 2020
+    }
+
+    response_abbreviation = api_client.post(
+        '/box-abbreviation/', data=data_abbreviation,
+        header={"Content-Type": "application/json"})
+    assert response_rack.status_code == 201
+
+    data['abbreviation_id'] = response_abbreviation.data['id']
+
+    response_box_archiving = api_client.post(
+        '/box-archiving/', data=data,
+        format='json')
+    assert response_box_archiving.status_code == 201
+
+    response = api_client.get('/search/?filter={"abbreviation_id":"a"}')
+    assert response.status_code == 200
+
+    data_unity = {
+        "unity_name": "unity1",
+        "unity_abbreviation": "u1",
+        "administrative_bond": "a",
+        "bond_abbreviation": "a",
+        "municipality": "test",
+        "telephone_number": "a",
+        "notes": "1"
+    }
+
+    response_unity = api_client.post(
+        '/unity/', data=data_unity,
+        header={"Content-Type": "application/json"})
+    assert response_unity.status_code == 201
+
+    data['sender_unity'] = response_unity.data['id']
+
+    response_box_archiving = api_client.post(
+        '/box-archiving/', data=data,
+        format='json')
+    assert response_box_archiving.status_code == 201
+
+    response = api_client.get('/search/?filter={"sender_unity":"unity1"}')
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
+def test_search_without_specific_fields_from_admin_process():
+
+    api_client = APIClient()
+
+    data_subject = {
+        "subject_name": "name",
+        "temporality": 2020
+    }
+
+    response_subject = api_client.post(
+        '/document-subject/', data=data_subject,
+        header={"Content-Type": "application/json"})
+    assert response_subject.status_code == 201
+
+    data_unity = {
+        "unity_name": "unity1",
+        "unity_abbreviation": "u1",
+        "administrative_bond": "a",
+        "bond_abbreviation": "a",
+        "municipality": "test",
+        "telephone_number": "a",
+        "notes": "1"
+    }
+
+    response_unity = api_client.post(
+        '/unity/', data=data_unity,
+        header={"Content-Type": "application/json"})
+    assert response_unity.status_code == 201
+
+    data = {
+        "process_number": "12345",
+        "notes": "1",
+        "filer_user": "1",
+        "notice_date": "2020-11-11",
+        "interested": "1",
+        "cpf_cnpj": "11111111111",
+        "reference_month_year": "2020-11-11",
+        "sender_user": "1",
+        "archiving_date": "2020-11-11",
+        "is_filed": False,
+        "is_eliminated": False,
+        "temporality_date": 2021,
+        "send_date": "2021-11-11",
+        "administrative_process_number": "1",
+        "sender_unity": None,
+        "subject_id": None,
+        "dest_unity_id": None,
+        "unity_id": None
+    }
+
+    data['subject_id'] = response_subject.data['id']
+    data['sender_unity'] = response_unity.data['id']
+    data['dest_unity_id'] = response_unity.data['id']
+    data['unity_id'] = response_unity.data['id']
+
+    response_admin = api_client.post(
+        '/administrative-process/', data=data,
+        format='json')
+    assert response_admin.status_code == 201
+
+    response = api_client.get('/search/?filter={"subject_id":"unity1"}')
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db(transaction=False)
+@override_settings(MIDDLEWARE=TESTS_MIDDLEWARE)
+def test_search_without_specific_fields_from_frequency_sheet():
+
+    api_client = APIClient()
+
+    data_type = {
+        "document_name": "name",
+        "temporality": 2020
+    }
+
+    response_type = api_client.post(
+        '/document-type/', data=data_type,
+        header={"Content-Type": "application/json"})
+    assert response_type.status_code == 201
+
+    data_pw = {
+        "name": "person1",
+        "cpf": "1111111111",
+        "role": "1",
+        "category": "1",
+        "workplace": "1",
+        "municipal_area": "1"
+    }
+
+    response_pw = api_client.post(
+        '/public-worker/', data=data_pw,
+        header={"Content-Type": "application/json"})
+    assert response_pw.status_code == 201
+
+    data = {
+        "person_id": None,
+        "cpf": "1",
+        "role": "1",
+        "category": "1",
+        "workplace": "1",
+        "municipal_area": "1",
+        "reference_period": "2020-11-11",
+        "notes": "1",
+        "process_number": "1",
+        "document_type_id": None,
+        "temporality_date": 2021
+    }
+
+    data['document_type_id'] = response_type.data['id']
+    data['person_id'] = response_pw.data['id']
+
+    response_sheet = api_client.post(
+        '/frequency-sheet/', data=data,
+        format='json')
+    assert response_sheet.status_code == 201
+
+    response = api_client.get('/search/?filter={"document_type_id":"name"}')
     assert response.status_code == 200
 
 

@@ -248,9 +248,21 @@ class SearchView(views.APIView):
             filter_dict = json.loads(query)
             filter_dict_fk = {}
 
-            if 'id' in list(filter_dict.keys())[0]:
+            if (
+                'id' in list(filter_dict.keys())[0] or
+                'sender_unity' in list(filter_dict.keys())[0]
+            ):
                 if 'abbreviation_id' in list(filter_dict.keys())[0]:
                     contains = 'abbreviation_id__name__icontains'
+                elif 'subject_id' in list(filter_dict.keys())[0]:
+                    contains = '{}__subject_name__icontains'.format(
+                        list(filter_dict.keys())[0])
+                elif 'document_type_id' in list(filter_dict.keys())[0]:
+                    contains = '{}__document_name__icontains'.format(
+                        list(filter_dict.keys())[0])
+                elif 'sender_unity' in list(filter_dict.keys())[0]:
+                    contains = '{}__unity_name__icontains'.format(
+                        list(filter_dict.keys())[0])
                 else:
                     contains = '{}__number__icontains'.format(
                         list(filter_dict.keys())[0])
