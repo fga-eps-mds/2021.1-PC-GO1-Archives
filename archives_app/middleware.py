@@ -22,9 +22,9 @@ class IsTokenValidMiddleware(object):
         response = self.get_response(response)
         return response
 
-    def process_view(self, request, callback, callback_args, callback_kwargs):
-        req = requests.post(VERIFY_TOKEN + self.url,
-                            data={'token': request.META['HTTP_AUTHORIZATION'][3:]})
-        if req.status_code == 401:
-            return HttpResponseForbidden()
-        return
+    # def process_view(self, request, callback, callback_args, callback_kwargs):
+    #     req = requests.post(VERIFY_TOKEN + self.url,
+    #                         data={'token': request.META['HTTP_AUTHORIZATION'][3:]})
+    #     if req.status_code == 401:
+    #         return HttpResponseForbidden()
+    #     return
