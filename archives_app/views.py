@@ -116,11 +116,13 @@ class BoxArchivingView(views.APIView):
     def post(self, request):
         origin_box = request.data['origin_box_id']
 
-        box = OriginBox.objects.create(number=origin_box['number'], year=origin_box['year'])
-        for subject in origin_box['subjects_list']:
-            sub = OriginBoxSubject.objects.create(name=subject['name'],
-                                                  dates=subject['dates'])
-            box.subject.add(sub.id)
+        if origin_box != {}:
+            print(origin_box)
+            box = OriginBox.objects.create(number=origin_box['number'], year=origin_box['year'])
+            for subject in origin_box['subjects_list']:
+                sub = OriginBoxSubject.objects.create(name=subject['name'],
+                                                    dates=subject['dates'])
+                box.subject.add(sub.id)
 
         documents_list = request.data['document_types']
         docs = list()
@@ -158,10 +160,11 @@ class BoxArchivingView(views.APIView):
             box_archiving.shelf_id = shelf_number_id
             box_archiving.save()
 
-        if box is not None:
-            print(box.id)
-            box_archiving.origin_box_id = box
-            box_archiving.save()
+        if origin_box != {}:
+            if box is not None:
+                print(box.id)
+                box_archiving.origin_box_id = box
+                box_archiving.save()
 
         for doc in docs:
             box_archiving.document_types.add(doc.id)
@@ -201,15 +204,16 @@ class BoxArchivingDetailsView(views.APIView):
 
             box_id = serializer.data['origin_box_id']
             box_dict = {}
-            box = OriginBox.objects.get(pk=box_id)
-            box_dict['number'] = box.number
-            box_dict['year'] = box.year
-            box_dict['subject_list'] = list()
-            for subject in box.subject.all():
-                box_dict['subject_list'].append({
-                    'name': subject.name,
-                    'date': subject.dates
-                })
+            if box_id is not None:
+                box = OriginBox.objects.get(pk=box_id)
+                box_dict['number'] = box.number
+                box_dict['year'] = box.year
+                box_dict['subject_list'] = list()
+                for subject in box.subject.all():
+                    box_dict['subject_list'].append({
+                        'name': subject.name,
+                        'date': subject.dates
+                    })
 
             final_dict = serializer.data
             final_dict['origin_box'] = box_dict

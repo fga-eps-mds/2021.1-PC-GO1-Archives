@@ -375,7 +375,7 @@ def box_archiving():
             {
                 "document_type_id": response_type.data['id'],
                 "year": 2020,
-                "month": 1,
+                "month": "01",
                 "temporality_date": 2030
             }
         ],

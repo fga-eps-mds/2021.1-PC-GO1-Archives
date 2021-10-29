@@ -31,7 +31,7 @@ class OriginBox(models.Model):
 class DocumentTypes(models.Model):
     document_type_id = models.ForeignKey(DocumentType, on_delete=models.PROTECT)
     year = models.IntegerField(validators=[MinValueValidator(1900)])
-    month = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True)
+    month = models.CharField(max_length=3, blank=True, null=True)
     temporality_date = models.IntegerField(validators=[MinValueValidator(1900)])
 
 
