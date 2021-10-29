@@ -83,7 +83,8 @@ class AdministrativeProcess(Document):
     dest_unity_id = models.ForeignKey(Unity, on_delete=models.PROTECT, blank=True,
                                       null=True, related_name='unity')
     reference_month_year = models.DateField(blank=True, null=True)
-    sender_user = models.CharField(max_length=150, blank=True, null=True)
+    sender_user = models.ForeignKey(PublicWorker, on_delete=models.PROTECT,
+                                    blank=True, null=True)
     archiving_date = models.DateField(blank=True, null=True)
     is_filed = models.BooleanField(blank=True, null=True)
     is_eliminated = models.BooleanField(blank=True, null=True)

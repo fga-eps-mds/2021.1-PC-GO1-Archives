@@ -615,7 +615,7 @@ def test_search_without_specific_fields_from_admin_process():
         "interested": "1",
         "cpf_cnpj": "11111111111",
         "reference_month_year": "2020-11-11",
-        "sender_user": "1",
+        "sender_user": None,
         "archiving_date": "2020-11-11",
         "is_filed": False,
         "is_eliminated": False,
