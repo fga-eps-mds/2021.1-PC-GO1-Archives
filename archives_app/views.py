@@ -118,10 +118,11 @@ class BoxArchivingView(views.APIView):
 
         if origin_box != {}:
             print(origin_box)
-            box = OriginBox.objects.create(number=origin_box['number'], year=origin_box['year'])
+            box = OriginBox.objects.create(
+                number=origin_box['number'], year=origin_box['year'])
             for subject in origin_box['subjects_list']:
                 sub = OriginBoxSubject.objects.create(name=subject['name'],
-                                                    dates=subject['dates'])
+                                                      dates=subject['dates'])
                 box.subject.add(sub.id)
 
         documents_list = request.data['document_types']
