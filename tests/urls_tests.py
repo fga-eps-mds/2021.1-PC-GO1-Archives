@@ -661,10 +661,6 @@ def test_search_without_specific_fields_from_frequency_sheet():
     data_pw = {
         "name": "person1",
         "cpf": "1111111111",
-        "role": "1",
-        "category": "1",
-        "workplace": "1",
-        "municipal_area": "1"
     }
 
     response_pw = api_client.post(
