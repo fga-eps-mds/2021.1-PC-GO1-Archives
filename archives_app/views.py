@@ -255,7 +255,8 @@ class SearchView(views.APIView):
 
             if (
                 'id' in list(filter_dict.keys())[0] or
-                'sender_unity' in list(filter_dict.keys())[0]
+                'sender_unity' in list(filter_dict.keys())[0] or
+                'sender_user' in list(filter_dict.keys())[0]
             ):
                 if 'abbreviation_id' in list(filter_dict.keys())[0]:
                     contains = 'abbreviation_id__name__icontains'
@@ -267,6 +268,12 @@ class SearchView(views.APIView):
                         list(filter_dict.keys())[0])
                 elif 'sender_unity' in list(filter_dict.keys())[0]:
                     contains = '{}__unity_name__icontains'.format(
+                        list(filter_dict.keys())[0])
+                elif (
+                    'person_id' in list(filter_dict.keys())[0] or
+                    'sender_user' in list(filter_dict.keys())[0]
+                ):
+                    contains = '{}__name__icontains'.format(
                         list(filter_dict.keys())[0])
                 else:
                     contains = '{}__number__icontains'.format(

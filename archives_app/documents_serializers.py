@@ -123,7 +123,13 @@ class AdministrativeProcessSerializer(serializers.ModelSerializer):
             return obj.sender_unity.unity_name
         return ""
 
+    def get_sender_user(self, obj):
+        if obj.sender_user is not None:
+            return obj.sender_user.name
+        return ""
+
     sender_unity_name = serializers.SerializerMethodField('get_sender_unity')
+    sender_user_name = serializers.SerializerMethodField('get_sender_user')
     document_subject_name = serializers.SerializerMethodField(
         'get_document_subject'
     )
@@ -139,6 +145,7 @@ class AdministrativeProcessSerializer(serializers.ModelSerializer):
                   "cpf_cnpj",
                   "reference_month_year",
                   "sender_user",
+                  "sender_user_name",
                   "archiving_date",
                   "is_filed",
                   "is_eliminated",
@@ -170,14 +177,21 @@ class DocumentTypesSerializer(serializers.ModelSerializer):
 
 class FrequencySheetSerializer(FrequencySupport):
 
+    def get_person_name(self, obj):
+        if obj.person_id is not None:
+            return obj.person_id.name
+        return ""
+
     document_type_name = serializers.SerializerMethodField(
         'get_document_type'
     )
+    person_name = serializers.SerializerMethodField('get_person_name')
 
     class Meta:
         model = FrequencySheet
         fields = ("id",
                   "person_id",
+                  "person_name",
                   "cpf",
                   "role",
                   "category",
