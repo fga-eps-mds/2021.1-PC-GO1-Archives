@@ -33,10 +33,28 @@ class BoxArchivingSerializer(serializers.ModelSerializer):
             return obj.sender_unity.unity_name
         return ""
 
+    def get_doc_types(self, obj):
+        if obj.document_types is not None:
+            doc_types = []
+            for obj in obj.document_types.all():
+                doc_types.append(obj.document_type_id.document_name)
+            return doc_types
+        return ""
+
+    def get_temporalities(self, obj):
+        if obj.document_types is not None:
+            doc_types = []
+            for obj in obj.document_types.all():
+                doc_types.append(obj.temporality_date)
+            return doc_types
+        return None
+
     shelf_number = serializers.SerializerMethodField('get_shelf_number')
     rack_number = serializers.SerializerMethodField('get_rack_number')
     abbreviation_name = serializers.SerializerMethodField('get_abbreviation_name')
     sender_unity_name = serializers.SerializerMethodField('get_sender_unity')
+    document_type_name = serializers.SerializerMethodField('get_doc_types')
+    temporality_date = serializers.SerializerMethodField('get_temporalities')
 
     class Meta:
         model = BoxArchiving
@@ -57,7 +75,9 @@ class BoxArchivingSerializer(serializers.ModelSerializer):
             "shelf_id",
             "rack_id",
             "document_types",
-            "sender_unity_name"
+            "sender_unity_name",
+            "document_type_name",
+            "temporality_date"
         )
 
 

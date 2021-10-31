@@ -227,8 +227,8 @@ class BoxArchivingDetailsView(views.APIView):
 
 
 class SearchView(views.APIView):
-    archival_relation_fields = [field.name for field in
-                                BoxArchiving._meta.get_fields()]
+    box_archiving_fields = [field.name for field in
+                            BoxArchiving._meta.get_fields()]
     frequency_relation_fields = [field.name for field in
                                  FrequencyRelation._meta.get_fields()]
     frequency_sheet_fields = [field.name for field in
@@ -275,13 +275,31 @@ class SearchView(views.APIView):
                     contains: list(filter_dict.values())[0]
                 }
 
-            if list(filter_dict.keys())[0] in self.archival_relation_fields:
+            if list(filter_dict.keys())[0] in self.box_archiving_fields:
                 if not filter_dict_fk:
                     box_archiving = box_archiving.filter(**filter_dict)
                 else:
                     box_archiving = box_archiving.filter(**filter_dict_fk)
                 return_dict['box_archiving'] = BoxArchivingSerializer(
                     box_archiving, many=True).data
+
+            if 'document_type_id' in list(filter_dict.keys())[0]:
+                boxes = []
+                for box in box_archiving:
+                    doc_types = box.document_types.filter(**filter_dict)
+                    if box not in boxes and doc_types:
+                        boxes.append(box)
+                return_dict['box_archiving'] = BoxArchivingSerializer(
+                    boxes, many=True).data
+
+            if 'temporality_date' in list(filter_dict.keys())[0]:
+                boxes = []
+                for box in box_archiving:
+                    doc_types = box.document_types.filter(**filter_dict)
+                    if box not in boxes and doc_types:
+                        boxes.append(box)
+                return_dict['box_archiving'] = BoxArchivingSerializer(
+                    boxes, many=True).data
 
             if list(filter_dict.keys())[0] in self.frequency_relation_fields:
                 if not filter_dict_fk:
