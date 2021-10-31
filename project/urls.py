@@ -14,14 +14,15 @@ router.register(r'front-cover', views.FrontCoverViewSet)
 router.register(r'administrative-process', views.AdministrativeProcessViewSet)
 router.register(r'frequency-relation', views.FrequencyRelationViewSet)
 router.register(r'frequency-sheet', views.FrequencySheetViewSet)
+router.register(r'public-worker', views.PublicWorkerViewSet)
 
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
-    path('archival-relation/', views.ArchivalRelationView.as_view()),
-    path('archival-relation/<int:pk>', views.ArchivalRelationDetailsView.as_view()),
+    path('box-archiving/', views.BoxArchivingView.as_view()),
+    path('box-archiving/<int:pk>', views.BoxArchivingDetailsView.as_view()),
     path('year-by-abbreviation/<str:abvt>', views.YearByAbbreviation.as_view()),
     path('number-by-year-abbrevation/<str:abvt>/<int:year>',
          views.NumberByYearAndAbbreviation.as_view()),
