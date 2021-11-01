@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .fields_models import BoxAbbreviations, FrontCover, DocumentSubject
-from .fields_models import DocumentType, Shelf, Unity, Rack
+from .fields_models import DocumentType, Shelf, Unity, Rack, PublicWorker
 
 
 class DocumentSubjectSerializer(serializers.ModelSerializer):
@@ -50,4 +50,11 @@ class FrontCoverSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FrontCover
+        fields = '__all__'
+
+
+class PublicWorkerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PublicWorker
         fields = '__all__'
