@@ -4,12 +4,17 @@ from django.core.validators import MinValueValidator
 
 class DocumentSubject(models.Model):
     subject_name = models.CharField(max_length=100, blank=True, null=True)
-    temporality = models.DateField(blank=True, null=True)
+    temporality = models.IntegerField(blank=True, null=True)
 
 
 class DocumentType(models.Model):
     document_name = models.CharField(max_length=100, blank=True, null=True)
-    temporality = models.DateField(blank=True, null=True)
+    temporality = models.IntegerField(blank=True, null=True)
+
+
+class PublicWorker(models.Model):
+    name = models.CharField(max_length=150)
+    cpf = models.CharField(max_length=11)
 
 
 class Unity(models.Model):
@@ -17,7 +22,6 @@ class Unity(models.Model):
     unity_abbreviation = models.CharField(max_length=20, blank=True, null=True)
     administrative_bond = models.CharField(max_length=100, blank=True, null=True)
     bond_abbreviation = models.CharField(max_length=20, blank=True, null=True)
-    type_of_unity = models.CharField(max_length=30, blank=True, null=True)
     municipality = models.CharField(max_length=100, blank=True, null=True)
     telephone_number = models.CharField(max_length=11, blank=True, null=True)
     notes = models.CharField(max_length=300, blank=True, null=True)
