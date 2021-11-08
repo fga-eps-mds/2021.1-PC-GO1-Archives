@@ -161,6 +161,11 @@ class BoxArchivingView(views.APIView):
             box_archiving.shelf_id = shelf_number_id
             box_archiving.save()
 
+        if request.data['rack_id'] != '':
+            rack_number_id = Rack.objects.get(pk=request.data['rack_id'])
+            box_archiving.rack_id = rack_number_id
+            box_archiving.save()
+
         if origin_box != {}:
             if box is not None:
                 print(box.id)
