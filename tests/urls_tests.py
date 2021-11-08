@@ -387,7 +387,8 @@ def box_archiving():
         "cover_sheet": "1",
         "filer_user": "1",
         "abbreviation_id": "",
-        "shelf_id": ""
+        "shelf_id": "",
+        "rack_id": ""
     }
 
     return data
