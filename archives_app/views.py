@@ -298,7 +298,7 @@ class SearchView(views.APIView):
             if 'document_type_id' in list(filter_dict.keys())[0]:
                 boxes = []
                 for box in box_archiving:
-                    doc_types = box.document_types.filter(**filter_dict)
+                    doc_types = box.document_types.filter(**filter_dict_fk)
                     if box not in boxes and doc_types:
                         boxes.append(box)
                 return_dict['box_archiving'] = BoxArchivingSerializer(
